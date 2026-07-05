@@ -5,6 +5,7 @@ module com.dbank.uccunivawealth {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
+    requires java.sql;
 
     opens com.dbank.uccunivawealth to javafx.fxml;
     exports com.dbank.uccunivawealth;
