@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane prefHeight="747" prefWidth="1326"
+            stylesheets="@styles.css"
+            styleClass="root-pane"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbank.uccunivawealth.controller.DashboardController">
+
+    <!-- ============ SIDEBAR (spans full window height) ============ -->
+    <left>
+        <VBox prefWidth="270" styleClass="sidebar">
+            <padding>
+                <Insets bottom="20" top="20" />
+            </padding>
+
+            <!-- Brand row -->
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <padding>
+                    <Insets bottom="30" left="25" />
+                </padding>
+                <StackPane>
+                    <Circle fill="WHITE" radius="24" />
+                    <Label text="🔥" />
+                </StackPane>
+                <Label styleClass="brand-label" text="MaterialFX" />
+            </HBox>
+
+            <Label styleClass="section-label" text="Components">
+                <padding>
+                    <Insets bottom="10" left="25" />
+                </padding>
+            </Label>
+
+            <!-- Nav items -->
+            <VBox fx:id="navItemsBox" spacing="4" />
+        </VBox>
+    </left>
+
+    <!-- ============ RIGHT SIDE: top bar + content, stacked ============ -->
+    <center>
+        <BorderPane>
+            <!-- Top bar (only spans the width next to the sidebar) -->
+            <top>
+                <HBox fx:id="navbar" alignment="CENTER_RIGHT" spacing="8" styleClass="top-bar">
+                    <padding>
+                        <Insets bottom="15" right="20" top="15" />
+                    </padding>
+                    <Circle fill="#B39DDB" radius="6" />
+                    <Circle fill="#FFD54F" radius="6" />
+                    <Circle fill="#EF9A9A" radius="6" />
+                </HBox>
+            </top>
+
+            <!-- Main content -->
+            <center>
+                <ScrollPane fitToWidth="true" styleClass="content-scroll">
+                    <GridPane hgap="24" vgap="24">
+                        <padding>
+                            <Insets bottom="30" left="30" right="30" top="30" />
+                        </padding>
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+
+                        <!-- Flat Buttons -->
+                        <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+                            <Label styleClass="card-title" text="Flat Buttons" />
+                            <VBox VBox.vgrow="ALWAYS" />
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <MFXButton styleClass="flat-btn" text="Button" />
+                                <MFXButton styleClass="flat-btn-custom" text="Custom" />
+                                <MFXButton disable="true" styleClass="flat-btn-disabled" text="Disabled" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Outlined Buttons -->
+                        <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+                            <Label styleClass="card-title" text="Outlined Buttons" />
+                            <VBox VBox.vgrow="ALWAYS" />
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <MFXButton styleClass="outlined-btn-filled" text="Button" />
+                                <MFXButton styleClass="outlined-btn" text="Button" />
+                                <MFXButton disable="true" styleClass="outlined-btn-disabled" text="Disabled" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Raised Buttons -->
+                        <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+                            <Label styleClass="card-title" text="Raised Buttons" />
+                            <VBox VBox.vgrow="ALWAYS" />
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <MFXButton styleClass="raised-btn" text="Button" />
+                                <MFXButton styleClass="raised-btn-custom" text="Custom" />
+                                <MFXButton disable="true" styleClass="raised-btn-disabled" text="Disabled" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Other Buttons -->
+                        <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+                            <Label styleClass="card-title" text="Other Buttons" />
+                            <VBox VBox.vgrow="ALWAYS" />
+                            <HBox alignment="CENTER" spacing="15">
+                                <Hyperlink styleClass="link-btn" text="Link Button" />
+                            </HBox>
+                        </VBox>
+
+                    </GridPane>
+                </ScrollPane>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>
