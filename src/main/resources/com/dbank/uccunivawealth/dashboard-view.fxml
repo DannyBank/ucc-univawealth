@@ -6,12 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<BorderPane prefHeight="747" prefWidth="1326"
-            stylesheets="@styles.css"
-            styleClass="root-pane"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.dbank.uccunivawealth.controller.DashboardController">
+<BorderPane prefHeight="747" prefWidth="1326" styleClass="root-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dbank.uccunivawealth.controller.DashboardController">
 
     <!-- ============ SIDEBAR (spans full window height) ============ -->
     <left>
@@ -48,13 +43,13 @@
         <BorderPane>
             <!-- Top bar (only spans the width next to the sidebar) -->
             <top>
-                <HBox fx:id="navbar" alignment="CENTER_RIGHT" spacing="8" styleClass="top-bar">
+                <HBox alignment="CENTER_RIGHT" spacing="8" styleClass="top-bar">
                     <padding>
                         <Insets bottom="15" right="20" top="15" />
                     </padding>
-                    <Circle fill="#B39DDB" radius="6" />
-                    <Circle fill="#FFD54F" radius="6" />
-                    <Circle fill="#EF9A9A" radius="6" />
+                    <Circle fx:id="btnMin" fill="#B39DDB" radius="7" />
+                    <Circle fx:id="btnMax" fill="#FFD54F" radius="7" />
+                    <Circle fx:id="btnClose" fill="#EF9A9A" radius="7" />
                 </HBox>
             </top>
 
@@ -75,12 +70,12 @@
                         </rowConstraints>
 
                         <!-- Flat Buttons -->
-                        <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <VBox prefHeight="400" prefWidth="650" spacing="20" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
                             <padding>
                                 <Insets bottom="20" left="20" right="20" top="20" />
                             </padding>
                             <Label styleClass="card-title" text="Flat Buttons" />
-                            <VBox VBox.vgrow="ALWAYS" />
+                            <VBox prefHeight="297.0" prefWidth="625.0" VBox.vgrow="ALWAYS" />
                             <HBox alignment="CENTER_LEFT" spacing="15">
                                 <MFXButton styleClass="flat-btn" text="Button" />
                                 <MFXButton styleClass="flat-btn-custom" text="Custom" />
@@ -88,7 +83,7 @@
                             </HBox>
                         </VBox>
 
-                        <!-- Outlined Buttons -->
+                        <!-- Outlined Buttons
                         <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
                             <padding>
                                 <Insets bottom="20" left="20" right="20" top="20" />
@@ -101,8 +96,8 @@
                                 <MFXButton disable="true" styleClass="outlined-btn-disabled" text="Disabled" />
                             </HBox>
                         </VBox>
-
-                        <!-- Raised Buttons -->
+                        -->
+                        <!-- Raised Buttons
                         <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <padding>
                                 <Insets bottom="20" left="20" right="20" top="20" />
@@ -115,8 +110,8 @@
                                 <MFXButton disable="true" styleClass="raised-btn-disabled" text="Disabled" />
                             </HBox>
                         </VBox>
-
-                        <!-- Other Buttons -->
+                        -->
+                        <!-- Other Buttons
                         <VBox prefHeight="160" prefWidth="340" spacing="20" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <padding>
                                 <Insets bottom="20" left="20" right="20" top="20" />
@@ -127,7 +122,7 @@
                                 <Hyperlink styleClass="link-btn" text="Link Button" />
                             </HBox>
                         </VBox>
-
+                        -->
                     </GridPane>
                 </ScrollPane>
             </center>

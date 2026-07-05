@@ -46,7 +46,8 @@ public class LoginController {
             stage.show();
         } else {
             // user failed verification, ask for a retry
-            Notification.ShowAlert("Login", "Failed", "Login Failed");
+            Notification.ShowAlert(Alert.AlertType.INFORMATION,
+                    "Login", "Failed", "Login Failed");
         }
     }
     
