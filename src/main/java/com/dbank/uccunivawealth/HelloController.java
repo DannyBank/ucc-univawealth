@@ -5,13 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class HelloController {
     @FXML
     private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
+    protected void onHelloButtonClick() throws SQLException {
         Connection conn = DatabaseManager.connect();
 
         if (conn != null) {

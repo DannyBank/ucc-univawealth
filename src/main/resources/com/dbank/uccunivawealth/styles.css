@@ -1,0 +1,25 @@
+.root-pane {
+    -fx-background-color: #f9f9f9; /* light neutral background */
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.mfx-text {
+    -fx-pref-width: 250;
+}
+
+.mfx-button {
+    -fx-background-color: #1976d2; /* Material Blue */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 10 20;
+}
+
+.mfx-button:hover {
+    -fx-background-color: #1565c0;
+}

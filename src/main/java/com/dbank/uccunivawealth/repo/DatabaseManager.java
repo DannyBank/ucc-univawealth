@@ -1,14 +1,15 @@
 package com.dbank.uccunivawealth.repo;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    private static final String URL = "jdbc:sqlite:univawealth.db";
+    private static final String URL = "jdbc:sqlite:database/univawealth.db";
 
-    public static Connection connect() {
+    public static Connection connect() throws SQLException{
         try {
             return DriverManager.getConnection(URL);
         } catch (SQLException e) {
