@@ -1,6 +1,6 @@
 package com.dbank.uccunivawealth.controller;
 
-import com.dbank.uccunivawealth.service.LoginService;
+import com.dbank.uccunivawealth.service.AuthService;
 import com.dbank.uccunivawealth.util.InputValidator;
 import com.dbank.uccunivawealth.util.Notification;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -35,7 +35,7 @@ public class LoginController {
         }
 
         // validate user input for registered user
-        var loginService = new LoginService();
+        var loginService = new AuthService();
         if (loginService.verify(username, password)){
             // user was verified successfully, proceed to dashboard
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/dbank/uccunivawealth/main.fxml"));
