@@ -5,82 +5,152 @@ import com.dbank.uccunivawealth.model.InvestmentAccount;
 import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.model.SavingsGoal;
 import com.dbank.uccunivawealth.model.Transaction;
+import com.dbank.uccunivawealth.repo.InvestmentsRepository;
+import com.dbank.uccunivawealth.repo.SavingsGoalsRepository;
+import com.dbank.uccunivawealth.repo.SavingsRepository;
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
  * In-memory data store shared by every controller in the application.
  * <p>
- * Because the UI is now split across several FXML files (dashboard, savings, investment,
+ * The UI is made up of several FXML files (dashboard, savings, investment,
  * transactions, goals), each with its own controller loaded independently by
  * {@link javafx.fxml.FXMLLoader}, the controllers need a common place to read and write
  * account data. A singleton keeps that sharing simple without introducing a dependency
- * injection framework, while still keeping the data access behind clear accessor methods
+ * injection, while still keeping the data access behind clear accessor methods
  * (encapsulation).
  */
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public final class AppData {
 
     private static final AppData INSTANCE = new AppData();
 
+    // Repositories (database layer)
+    // ============================
+    private final SavingsRepository savingsRepo = new SavingsRepository();
+    private final InvestmentsRepository investmentsRepo = new InvestmentsRepository();
+    private final TransactionsRepository transactionsRepo = new TransactionsRepository();
+    private final SavingsGoalsRepository goalsRepo = new SavingsGoalsRepository();
+
+    // UI observable caches
+    // ============================
     private final ObservableList<SavingsAccount> savingsAccounts = FXCollections.observableArrayList();
     private final ObservableList<InvestmentAccount> investmentAccounts = FXCollections.observableArrayList();
     private final ObservableList<Transaction> allTransactions = FXCollections.observableArrayList();
     private final ObservableList<SavingsGoal> goals = FXCollections.observableArrayList();
 
-    private int nextAccountNumber = 1001;
+    private AppData() {}
+    public static AppData getInstance() { return INSTANCE; }
 
-    private AppData() {
+    // Getters for UI Binding
+    // ============================
+    public ObservableList<SavingsAccount> getSavingsAccounts() { return savingsAccounts; }
+    public ObservableList<InvestmentAccount> getInvestmentAccounts() { return investmentAccounts; }
+    public ObservableList<Transaction> getAllTransactions() { return allTransactions; }
+    public ObservableList<SavingsGoal> getGoals() { return goals; }
+
+    // Initial Load from Database
+    // ============================
+    public void loadAllData() {
+        loadSavingsAccounts();
+        loadInvestmentAccounts();
+        loadTransactions();
+        loadGoals();
     }
 
-    public static AppData getInstance() {
-        return INSTANCE;
+    public void loadSavingsAccounts() {
+        savingsAccounts.setAll(savingsRepo.getAll());
     }
 
-    public ObservableList<SavingsAccount> getSavingsAccounts() {
-        return savingsAccounts;
+    public void loadInvestmentAccounts() {
+        investmentAccounts.setAll(investmentsRepo.getAll());
     }
 
-    public ObservableList<InvestmentAccount> getInvestmentAccounts() {
-        return investmentAccounts;
+    public void loadTransactions() {
+        allTransactions.setAll(transactionsRepo.getAll());
     }
 
-    public ObservableList<Transaction> getAllTransactions() {
-        return allTransactions;
+    public void loadGoals() {
+        goals.setAll(goalsRepo.getAll());
     }
 
-    public ObservableList<SavingsGoal> getGoals() {
-        return goals;
+    // SAVINGS ACCOUNTS
+    // ============================
+
+    public void addSavingsAccount(SavingsAccount acc) {
+        savingsRepo.insert(acc);      // save to DB
+        savingsAccounts.add(acc);    // update UI
     }
 
-    public synchronized String nextAccountId(String prefix) {
-        return prefix + "-" + (nextAccountNumber++);
+    public void updateSavingsAccount(SavingsAccount acc) {
+        savingsRepo.update(acc);
+        loadSavingsAccounts(); // refresh UI
     }
 
-    /** Copies every transaction currently logged on an account into the global ledger. */
+    public void deleteSavingsAccount(String accountId) {
+        savingsRepo.delete(accountId);
+        savingsAccounts.removeIf(a -> a.getAccountNumber().equals(accountId));
+    }
+
+    // INVESTMENT ACCOUNTS
+    // ============================
+
+    public void addInvestmentAccount(InvestmentAccount acc) {
+        investmentsRepo.insert(acc);
+        investmentAccounts.add(acc);
+    }
+
+    public void updateInvestmentAccount(InvestmentAccount acc) {
+        investmentsRepo.update(acc);
+        loadInvestmentAccounts();
+    }
+
+    public void deleteInvestmentAccount(String accountId) {
+        investmentsRepo.delete(accountId);
+        investmentAccounts.removeIf(a -> a.getAccountNumber().equals(accountId));
+    }
+
+    // TRANSACTIONS
+    // =========================
+
+    public void addTransaction(Transaction tx) {
+        transactionsRepo.insert(tx);
+        allTransactions.add(tx);
+    }
+
+    // optional helpers
     public void recordTransactionsOf(Account account) {
-        allTransactions.addAll(account.getTransactions());
-    }
-
-    /** Copies only the most recent transaction logged on an account into the global ledger. */
-    public void recordLatestTransactionOf(Account account) {
-        var transactions = account.getTransactions();
-        if (!transactions.isEmpty()) {
-            allTransactions.add(transactions.get(transactions.size() - 1));
+        for (Transaction tx : account.getTransactions()) {
+            addTransaction(tx);
         }
     }
 
-    /** Seeds the app with a couple of demo records so the tables aren't empty on first run. */
-    public void seedDemoData() {
-        SavingsAccount s1 = new SavingsAccount(nextAccountId("SAV"), "Kwame Mensah", 2500.00, 0.12);
-        savingsAccounts.add(s1);
-        recordTransactionsOf(s1);
+    public void recordLatestTransactionOf(Account account) {
+        var transactions = account.getTransactions();
+        if (!transactions.isEmpty()) {
+            addTransaction(transactions.getLast());
+        }
+    }
 
-        InvestmentAccount i1 = new InvestmentAccount(
-                nextAccountId("INV"), "Kwame Mensah", 5000.00, "Mutual Fund", 0.15, "Medium");
-        investmentAccounts.add(i1);
-        recordTransactionsOf(i1);
+    // GOALS
+    // =========================
 
-        goals.add(new SavingsGoal("Emergency Fund", 10000, 2500, "Dec 2026"));
-        goals.add(new SavingsGoal("New Laptop", 8000, 3200, "Sep 2026"));
+    public void addGoal(SavingsGoal goal) {
+        goalsRepo.insert(goal);
+        goals.add(goal);
+    }
+
+    public void updateGoal(SavingsGoal goal) {
+        goalsRepo.update(goal);
+        loadGoals();
+    }
+
+    public void deleteGoal(String name) {
+        goalsRepo.delete(name);
+        goals.removeIf(g -> g.getName().equals(name));
     }
 }
