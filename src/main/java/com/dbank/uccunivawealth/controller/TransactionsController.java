@@ -1,6 +1,4 @@
 package com.dbank.uccunivawealth.controller;
 
-
-public class DashboardController {
-
+public class TransactionsController {
 }
