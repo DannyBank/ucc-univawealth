@@ -1,5 +1,7 @@
 package com.dbank.uccunivawealth.repo;
 
+import com.dbank.uccunivawealth.model.InvestmentAccount;
+import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.model.SavingsGoal;
 
 import java.sql.*;
@@ -50,4 +52,7 @@ public class SavingsGoalsRepository {
             e.printStackTrace();
         }
     }
+
+    public void update(SavingsGoal account){ return; }
+    public void delete(String accountId){ return; }
 }

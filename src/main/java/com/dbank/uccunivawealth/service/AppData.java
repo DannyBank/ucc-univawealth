@@ -27,7 +27,9 @@ import javafx.collections.ObservableList;
 
 public final class AppData {
 
+    public AppData() {}
     private static final AppData INSTANCE = new AppData();
+    public static AppData getInstance() { return INSTANCE; }
 
     // Repositories (database layer)
     // ============================
@@ -42,9 +44,6 @@ public final class AppData {
     private final ObservableList<InvestmentAccount> investmentAccounts = FXCollections.observableArrayList();
     private final ObservableList<Transaction> allTransactions = FXCollections.observableArrayList();
     private final ObservableList<SavingsGoal> goals = FXCollections.observableArrayList();
-
-    private AppData() {}
-    public static AppData getInstance() { return INSTANCE; }
 
     // Getters for UI Binding
     // ============================

@@ -20,22 +20,21 @@ import java.util.List;
  * </ul>
  */
 public abstract class Account {
-
+    private final int userId;
     private final String accountNumber;
     private final String ownerName;
     private double balance;
     private final List<Transaction> transactions = new ArrayList<>();
 
-    protected Account(String accountNumber, String ownerName, double initialBalance) {
+    protected Account(int userId, String accountNumber, String ownerName, double initialBalance) {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("Initial balance cannot be negative.");
         }
+        this.userId = userId;
         this.accountNumber = accountNumber;
         this.ownerName = ownerName;
         this.balance = initialBalance;
-        if (initialBalance > 0) {
-            logTransaction("OPENING BALANCE", initialBalance);
-        }
+        if (initialBalance > 0) { logTransaction("OPENING BALANCE", initialBalance); }
     }
 
     /** Deposits a positive amount into the account and logs the transaction. */
@@ -47,14 +46,13 @@ public abstract class Account {
         logTransaction("DEPOSIT", amount);
     }
 
-    /** Withdraws a positive amount from the account, provided sufficient funds exist. */
+    // Withdraws a positive amount from the account, provided sufficient funds exist.
     public void withdraw(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be greater than zero.");
         }
         if (amount > balance) {
-            throw new IllegalArgumentException(
-                    String.format("Insufficient funds. Available balance: GHS %,.2f", balance));
+            throw new IllegalArgumentException("Insufficient funds. Check your balance and try again");
         }
         balance -= amount;
         logTransaction("WITHDRAWAL", -amount);
@@ -64,13 +62,15 @@ public abstract class Account {
      * Allows a subclass to adjust the balance for reasons other than a plain deposit/withdrawal
      * (e.g. interest credit, simulated investment return) while still keeping the field private.
      */
-    protected void adjustBalance(double delta) {
-        this.balance += delta;
+    protected void adjustBalance(double adjustment) {
+        this.balance += adjustment;
     }
 
     protected void logTransaction(String type, double amount) {
         transactions.add(new Transaction(accountNumber, type, amount, balance));
     }
+
+    public int getUserId() { return userId; }
 
     public String getAccountNumber() {
         return accountNumber;
@@ -88,9 +88,9 @@ public abstract class Account {
         return Collections.unmodifiableList(transactions);
     }
 
-    /** A short label describing the kind of account, e.g. "Savings" or "Investment". */
+    // A short label describing the kind of account, e.g. "Savings" or "Investment".
     public abstract String getAccountCategory();
 
-    /** A one-line human-readable description of how this account grows money. */
+    // A one-line description of how this account grows money.
     public abstract String describeYield();
 }

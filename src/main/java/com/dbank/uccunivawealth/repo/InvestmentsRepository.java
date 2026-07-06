@@ -53,4 +53,8 @@ public class InvestmentsRepository {
             e.printStackTrace();
         }
     }
+
+    public void update(InvestmentAccount account){ return; }
+    public void delete(String accountId){ return; }
+
 }

@@ -1,6 +1,7 @@
 package com.dbank.uccunivawealth.model;
 
 public class User {
+    private int userId;
     private String username;
     private String passwordHash;
     private String fullName;
@@ -25,6 +26,7 @@ public class User {
     }
 
     //getters
+    public int getUserId(){ return userId; }
     public String getUsername() { return username; }
     public String getPasswordHash() { return passwordHash; }
     public String getFullName() { return fullName; }
@@ -35,6 +37,7 @@ public class User {
     public boolean isActive() { return isActive; }
 
     //setters
+    public void setUserId(int userid) { this.userId = userid; }
     public void setUsername(String username) {
         this.username = username;
     }
@@ -44,9 +47,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    public void setPhone(String phone) { this.phone = phone; }
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }

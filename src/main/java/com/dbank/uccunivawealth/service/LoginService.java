@@ -13,7 +13,7 @@ public class LoginService {
         if (userFound == null || !userFound.isActive()){
             return false;
         }
-
+        
         // verify the hashed password
         BCrypt.Result result = BCrypt.verifyer()
                 .verify(password.toCharArray(), userFound.getPasswordHash());
