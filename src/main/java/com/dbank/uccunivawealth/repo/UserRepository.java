@@ -20,7 +20,7 @@ public class UserRepository {
     }
 
     // retrieve the details of the user to build a profile on the dashboard
-    public User getUser(String username, String password) {
+    public User getUser(String username) {
         String sql = "SELECT * FROM Users WHERE Username = ?";
 
         try (Connection conn = DatabaseManager.connect()){

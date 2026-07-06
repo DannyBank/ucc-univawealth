@@ -5,8 +5,8 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.dbank.uccunivawealth.controller.MainController"
-            stylesheets="@start.css,@app.css,@styles.css">
+            fx:controller="com.dbank.uccunivawealth.controller.StartController"
+            stylesheets="@start.css">
 
     <!-- TOP BAR -->
     <top>
@@ -24,7 +24,6 @@
             <Button text="Investment Accounts" onAction="#showInvestment" fx:id="btnInvestment"/>
             <Button text="Transactions" onAction="#showTransactions" fx:id="btnTransactions"/>
             <Button text="Savings Goals" onAction="#showGoals" fx:id="btnGoals"/>
-            <Button text="Logout" onAction="#logout" fx:id="btnLogOut"/>
 
         </VBox>
     </left>

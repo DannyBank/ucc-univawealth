@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.dbank.uccunivawealth.controller.DashboardController"
             styleClass="tab-scroll-pane">
     <VBox spacing="15" alignment="TOP_CENTER" styleClass="tab-content">
@@ -46,7 +47,7 @@
             </VBox>
         </HBox>
 
-        <PieChart fx:id="allocationChart" title="Asset Allocation" legendVisible="true" prefHeight="380"/>
+        <PieChart fx:id="allocationChart" title="Asset Allocation" legendVisible="true" prefHeight="300"/>
 
         <MFXButton fx:id="refreshBtn" text="Refresh Dashboard" onAction="#onRefresh" styleClass="mfx-button-raised"/>
     </VBox>

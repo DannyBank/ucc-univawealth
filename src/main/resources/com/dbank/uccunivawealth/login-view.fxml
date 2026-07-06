@@ -28,5 +28,13 @@
         </MFXPasswordField>
         <MFXButton fx:id="btnLogin" styleClass="mfx-button" text="Login" onAction="#onLoginBtnClick" />
     </VBox>
+    <!-- Loading overlay -->
+    <VBox fx:id="loadingPane"
+          visible="false"
+          alignment="CENTER"
+          style="-fx-background-color: rgba(0,0,0,0.3);">
 
+        <ProgressIndicator fx:id="progressIndicator"/>
+        <Label text="Logging in..." style="-fx-text-fill: white;"/>
+    </VBox>
 </AnchorPane>
