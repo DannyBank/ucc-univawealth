@@ -5,7 +5,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="root-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dbank.uccunivawealth.controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0"
+            styleClass="root-pane" stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbank.uccunivawealth.controller.LoginController">
 
     <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
@@ -21,7 +26,7 @@
             <Font size="18.0" />
          </font>
         </MFXPasswordField>
-        <MFXButton styleClass="mfx-button" text="Login" onAction="#onLoginBtnClick" />
+        <MFXButton fx:id="btnLogin" styleClass="mfx-button" text="Login" onAction="#onLoginBtnClick" />
     </VBox>
 
 </AnchorPane>

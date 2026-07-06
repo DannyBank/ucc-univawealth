@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbank.uccunivawealth.controller.MainController"
+            styleClass="root-pane">
+    <top>
+        <HBox styleClass="app-header" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="16" right="16" bottom="16" left="16"/>
+            </padding>
+            <Label text="💰 Savings &amp; Investment Management System" styleClass="app-title"/>
+        </HBox>
+    </top>
+    <center>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" styleClass="main-tab-pane">
+            <tabs>
+                <Tab fx:id="dashboardTab" text="Dashboard">
+                    <fx:include fx:id="dashboard" source="dashboard.fxml"/>
+                </Tab>
+                <Tab text="Savings Accounts">
+                    <fx:include fx:id="savings" source="savings.fxml"/>
+                </Tab>
+                <Tab text="Investment Accounts">
+                    <fx:include fx:id="investment" source="investment.fxml"/>
+                </Tab>
+                <Tab text="Transactions">
+                    <fx:include fx:id="transactions" source="transactions.fxml"/>
+                </Tab>
+                <Tab text="Savings Goals">
+                    <fx:include fx:id="goals" source="goals.fxml"/>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

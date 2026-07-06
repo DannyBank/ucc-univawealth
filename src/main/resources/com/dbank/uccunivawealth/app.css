@@ -1,0 +1,76 @@
+/*
+ * App-specific styling layered on top of the MaterialFX theme (see MainApp).
+ * MaterialFX already restyles buttons, text fields, combo boxes, table views,
+ * progress bars, tabs and scroll panes to a Material Design look; this sheet only
+ * covers the bespoke pieces that are plain layout containers (header bar, dashboard
+ * summary cards, goal cards) which MaterialFX has no opinion on.
+ */
+
+.root-pane {
+    -fx-background-color: #f4f6f5;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+    -fx-background-color: #1b4332;
+}
+
+.app-title {
+    -fx-font-family: "Arial";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* ---------- Dashboard summary cards ---------- */
+.summary-card {
+    -fx-background-radius: 10;
+}
+
+.card-savings {
+    -fx-background-color: #2d6a4f;
+}
+
+.card-investment {
+    -fx-background-color: #1b4965;
+}
+
+.card-networth {
+    -fx-background-color: #6a4c93;
+}
+
+.card-title {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.card-value {
+    -fx-font-family: "Arial";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* ---------- Forms (create-account / add-goal panels) ---------- */
+.form-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #dcdfe2;
+    -fx-border-radius: 8;
+}
+
+/* ---------- Savings goal cards ---------- */
+.goal-card {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+}
+
+.goal-name {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}

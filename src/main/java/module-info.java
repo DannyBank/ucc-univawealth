@@ -11,6 +11,7 @@ module com.dbank.uccunivawealth {
 
     opens com.dbank.uccunivawealth to javafx.fxml;
     opens com.dbank.uccunivawealth.controller to javafx.fxml;
+    opens com.dbank.uccunivawealth.model to javafx.base;
     exports com.dbank.uccunivawealth;
     exports com.dbank.uccunivawealth.app to javafx.graphics;
 }

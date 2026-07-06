@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbank.uccunivawealth.controller.TransactionsController"
+            styleClass="tab-content">
+    <center>
+        <TableView fx:id="transactionsTable">
+            <columns>
+                <TableColumn fx:id="idCol" text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="id"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="accCol" text="Account No.">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="accountNumber"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="typeCol" text="Type">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="amountCol" text="Amount (GHS)">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="amount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="balAfterCol" text="Balance After (GHS)">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="balanceAfter"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="timeCol" text="Timestamp">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="formattedTime"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <placeholder>
+                <Label text="No transactions yet."/>
+            </placeholder>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <MFXButton fx:id="exportBtn" text="Export Summary" onAction="#onExportSummary"
+                       styleClass="mfx-button-raised"/>
+        </HBox>
+    </bottom>
+</BorderPane>

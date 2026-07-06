@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -17,13 +18,10 @@ import java.sql.SQLException;
 
 public class LoginController {
 
-    @FXML
-    MFXTextField usernameField;
-    @FXML
-    MFXPasswordField passwordField;
-
-    @FXML
-    Label lbl;
+    @FXML MFXTextField usernameField;
+    @FXML MFXPasswordField passwordField;
+    @FXML Button btnLogin;
+    @FXML Label lbl;
 
     @FXML
     protected void onLoginBtnClick() throws SQLException, IOException {
@@ -40,8 +38,13 @@ public class LoginController {
         var loginService = new LoginService();
         if (loginService.verify(username, password)){
             // user was verified successfully, proceed to dashboard
-            Parent root = FXMLLoader.load(getClass().getResource("/com/dbank/uccunivawealth/dashboard-view.fxml"));
-            Stage stage = (Stage) usernameField.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/dbank/uccunivawealth/main.fxml"));
+            Parent root = loader.load();
+
+            MainController controller = loader.getController();
+            controller.refreshDashboard();
+
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } else {

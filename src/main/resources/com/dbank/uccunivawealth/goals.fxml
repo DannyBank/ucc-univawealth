@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbank.uccunivawealth.controller.GoalsController"
+            styleClass="tab-content">
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="tab-scroll-pane">
+            <VBox fx:id="goalsList" spacing="12">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <GridPane hgap="10" vgap="10" styleClass="form-panel">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints minWidth="160"/>
+                <ColumnConstraints minWidth="260" hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Goal Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <MFXTextField fx:id="nameField" floatingText="Goal name (e.g. Buy a laptop)"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Target Amount:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <MFXTextField fx:id="targetField" floatingText="Target amount (GHS)"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Current Savings:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <MFXTextField fx:id="currentField" floatingText="Current savings toward goal (GHS)"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Target Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <MFXTextField fx:id="dateField" floatingText="Target date (e.g. Dec 2026)"
+                          GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <MFXButton fx:id="addGoalBtn" text="Add Goal" onAction="#onAddGoal"
+                       styleClass="mfx-button-raised" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        </GridPane>
+    </bottom>
+</BorderPane>
