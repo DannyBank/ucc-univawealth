@@ -49,6 +49,9 @@ public class InvestmentController {
     @FXML
     private void onCreateAccount() {
         try {
+            int userId = 1;
+            String accountNo = "";
+
             String owner = UiUtils.requireNonEmpty(ownerField.getText(), "Owner name");
             double initialBal = UiUtils.parsePositiveOrZero(initialBalField.getText(), "Initial investment");
             String type = typeBox.getValue();
@@ -62,7 +65,7 @@ public class InvestmentController {
             double expReturn = UiUtils.parsePositiveOrZero(returnField.getText(), "Expected return") / 100.0;
 
             InvestmentAccount account = new InvestmentAccount(
-                    appData.nextAccountId("INV"), owner, initialBal, type, expReturn, risk);
+                    userId, accountNo, owner, initialBal, type, expReturn, risk);
             appData.getInvestmentAccounts().add(account);
             appData.recordTransactionsOf(account);
 

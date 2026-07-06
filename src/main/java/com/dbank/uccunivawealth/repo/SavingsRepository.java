@@ -20,6 +20,7 @@ public class SavingsRepository {
 
                 while (rs.next()) {
                     list.add(new SavingsAccount(
+                            rs.getInt("account_id"),
                             rs.getString("account_id"),
                             rs.getString("owner"),
                             rs.getDouble("balance"),

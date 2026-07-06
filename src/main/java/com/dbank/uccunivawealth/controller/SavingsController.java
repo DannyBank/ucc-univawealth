@@ -39,11 +39,14 @@ public class SavingsController {
     @FXML
     private void onCreateAccount() {
         try {
+            int userId = 1;
+            String accountNo = "";
+
             String owner = UiUtils.requireNonEmpty(ownerField.getText(), "Owner name");
             double initialBal = UiUtils.parsePositiveOrZero(initialBalField.getText(), "Initial deposit");
             double rate = UiUtils.parsePositiveOrZero(rateField.getText(), "Interest rate") / 100.0;
 
-            SavingsAccount account = new SavingsAccount(appData.nextAccountId("SAV"), owner, initialBal, rate);
+            SavingsAccount account = new SavingsAccount(userId, accountNo, owner, initialBal, rate);
             appData.getSavingsAccounts().add(account);
             appData.recordTransactionsOf(account);
 

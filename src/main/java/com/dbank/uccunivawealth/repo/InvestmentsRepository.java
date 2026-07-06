@@ -19,6 +19,7 @@ public class InvestmentsRepository {
 
                 while (rs.next()) {
                     list.add(new InvestmentAccount(
+                            rs.getInt(""),
                             rs.getString("accountnumber"),
                             rs.getString("ownername"),
                             rs.getDouble("initialbalance"),

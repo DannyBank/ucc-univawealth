@@ -12,9 +12,9 @@ public class InvestmentAccount extends Account {
     private final double expectedReturn;
     private final String riskLevel;
 
-    public InvestmentAccount(String accountNumber, String ownerName, double initialBalance,
+    public InvestmentAccount(int userId, String accountNumber, String ownerName, double initialBalance,
                               String investmentType, double expectedReturn, String riskLevel) {
-        super(accountNumber, ownerName, initialBalance);
+        super(userId, accountNumber, ownerName, initialBalance);
         this.investmentType = investmentType;
         this.expectedReturn = expectedReturn;
         this.riskLevel = riskLevel;
