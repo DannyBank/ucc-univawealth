@@ -76,7 +76,7 @@ public abstract class Account {
         return accountNumber;
     }
 
-    public String getOwnerName() {
+    public String getAccountName() {
         return ownerName;
     }
 

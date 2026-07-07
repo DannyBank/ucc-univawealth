@@ -12,7 +12,7 @@ public class SavingsGoalsRepository {
     public List<SavingsGoal> getAll() {
         List<SavingsGoal> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM savings_accounts";
+        String sql = "SELECT * FROM SavingsAccount";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;
@@ -21,10 +21,10 @@ public class SavingsGoalsRepository {
 
                 while (rs.next()) {
                     list.add(new SavingsGoal(
-                            rs.getString("account_id"),
-                            rs.getDouble("balance"),
-                            rs.getDouble("interest_rate"),
-                            rs.getString("owner")
+                            rs.getString("Name"),
+                            rs.getDouble("TargetAmount"),
+                            rs.getDouble("CurrentAmount"),
+                            rs.getString("TargetDate")
                     ));
                 }
             }
@@ -35,7 +35,7 @@ public class SavingsGoalsRepository {
     }
 
     public void insert(SavingsGoal acc) {
-        String sql = "INSERT INTO savings_accounts(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO SavingsAccount(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;

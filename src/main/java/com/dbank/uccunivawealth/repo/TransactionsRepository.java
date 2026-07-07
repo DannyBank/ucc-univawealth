@@ -11,7 +11,7 @@ public class TransactionsRepository {
     public List<Transaction> getAll() {
         List<Transaction> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM savings_accounts";
+        String sql = "SELECT * FROM SavingsAccount";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;
@@ -34,7 +34,7 @@ public class TransactionsRepository {
     }
 
     public void insert(Transaction acc) {
-        String sql = "INSERT INTO savings_accounts(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO SavingsAccount(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;

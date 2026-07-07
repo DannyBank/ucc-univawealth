@@ -2,9 +2,7 @@ package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AuthService;
-import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.InputValidator;
-import com.dbank.uccunivawealth.util.Notification;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.FadeTransition;
@@ -14,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;

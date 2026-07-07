@@ -1,6 +1,7 @@
 package com.dbank.uccunivawealth.util;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class Notification {
 
@@ -15,6 +16,20 @@ public class Notification {
         alert.setContentText(message);
 
         alert.show();
+    }
+
+    public static void showInfo(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setHeaderText(null);
+        alert.setTitle("Success");
+        alert.showAndWait();
+    }
+
+    public static void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.showAndWait();
     }
 
     public static void ShowOptions(Alert.AlertType alertType,

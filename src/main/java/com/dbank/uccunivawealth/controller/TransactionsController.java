@@ -2,6 +2,7 @@ package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.Transaction;
+import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -45,6 +46,6 @@ public class TransactionsController {
 
     @FXML
     private void onExportSummary() {
-        UiUtils.showInfo("Total transactions logged: " + appData.getAllTransactions().size());
+        Notification.showInfo("Total transactions logged: " + appData.getAllTransactions().size());
     }
 }

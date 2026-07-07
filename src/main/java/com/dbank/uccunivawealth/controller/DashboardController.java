@@ -1,5 +1,6 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.Account;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.InvestmentAccount;
 import com.dbank.uccunivawealth.model.SavingsAccount;
@@ -39,12 +40,10 @@ public class DashboardController {
     }
 
     public void refreshDashboard() {
-        double totalSavings = appData.getSavingsAccounts().stream()
-                .mapToDouble(SavingsAccount::getBalance)
-                .sum();
-        double totalInvestment = appData.getInvestmentAccounts().stream()
-                .mapToDouble(InvestmentAccount::getBalance)
-                .sum();
+        double totalSavings = 0.0;//appData.getSavingsAccounts().stream()
+                //.mapToDouble(Account::getBalance).sum();
+        double totalInvestment = 0.0;//appData.getInvestmentAccounts().stream()
+                //.mapToDouble(Account::getBalance).sum();
         double netWorth = totalSavings + totalInvestment;
 
         totalSavingsLabel.setText(UiUtils.formatMoney(totalSavings));

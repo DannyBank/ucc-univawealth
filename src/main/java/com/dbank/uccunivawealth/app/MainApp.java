@@ -14,9 +14,6 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        // load data from the database
-        AppData.getInstance().loadAllData();
-
         // load user interface
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/dbank/uccunivawealth/login-view.fxml"));
         Parent root = loader.load();

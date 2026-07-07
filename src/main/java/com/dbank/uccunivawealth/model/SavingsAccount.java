@@ -7,17 +7,56 @@ package com.dbank.uccunivawealth.model;
  */
 public class SavingsAccount extends Account {
 
+    private final int savingsId;
+    private final double targetAmount;
+    private final double currentBalance;
+    private final String startDate;
+    private final String targetDate;
+    private final String status;
+
+    public int getSavingsId() {
+        return savingsId;
+    }
+
+    public double getTargetAmount() {
+        return targetAmount;
+    }
+
+    public double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getTargetDate() {
+        return targetDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     /** Annual interest rate expressed as a fraction, e.g. 0.12 for 12%. */
     private final double interestRate;
 
     public SavingsAccount(int userId, String accountNumber, String ownerName,
-                          double initialBalance, double interestRate) {
+                          double initialBalance, double interestRate,
+                          double targetAmount, double currentBalance,
+                          String startDate, String targetDate, String status) {
         super(userId, accountNumber, ownerName, initialBalance);
         if (interestRate < 0) {
             throw new IllegalArgumentException("Interest rate cannot be negative.");
         } else {
             this.interestRate = interestRate;
         }
+        this.targetAmount = targetAmount;
+        this.currentBalance = currentBalance;
+        this.startDate = startDate;
+        this.targetDate = targetDate;
+        this.status = status;
+        this.savingsId = 0;
     }
 
     /**

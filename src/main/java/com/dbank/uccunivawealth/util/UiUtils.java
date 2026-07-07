@@ -50,18 +50,4 @@ public final class UiUtils {
             }
         };
     }
-
-    public static void showInfo(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setHeaderText(null);
-        alert.setTitle("Success");
-        alert.showAndWait();
-    }
-
-    public static void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.setHeaderText(null);
-        alert.setTitle("Error");
-        alert.showAndWait();
-    }
 }

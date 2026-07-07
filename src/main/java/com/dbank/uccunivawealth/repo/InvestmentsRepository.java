@@ -10,7 +10,7 @@ public class InvestmentsRepository {
     public List<InvestmentAccount> getAll() {
         List<InvestmentAccount> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM savings_accounts";
+        String sql = "SELECT * FROM SavingsAccount";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;
@@ -19,7 +19,7 @@ public class InvestmentsRepository {
 
                 while (rs.next()) {
                     list.add(new InvestmentAccount(
-                            rs.getInt(""),
+                            rs.getInt("userId"),
                             rs.getString("accountnumber"),
                             rs.getString("ownername"),
                             rs.getDouble("initialbalance"),
@@ -43,7 +43,7 @@ public class InvestmentsRepository {
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 ps.setString(1, acc.getAccountNumber());
-                ps.setString(2, acc.getOwnerName());
+                ps.setString(2, acc.getAccountName());
                 ps.setDouble(3, acc.getBalance());
                 ps.setDouble(4, acc.getBalance());
 

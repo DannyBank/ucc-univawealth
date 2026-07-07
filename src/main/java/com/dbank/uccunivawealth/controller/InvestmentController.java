@@ -2,6 +2,7 @@ package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.InvestmentAccount;
+import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -74,9 +75,9 @@ public class InvestmentController {
             typeBox.setValue(null);
             riskBox.setValue(null);
             returnField.clear();
-            UiUtils.showInfo("Investment account " + account.getAccountNumber() + " created for " + owner + ".");
+            Notification.showInfo("Investment account " + account.getAccountNumber() + " created for " + owner + ".");
         } catch (Exception ex) {
-            UiUtils.showError(ex.getMessage());
+            Notification.showError(ex.getMessage());
         }
     }
 
@@ -94,21 +95,21 @@ public class InvestmentController {
     private void onSimulateReturn() {
         InvestmentAccount selected = investmentTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            UiUtils.showError("Please select an investment account first.");
+            Notification.showError("Please select an investment account first.");
             return;
         }
         double gain = selected.simulateAnnualReturn();
         appData.recordLatestTransactionOf(selected);
         investmentTable.refresh();
         String sign = gain >= 0 ? "gain" : "loss";
-        UiUtils.showInfo(String.format(
+        Notification.showInfo(String.format(
                 "Simulated a %s of GHS %.2f on account %s.", sign, Math.abs(gain), selected.getAccountNumber()));
     }
 
     private void performAction(String action) {
         InvestmentAccount selected = investmentTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            UiUtils.showError("Please select an account first.");
+            Notification.showError("Please select an account first.");
             return;
         }
         try {
@@ -125,10 +126,10 @@ public class InvestmentController {
             appData.recordLatestTransactionOf(selected);
             amountField.clear();
             investmentTable.refresh();
-            UiUtils.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",
+            Notification.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",
                     action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getBalance()));
         } catch (Exception ex) {
-            UiUtils.showError(ex.getMessage());
+            Notification.showError(ex.getMessage());
         }
     }
 }

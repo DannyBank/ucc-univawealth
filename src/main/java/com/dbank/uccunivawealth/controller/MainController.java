@@ -1,5 +1,6 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.service.AuthService;
 import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
@@ -42,6 +43,8 @@ public class MainController {
     public void initialize() {
 
         try {
+            // load data from the database
+            AppData.getInstance().loadAllData();
 
             // Dashboard (need controller)
             FXMLLoader dashboardLoader =

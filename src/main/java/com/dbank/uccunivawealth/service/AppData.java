@@ -65,6 +65,10 @@ public final class AppData {
         savingsAccounts.setAll(savingsRepo.getAll());
     }
 
+    public void loadSavingsAccounts(int userId) {
+        savingsAccounts.setAll(savingsRepo.getByUser(userId));
+    }
+
     public void loadInvestmentAccounts() {
         investmentAccounts.setAll(investmentsRepo.getAll());
     }
@@ -80,9 +84,10 @@ public final class AppData {
     // SAVINGS ACCOUNTS
     // ============================
 
-    public void addSavingsAccount(SavingsAccount acc) {
-        savingsRepo.insert(acc);      // save to DB
-        savingsAccounts.add(acc);    // update UI
+    public boolean addSavingsAccount(SavingsAccount acc) {
+        int insert = savingsRepo.insert(acc);// save to DB
+        savingsAccounts.add(acc);            // update UI
+        return insert > 0;
     }
 
     public void updateSavingsAccount(SavingsAccount acc) {

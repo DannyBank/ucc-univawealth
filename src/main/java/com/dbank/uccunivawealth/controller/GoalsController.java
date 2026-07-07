@@ -2,6 +2,7 @@ package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsGoal;
+import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
 import io.github.palexdev.materialfx.controls.MFXProgressBar;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -56,7 +57,7 @@ public class GoalsController {
             dateField.clear();
             renderGoals();
         } catch (Exception ex) {
-            UiUtils.showError(ex.getMessage());
+            Notification.showError(ex.getMessage());
         }
     }
 

@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.dbank.uccunivawealth.controller.SavingsController"
@@ -24,9 +25,9 @@
                         <PropertyValueFactory property="accountNumber"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="ownerCol" text="Owner">
+                <TableColumn fx:id="ownerCol" text="accountName">
                     <cellValueFactory>
-                        <PropertyValueFactory property="ownerName"/>
+                        <PropertyValueFactory property="accountName"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="rateCol" text="Interest Rate (p.a.)">
@@ -72,8 +73,16 @@
                 <MFXTextField fx:id="rateField" floatingText="Annual interest rate % (e.g. 12)"
                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
+                <Label text="Target:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <MFXTextField fx:id="targetAmtField" floatingText="Set Target"
+                              GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Target Date" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <MFXDatePicker fx:id="targetDateField" floatingText="Set Date to achieve"
+                              GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
                 <MFXButton fx:id="createBtn" text="Create Savings Account" onAction="#onCreateAccount"
-                           styleClass="mfx-button-raised" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                           styleClass="mfx-button-raised" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
             </GridPane>
 
             <HBox spacing="10" alignment="CENTER_LEFT" styleClass="form-panel">
