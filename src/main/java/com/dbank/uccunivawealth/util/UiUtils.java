@@ -4,6 +4,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Small, stateless helper methods shared by several controllers: input validation,
  * money formatting, and alert dialogs. Kept as static utilities (not instantiable)
@@ -49,5 +53,12 @@ public final class UiUtils {
                 setText(empty || value == null ? null : String.format("%,.2f", value));
             }
         };
+    }
+
+    public static String generateAccountNumber() {
+        String timestamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        int random = new SecureRandom().nextInt(10000);
+        return "UW" + timestamp + String.format("%04d", random);
     }
 }

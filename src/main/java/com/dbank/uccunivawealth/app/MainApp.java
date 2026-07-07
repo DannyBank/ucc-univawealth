@@ -18,7 +18,7 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/dbank/uccunivawealth/login-view.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, 550, 350);
+        Scene scene = new Scene(root, 550, 380);
         scene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/com/dbank/uccunivawealth/app.css")).toExternalForm());
 

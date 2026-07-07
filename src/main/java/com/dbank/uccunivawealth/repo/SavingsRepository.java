@@ -54,10 +54,9 @@ public class SavingsRepository {
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
-        try (Connection conn = DatabaseManager.connect()) {
-            if (conn == null) return 0;
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, acc.getAccountNumber());
             ps.setString(2, acc.getAccountName());
             ps.setDouble(3, acc.getBalance());

@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 
+import java.util.Objects;
+
 /**
  * Controller for {@code dashboard.fxml}. Shows the totals across all accounts and an
  * asset-allocation pie chart, refreshed either on request or when the Dashboard tab
@@ -40,10 +42,14 @@ public class DashboardController {
     }
 
     public void refreshDashboard() {
-        double totalSavings = 0.0;//appData.getSavingsAccounts().stream()
-                //.mapToDouble(Account::getBalance).sum();
-        double totalInvestment = 0.0;//appData.getInvestmentAccounts().stream()
-                //.mapToDouble(Account::getBalance).sum();
+        double totalSavings = appData.getSavingsAccounts().stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
+                .sum();
+        double totalInvestment = appData.getInvestmentAccounts().stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
+                .sum();
         double netWorth = totalSavings + totalInvestment;
 
         totalSavingsLabel.setText(UiUtils.formatMoney(totalSavings));

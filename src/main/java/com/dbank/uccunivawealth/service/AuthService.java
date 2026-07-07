@@ -3,12 +3,23 @@ package com.dbank.uccunivawealth.service;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.UserRepository;
+import com.dbank.uccunivawealth.util.UiUtils;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class AuthService {
     /** create a user in the database for accounts or systems use */
-    public boolean register(User user){
+    public User addUser(String username, String password, String email, String msisdn) throws SQLException {
+        String passwordHash = BCrypt.withDefaults()
+                .hashToString(12, password.toCharArray());
+        String accountNo = UiUtils.generateAccountNumber();
+        LocalDateTime date = LocalDateTime.now();
+
+        User user = new User(username, accountNo, passwordHash, "n/a",
+                email, msisdn, date, date, true);
         return new UserRepository().insert(user);
     }
 
@@ -28,10 +39,12 @@ public class AuthService {
         return result.verified;
     }
 
+    /** start a session with system-wide shared variables */
     public void sessionLogin(User user) {
         UserSession.getInstance().login(user);
     }
 
+    /** logging out of the system, destroy all shared variables */
     public void sessionLogout(int userId) {
         UserSession.getInstance().logout();
     }

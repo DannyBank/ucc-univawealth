@@ -1,5 +1,6 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.service.UserSession;
@@ -42,11 +43,11 @@ public class SavingsController {
     private MFXDatePicker targetDateField;
 
     private final AppData appData = AppData.getInstance();
-    private final int userId = UserSession.getInstance().getCurrentUser().getUserId();
+    private final User currentUser = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
-        appData.loadSavingsAccounts(userId);
+        appData.loadSavingsAccounts(currentUser.getUserId());
         savingsTable.setItems(appData.getSavingsAccounts());
         balCol.setCellFactory(col -> UiUtils.moneyCell());
     }
@@ -54,7 +55,9 @@ public class SavingsController {
     @FXML
     private void onCreateAccount() {
         try {
-            String accountNo = generateAccountNumber();
+            String accountNo = currentUser.getAccountNumber();
+            int userId = currentUser.getUserId();
+
             String owner = UiUtils.requireNonEmpty(ownerField.getText(), "Owner name");
             double initialBal = UiUtils.parsePositiveOrZero(initialBalField.getText(), "Initial deposit");
             double rate = UiUtils.parsePositiveOrZero(rateField.getText(), "Interest rate") / 100.0;
@@ -85,13 +88,6 @@ public class SavingsController {
         rateField.clear();
         targetDateField.clear();
         targetAmtField.clear();
-    }
-
-    public static String generateAccountNumber() {
-        String timestamp = LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        int random = new SecureRandom().nextInt(10000);
-        return "UW" + timestamp + String.format("%04d", random);
     }
 
     @FXML

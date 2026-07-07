@@ -12,7 +12,7 @@
            styleClass="root-pane" stylesheets="@style/login.css"
            xmlns="http://javafx.com/javafx/17.0.12"
            xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.dbank.uccunivawealth.controller.LoginController">
+           fx:controller="com.dbank.uccunivawealth.controller.RegisterController">
 
     <!-- Main split layout -->
     <HBox fillHeight="true" spacing="0">
@@ -31,7 +31,7 @@
                     <Insets bottom="40.0" left="40.0" right="30.0" top="40.0" />
                 </padding>
 
-                <Label styleClass="welcome-title" text="UNIVAWEALTH" wrapText="true">
+                <Label styleClass="welcome-title" text="UnivaWealth" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -50,7 +50,7 @@
         <!-- RIGHT PANEL : login form -->
         <VBox alignment="CENTER" spacing="22" styleClass="right-panel" HBox.hgrow="ALWAYS">
 
-            <Label fx:id="lbl" styleClass="login-heading" text="LOGIN">
+            <Label fx:id="lbl" styleClass="login-heading" text="CREATE ACCOUNT">
                 <font>
                     <Font size="20.0" />
                 </font>
@@ -59,7 +59,7 @@
             <VBox alignment="CENTER" maxWidth="320.0" spacing="16" styleClass="form-box">
 
                 <MFXTextField fx:id="usernameField" alignment="CENTER_LEFT"
-                              floatingText="Username" prefWidth="250.0"
+                              floatingText="Eg. ucc, no symbols/special characters" prefWidth="250.0"
                               styleClass="mfx-text" >
                     <font>
                         <Font size="10.0" />
@@ -67,25 +67,31 @@
                 </MFXTextField>
 
                 <MFXPasswordField fx:id="passwordField" alignment="CENTER_LEFT"
-                                  floatingText="Password" prefWidth="250.0"
-                                  styleClass="mfx-text">
+                                  floatingText="At least 6 characters" prefWidth="250.0"
+                                  styleClass="mfx-text" textLimit="6">
                     <font>
                         <Font size="10.0" />
                     </font>
                 </MFXPasswordField>
 
-                <HBox alignment="CENTER_LEFT" maxWidth="250.0" spacing="10">
-                    <CheckBox fx:id="rememberBox" selected="true" styleClass="remember-check" text="Remember" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Hyperlink fx:id="forgotLink" styleClass="forgot-link" text="Forgot password?" />
-                </HBox>
+                <MFXTextField fx:id="emailField" alignment="CENTER_LEFT"
+                              floatingText="Eg. lec@ucc.edu.gh" prefWidth="250.0"
+                              styleClass="mfx-text">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </MFXTextField>
 
-                <HBox alignment="BOTTOM_LEFT" maxWidth="250.0" spacing="10">
-                    <MFXButton fx:id="btnLogin" prefWidth="125.0" styleClass="mfx-button"
-                           text="LOGIN" onAction="#onLoginBtnClick" />
-                    <MFXButton fx:id="btnRegister" prefWidth="125.0" styleClass="mfx-button"
-                               text="SIGN UP" onAction="#onRegisterBtnClick" />
-                </HBox>
+                <MFXTextField fx:id="msisdnField" alignment="CENTER_LEFT"
+                              floatingText="Eg, 0242123456" prefWidth="250.0"
+                              styleClass="mfx-text" textLimit="12">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </MFXTextField>
+
+                <MFXButton fx:id="btnRegister" prefWidth="250.0" styleClass="mfx-button"
+                           text="SUBMIT" onAction="#onRegisterBtnClick" />
             </VBox>
 
             <!-- Loading overlay, now correctly stacked above everything -->
@@ -94,7 +100,6 @@
                 <Label style="-fx-text-fill: white;" text="Logging in..." />
             </VBox>
         </VBox>
-
     </HBox>
 
 </StackPane>
