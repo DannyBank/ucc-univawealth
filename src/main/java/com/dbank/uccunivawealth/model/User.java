@@ -1,8 +1,5 @@
 package com.dbank.uccunivawealth.model;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 public class User {
     private int userId;
     private String username;
@@ -39,6 +36,7 @@ public class User {
                 boolean isActive) {
         this.username = username;
         this.passwordHash = passwordHash;
+        this.accountNumber = accountNumber;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;

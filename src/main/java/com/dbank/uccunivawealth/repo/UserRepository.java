@@ -52,10 +52,11 @@ public class UserRepository {
             FullName,
             Email,
             Phone,
+            DateCreated,
             LastLogin,
             IsActive
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         RETURNING *
         """;
 
