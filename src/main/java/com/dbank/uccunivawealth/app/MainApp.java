@@ -21,11 +21,11 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/dbank/uccunivawealth/login-view.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, 450, 300);
+        Scene scene = new Scene(root, 550, 350);
         scene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/com/dbank/uccunivawealth/app.css")).toExternalForm());
 
-        stage.setTitle("UnivaWealth || Savings & Investments Manager");
+        stage.setTitle("UnivaWealth :: Savings & Investments Manager");
         stage.setScene(scene);
         stage.show();
     }

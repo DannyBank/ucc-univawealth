@@ -10,7 +10,7 @@
 }
 
 .mfx-button {
-    -fx-background-color: #1976d2; /* Material Blue */
+    -fx-background-color: #1976d2;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 6;

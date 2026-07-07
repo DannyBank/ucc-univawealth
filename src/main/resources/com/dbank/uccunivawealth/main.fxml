@@ -11,7 +11,7 @@
     <!-- TOP BAR -->
     <top>
         <HBox styleClass="top-bar" alignment="CENTER_LEFT">
-            <Label text="💰 UnivaWealth Dashboard" styleClass="app-title"/>
+            <Label text="💰 UnivaWealth" styleClass="app-title"/>
         </HBox>
     </top>
 

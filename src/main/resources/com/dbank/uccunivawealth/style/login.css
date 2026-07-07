@@ -1,0 +1,103 @@
+/* new css */
+/* ====== ROOT ====== */
+.root-pane {
+    -fx-background-color: white;
+}
+
+/* ====== LEFT PANEL (gradient banner) ====== */
+.left-panel {
+    -fx-background-color: linear-gradient(to bottom right, #6659f0, #b968c9 55%, #ee6f8e);
+}
+
+/* dark-ish gradient laid over any inserted image, keeps the text readable */
+.left-overlay {
+    -fx-background-color: linear-gradient(to bottom right,
+    rgba(90,70,230,0.55),
+    rgba(210,90,190,0.35) 55%,
+    rgba(255,120,90,0.25));
+}
+
+.welcome-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.welcome-subtitle {
+    -fx-text-fill: rgba(255,255,255,0.9);
+}
+
+/* ====== RIGHT PANEL ====== */
+.right-panel {
+    -fx-background-color: white;
+}
+
+.login-heading {
+    -fx-text-fill: #6a5cf5;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 1.5px;
+}
+
+/* ====== INPUT FIELDS (pill shape, soft lavender) ====== */
+.mfx-text {
+    -fx-background-color: #ece9fb;
+    -fx-background-radius: 24px;
+    -fx-border-radius: 24px;
+    -fx-padding: 0 16 16 16;
+}
+
+.mfx-text .floating-text {
+    -fx-text-fill: #9a95c9;
+}
+
+.mfx-text .input-field {
+    -fx-text-fill: #4b4b4b;
+}
+
+/* remove MaterialFX's default bottom underline for a cleaner pill look */
+.mfx-text .line,
+.mfx-text .focused-line {
+    -fx-opacity: 0;
+}
+
+/* ====== REMEMBER / FORGOT ROW ====== */
+.remember-check {
+    -fx-text-fill: #8a8a8a;
+    -fx-font-size: 12px;
+}
+
+.remember-check .box {
+    -fx-background-color: #6a5cf5;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+}
+
+.forgot-link {
+    -fx-text-fill: #9a9a9a;
+    -fx-font-size: 12px;
+    -fx-border-color: transparent;
+    -fx-underline: false;
+}
+
+.forgot-link:hover {
+    -fx-text-fill: #6a5cf5;
+}
+
+/* ====== LOGIN BUTTON (gradient pill) ====== */
+.mfx-button {
+    -fx-background-color: linear-gradient(to right, #d15fc0, #6a5cf5);
+    -fx-background-radius: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 12 0 12 0;
+    -fx-cursor: hand;
+}
+
+.mfx-button:hover {
+    -fx-background-color: linear-gradient(to right, #c04fb0, #5a4de5);
+}
+
+/* ====== LOADING OVERLAY ====== */
+.loading-pane {
+    -fx-background-color: rgba(0, 0, 0, 0.35);
+}
