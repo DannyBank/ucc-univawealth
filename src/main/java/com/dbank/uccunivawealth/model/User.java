@@ -10,8 +10,8 @@ public class User {
     private String fullName;
     private String email;
     private String phone;
-    private LocalDateTime dateCreated;
-    private LocalDateTime lastLogin;
+    private String dateCreated;
+    private String lastLogin;
     private boolean isActive;
     private String accountNumber;
 
@@ -19,7 +19,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -35,7 +35,7 @@ public class User {
 
     public User(String username, String accountNumber, String passwordHash,
                 String fullName, String email, String phone,
-                LocalDateTime dateCreated, LocalDateTime lastLogin,
+                String dateCreated, String lastLogin,
                 boolean isActive) {
         this.username = username;
         this.passwordHash = passwordHash;
@@ -54,8 +54,8 @@ public class User {
     public String getFullName() { return fullName; }
     public String getEmail() { return email; }
     public String getPhone() { return phone; }
-    public LocalDateTime getDateCreated() { return dateCreated; }
-    public LocalDateTime getLastLogin() { return lastLogin; }
+    public String getDateCreated() { return dateCreated; }
+    public String getLastLogin() { return lastLogin; }
     public boolean isActive() { return isActive; }
 
     //setters
@@ -70,7 +70,7 @@ public class User {
         this.email = email;
     }
     public void setPhone(String phone) { this.phone = phone; }
-    public void setLastLogin(LocalDateTime lastLogin) {
+    public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
     public void setActive(boolean active) {

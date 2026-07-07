@@ -16,7 +16,7 @@ public class AuthService {
         String passwordHash = BCrypt.withDefaults()
                 .hashToString(12, password.toCharArray());
         String accountNo = UiUtils.generateAccountNumber();
-        LocalDateTime date = LocalDateTime.now();
+        String date = LocalDateTime.now().toString();
 
         User user = new User(username, accountNo, passwordHash, "n/a",
                 email, msisdn, date, date, true);
