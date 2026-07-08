@@ -167,7 +167,7 @@
 
 
                         <TableColumn fx:id="rateCol"
-                                     text="Interest (%)"
+                                     text="Interest"
                                      prefWidth="120">
 
                             <cellValueFactory>

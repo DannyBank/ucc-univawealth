@@ -1,7 +1,10 @@
 package com.dbank.uccunivawealth.util;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
 
 public class Notification {
 
@@ -32,16 +35,21 @@ public class Notification {
         alert.showAndWait();
     }
 
-    public static void ShowOptions(Alert.AlertType alertType,
-                                 String title, String header, String message){
-        // Create the alert instance
-        Alert alert = new Alert(alertType);
+    public static boolean showConfirmation(String title, String header, String content) {
 
-        // Set text properties
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
         alert.setTitle(title);
         alert.setHeaderText(header);
-        alert.setContentText(message);
+        alert.setContentText(content);
 
-        alert.showAndWait();
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.isPresent() && result.get() == yesButton;
     }
 }

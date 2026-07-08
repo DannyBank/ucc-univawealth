@@ -161,27 +161,34 @@ public class MainController {
             new AuthService().sessionLogout(userId);
         }
 
-        Notification.ShowOptions(
-                Alert.AlertType.INFORMATION,
+        boolean confirmed = Notification.showConfirmation(
                 "Logout",
-                "Leaving",
-                "See you again"
+                "Confirm Logout",
+                "Are you sure you want to end session?"
         );
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/dbank/uccunivawealth/login-view.fxml")
-        );
-        Parent root = loader.load();
+        if (confirmed) {
+            Notification.showInfo("See you again soon");
 
-        Stage stage = (Stage) btnLogout.getScene().getWindow();
-        stage.setScene(new Scene(root, 550, 380));
-        stage.centerOnScreen();
-        stage.show();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/dbank/uccunivawealth/login-view.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = (Stage) btnLogout.getScene().getWindow();
+            stage.setScene(new Scene(root, 550, 380));
+            stage.centerOnScreen();
+            stage.show();
+        } else {
+            System.out.println("Logout Cancelled.");
+        }
     }
 
     public void addSavings(ActionEvent actionEvent) {
+        showSavings();
     }
 
     public void addInvestment(ActionEvent actionEvent) {
+        showInvestment();
     }
 }
