@@ -21,8 +21,7 @@
     <!-- Header -->
     <VBox spacing="4.0">
         <Label text="Dashboard" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1F2937;"/>
-        <Label text="Overview of your savings, investments, and net worth"
-               style="-fx-font-size: 14px; -fx-text-fill: #6B7280;"/>
+        <Label fx:id="lblUserWelcome" style="-fx-font-size: 14px; -fx-text-fill: #6B7280;"/>
     </VBox>
 
     <!-- Cards Row -->

@@ -11,50 +11,58 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Transaction {
 
-    private static final AtomicInteger SEQUENCE = new AtomicInteger(1);
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss");
-
     private final int id;
-    private final String accountNumber;
+    private final int userId;
+    private final int savingsId;
+    private final int investmentId;
+    private final String notes;
+
+    public int getSavingsId() {
+        return savingsId;
+    }
+
+    public int getInvestmentId() {
+        return investmentId;
+    }
+
+    public String getTransDate() {
+        return transDate;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
     private final String type;
     private final double amount;
-    private final double balanceAfter;
-    private final LocalDateTime timestamp;
+    private final String transDate;
+    private final int category;
 
-    public Transaction(String accountNumber, String type, double amount, double balanceAfter) {
-        this.id = SEQUENCE.getAndIncrement();
-        this.accountNumber = accountNumber;
+    public Transaction(int id, int userId, int savingsId, int investmentId,
+                       String type, double amount, String transDate,
+                       int category, String notes) {
+        this.id = id;
+        this.userId = userId;
         this.type = type;
         this.amount = amount;
-        this.balanceAfter = balanceAfter;
-        this.timestamp = LocalDateTime.now();
+        this.transDate = transDate;
+        this.category = category;
+        this.savingsId = savingsId;
+        this.investmentId = investmentId;
+        this.notes = notes;
     }
 
     public int getId() {
         return id;
     }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
+    public int getUserId() {return userId; }
     public String getType() {
         return type;
     }
-
     public double getAmount() {
         return amount;
     }
-
-    public double getBalanceAfter() {
-        return balanceAfter;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public String getFormattedTime() {
-        return timestamp.format(FORMATTER);
+    public String getNotes() {
+        return notes;
     }
 }

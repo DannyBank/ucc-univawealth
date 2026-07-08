@@ -1,7 +1,9 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.Investment;
+import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.UiUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +20,12 @@ import java.util.Objects;
  */
 public class DashboardController {
 
+    public Label lblUserWelcome;
     @FXML
     private PieChart allocationChart;
 
     private final AppData appData = AppData.getInstance();
+    private final User user = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
@@ -54,6 +58,9 @@ public class DashboardController {
 
     public void refreshDashboard() {
         AppData.getInstance().loadAllData();
+
+        //greetings
+        lblUserWelcome.setText("Welcome " + user.getUsername() + ", Overview of your financials below");
 
         double totalSavings = appData.getSavingsAccounts().stream()
                 .filter(Objects::nonNull)

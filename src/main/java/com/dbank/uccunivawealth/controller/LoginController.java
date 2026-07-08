@@ -3,6 +3,7 @@ package com.dbank.uccunivawealth.controller;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AuthService;
 import com.dbank.uccunivawealth.util.InputValidator;
+import com.dbank.uccunivawealth.util.Notification;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.FadeTransition;
@@ -52,6 +53,8 @@ public class LoginController {
 
             if (user != null) {
                 goToMainPage(user);
+            } else {
+                Notification.showError("Invalid username or password");
             }
         });
 

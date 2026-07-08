@@ -1,7 +1,9 @@
 package com.dbank.uccunivawealth.service;
 
 public class LoggerService {
-    public static void logError(Exception ex) {
+
+    public static void logError(Exception ex, String errorMessage) {
 
     }
+
 }

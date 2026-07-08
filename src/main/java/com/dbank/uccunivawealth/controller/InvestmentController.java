@@ -1,6 +1,8 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.Investment;
 import com.dbank.uccunivawealth.service.LoggerService;
@@ -58,8 +60,6 @@ public class InvestmentController {
     private void onCreateAccount() {
         try {
             int userId = currentUser.getUserId();
-            String accountNo = currentUser.getAccountNumber();
-
             String investmentName = investmentNameField.getText();
             double interest = UiUtils.parsePositiveOrZero(interestField.getText(), "Interest Rate");
             int durationMonths = Integer.parseInt(durationField.getText());
@@ -79,14 +79,24 @@ public class InvestmentController {
                     expectedReturn, "ACTIVE"
             );
 
-            if (appData.addInvestmentAccount(account))
+            if (appData.addInvestmentAccount(account)) {
                 clearFields();
+                Notification.showInfo("Investment account was successfully created");
 
-            Notification.showInfo("Investment account was successfully created");
+                recordTransaction(userId, initialBal, startDate, "INVESTMENT");
+            } else {
+                Notification.showError("An error occurred, Please try again");
+            }
         } catch (Exception ex) {
             Notification.showError("An error occurred, Please try again");
-            LoggerService.logError(ex);
+            LoggerService.logError(ex, "An error occurred, Please try again");
         }
+    }
+
+    private void recordTransaction(int userId, double target, String date, String goal){
+        new TransactionsRepository().insert(
+                new Transaction(0, userId, 0, 0, "SAVINGS",
+                        target, date, 9, goal));
     }
 
     private void clearFields() {

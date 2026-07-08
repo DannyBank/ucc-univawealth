@@ -1,16 +1,18 @@
 package com.dbank.uccunivawealth.repo;
 
 import com.dbank.uccunivawealth.model.Transaction;
+import com.dbank.uccunivawealth.service.LoggerService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionsRepository {
+
     public List<Transaction> getAll() {
         List<Transaction> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM SavingsAccount";
+        String sql = "SELECT * FROM Transactions";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;
@@ -19,10 +21,15 @@ public class TransactionsRepository {
 
                 while (rs.next()) {
                     list.add(new Transaction(
-                            rs.getString("accountnumber"),
-                            rs.getString("ownername"),
-                            rs.getDouble("initialbalance"),
-                            rs.getDouble("initialbalance")
+                            rs.getInt("TransactionId"),
+                            rs.getInt("UserId"),
+                            rs.getInt("SavingsId"),
+                            rs.getInt("InvestmentId"),
+                            rs.getString("TransactionType"),
+                            rs.getDouble("Amount"),
+                            rs.getString("TransactionDate"),
+                            rs.getInt("CategoryId"),
+                            rs.getString("Notes")
                     ));
                 }
             }
@@ -32,22 +39,59 @@ public class TransactionsRepository {
         return list;
     }
 
-    public void insert(Transaction acc) {
-        String sql = "INSERT INTO SavingsAccount(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
+    public boolean insert(Transaction transaction) {
+        String sql = """
+        INSERT INTO Transactions (
+            UserId,
+            SavingsId,
+            InvestmentId,
+            TransactionType,
+            Amount,
+            TransactionDate,
+            CategoryId,
+            Notes
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
-        try (Connection conn = DatabaseManager.connect()) {
-            assert conn != null;
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                ps.setString(1, acc.getAccountNumber());
-                ps.setString(2, acc.getAccountNumber());
-                ps.setDouble(3, acc.getAmount());
-                ps.setDouble(4, acc.getBalanceAfter());
+            stmt.setInt(1, transaction.getUserId());
 
-                ps.executeUpdate();
+            if (transaction.getSavingsId() > 0) {
+                stmt.setInt(2, transaction.getSavingsId());
+            } else {
+                stmt.setNull(2, Types.INTEGER);
             }
+
+            if (transaction.getInvestmentId() > 0) {
+                stmt.setInt(3, transaction.getInvestmentId());
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+
+            stmt.setString(4, transaction.getType());
+            stmt.setDouble(5, transaction.getAmount());
+            stmt.setString(6, transaction.getTransDate());
+
+            if (transaction.getCategory() > 0) {
+                stmt.setInt(7, transaction.getCategory());
+            } else {
+                stmt.setNull(7, Types.INTEGER);
+            }
+
+            if (transaction.getNotes() != null) {
+                stmt.setString(8, transaction.getNotes());
+            } else {
+                stmt.setNull(8, Types.VARCHAR);
+            }
+
+            return stmt.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            LoggerService.logError(e, "Failed to insert transaction");
+            return false;
         }
     }
 

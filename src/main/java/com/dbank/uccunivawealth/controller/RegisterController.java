@@ -1,6 +1,8 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AuthService;
 import com.dbank.uccunivawealth.util.InputValidator;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -20,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class RegisterController {
 
@@ -107,7 +110,9 @@ public class RegisterController {
             return null;
         }
 
-        return new AuthService().addUser(username, password, email, msisdn);
+        User user = new AuthService().addUser(username, password, email, msisdn);
+        recordTransaction(user.getUserId(), 0, LocalDate.now().toString(), "REGISTER");
+        return user;
     }
 
     public void onLoginBtnClick(ActionEvent actionEvent) {
@@ -122,5 +127,11 @@ public class RegisterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void recordTransaction(int userId, double target, String date, String goal){
+        new TransactionsRepository().insert(
+                new Transaction(0, userId, 0, 0, "REGISTER",
+                        target, date, 11, goal));
     }
 }

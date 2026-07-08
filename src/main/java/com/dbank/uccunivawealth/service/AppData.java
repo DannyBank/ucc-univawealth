@@ -1,6 +1,5 @@
 package com.dbank.uccunivawealth.service;
 
-import com.dbank.uccunivawealth.model.Account;
 import com.dbank.uccunivawealth.model.Investment;
 import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.model.SavingsGoal;
@@ -95,9 +94,9 @@ public final class AppData {
         loadSavingsAccounts(); // refresh UI
     }
 
-    public void deleteSavingsAccount(String accountId) {
-        savingsRepo.delete(accountId);
-        savingsAccounts.removeIf(a -> a.getAccountNumber().equals(accountId));
+    public void deleteSavingsAccount(int accountId) {
+        savingsRepo.delete(String.valueOf(accountId));
+        savingsAccounts.removeIf(a -> a.getSavingsId() == accountId);
     }
 
     // INVESTMENT ACCOUNTS
@@ -125,20 +124,6 @@ public final class AppData {
     public void addTransaction(Transaction tx) {
         transactionsRepo.insert(tx);
         allTransactions.add(tx);
-    }
-
-    // optional helpers
-    public void recordTransactionsOf(Account account) {
-        for (Transaction tx : account.getTransactions()) {
-            addTransaction(tx);
-        }
-    }
-
-    public void recordLatestTransactionOf(Account account) {
-        var transactions = account.getTransactions();
-        if (!transactions.isEmpty()) {
-            addTransaction(transactions.getLast());
-        }
     }
 
     // GOALS

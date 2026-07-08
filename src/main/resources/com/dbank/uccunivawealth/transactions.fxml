@@ -15,34 +15,24 @@
     <center>
         <TableView fx:id="transactionsTable">
             <columns>
-                <TableColumn fx:id="idCol" text="ID">
+                <TableColumn fx:id="dateCol" text="Date">
                     <cellValueFactory>
-                        <PropertyValueFactory property="id"/>
+                        <PropertyValueFactory property="transactionDate"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="accCol" text="Account No.">
+                <TableColumn fx:id="transTypeCol" text="Transaction">
                     <cellValueFactory>
-                        <PropertyValueFactory property="accountNumber"/>
+                        <PropertyValueFactory property="transactionType"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="typeCol" text="Type">
+                <TableColumn fx:id="notesCol" text="Description">
                     <cellValueFactory>
-                        <PropertyValueFactory property="type"/>
+                        <PropertyValueFactory property="notes"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="amountCol" text="Amount (GHS)">
                     <cellValueFactory>
                         <PropertyValueFactory property="amount"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="balAfterCol" text="Balance After (GHS)">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="balanceAfter"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="timeCol" text="Timestamp">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="formattedTime"/>
                     </cellValueFactory>
                 </TableColumn>
             </columns>

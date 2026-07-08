@@ -21,27 +21,20 @@ public class TransactionsController {
     private TableView<Transaction> transactionsTable;
     @FXML
     private TableColumn<Transaction, Double> amountCol;
-    @FXML
-    private TableColumn<Transaction, Double> balAfterCol;
-    @FXML
-    private TableColumn<Transaction, Number> idCol;
 
     private final AppData appData = AppData.getInstance();
 
     @FXML
     public void initialize() {
+        appData.loadTransactions();
         var transactions = appData.getAllTransactions();
         transactionsTable.setItems(transactions);
 
         amountCol.setCellFactory(col -> UiUtils.moneyCell());
-        balAfterCol.setCellFactory(col -> UiUtils.moneyCell());
 
         // Sort newest first by default.
         transactions.sort(Comparator.comparingInt(Transaction::getId).reversed());
         //transactions.addListener((ListChangeListener<Transaction>) c -> transactionsTable.sort());
-
-        idCol.setSortType(TableColumn.SortType.DESCENDING);
-        transactionsTable.getSortOrder().add(idCol);
     }
 
     @FXML

@@ -1,7 +1,9 @@
 package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.model.SavingsStatus;
+import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.service.UserSession;
@@ -62,17 +64,25 @@ public class SavingsController {
                     targetAmount, initialBal, new Date().toString(),
                     targetDate, SavingsStatus.ACTIVE.toString()
             );
-            if (appData.addSavingsAccount(account))
-                appData.recordTransactionsOf(account);
+            if (!appData.addSavingsAccount(account))
+                Notification.showError("An error occurred, please try again");
+
+            recordTransaction(userId, initialBal, account.getStartDate(), "SAVINGS");
 
             // clear all inputs
             clearFields();
 
             // show successful account creation
-            Notification.showInfo("Congratulations! \nYour savings account " + account.getAccountNumber() + " has been created");
+            Notification.showInfo("Congratulations! \nYour savings account has been created");
         } catch (Exception ex) {
             Notification.showError(ex.getMessage());
         }
+    }
+
+    private void recordTransaction(int userId, double target, String date, String goal){
+        new TransactionsRepository().insert(
+                new Transaction(0, userId, 0, 0, "SAVINGS",
+                        target, date, 9, goal));
     }
 
     private void clearFields() {
@@ -100,10 +110,9 @@ public class SavingsController {
             return;
         }
         double interest = selected.applyMonthlyInterest();
-        appData.recordLatestTransactionOf(selected);
         savingsTable.refresh();
         Notification.showInfo(String.format(
-                "Applied interest of GHS %.2f to account %s.", interest, selected.getAccountNumber()));
+                "Applied interest of GHS %.2f", interest));
     }
 
     private void performAction(String action) {
@@ -123,7 +132,6 @@ public class SavingsController {
             } else {
                 selected.withdraw(amount);
             }
-            appData.recordLatestTransactionOf(selected);
             amountField.clear();
             savingsTable.refresh();
             Notification.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",

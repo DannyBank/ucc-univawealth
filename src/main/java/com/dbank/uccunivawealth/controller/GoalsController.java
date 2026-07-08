@@ -1,7 +1,9 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.SavingsGoalsRepository;
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsGoal;
 import com.dbank.uccunivawealth.service.UserSession;
@@ -59,12 +61,19 @@ public class GoalsController {
                 Notification.showError("An error occurred, please try again");
 
             appData.getGoals().add(goal);
+            recordTransaction(userId, target, date, goal.getName());
             clearFields();
             renderGoals();
 
         } catch (Exception ex) {
             Notification.showError(ex.getMessage());
         }
+    }
+
+    private void recordTransaction(int userId, double target, String date, String goal){
+        new TransactionsRepository().insert(
+                new Transaction(0, userId, 0, 0, "GOAL",
+                        target, date, 8, goal));
     }
 
     private void clearFields(){

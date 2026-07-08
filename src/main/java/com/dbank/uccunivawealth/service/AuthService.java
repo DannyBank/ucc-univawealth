@@ -1,7 +1,9 @@
 package com.dbank.uccunivawealth.service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.repo.UserRepository;
 import com.dbank.uccunivawealth.util.UiUtils;
 import java.sql.SQLException;
@@ -39,6 +41,13 @@ public class AuthService {
     /** start a session with system-wide shared variables */
     public void sessionLogin(User user) {
         UserSession.getInstance().login(user);
+        recordTransaction(user.getUserId(), 0, LocalDateTime.now().toString(), "LOGIN");
+    }
+
+    private void recordTransaction(int userId, double target, String date, String goal){
+        new TransactionsRepository().insert(
+                new Transaction(0, userId, 0, 0, "LOGIN",
+                        target, date, 10, goal));
     }
 
     /** logging out of the system, destroy all shared variables */
