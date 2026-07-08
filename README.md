@@ -248,6 +248,7 @@ Some planned enhancements include:
 - Multi-user support
 - Backup and restore
 - Cloud synchronization
+- Parameterized stored procedure queries for security
 
 ---
 
