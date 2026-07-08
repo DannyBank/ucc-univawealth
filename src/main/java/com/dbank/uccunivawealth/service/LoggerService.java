@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public final class LoggerService {
 
     private static final String LOG_FOLDER = System.getProperty("user.home")
-            + File.separator + "UCCUnivaWealth" + File.separator
+            + File.separator + "UccUnivaWealth" + File.separator
             + "logs";
 
     private LoggerService() {}
@@ -76,7 +76,6 @@ public final class LoggerService {
             ex.printStackTrace(pw);
 
             log.append(sw);
-
             log.append("\n\n");
 
             Files.writeString(
@@ -85,7 +84,9 @@ public final class LoggerService {
                     StandardOpenOption.CREATE,
                     StandardOpenOption.APPEND
             );
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            System.out.println(ignored.getMessage());
+        }
 
         showGenericAlert();
     }

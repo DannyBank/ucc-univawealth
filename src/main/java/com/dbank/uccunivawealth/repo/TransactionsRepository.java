@@ -34,7 +34,7 @@ public class TransactionsRepository {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LoggerService.log(e);
         }
         return list;
     }
@@ -90,7 +90,7 @@ public class TransactionsRepository {
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LoggerService.logError(e, "Failed to insert transaction");
+            LoggerService.log(e);
             return false;
         }
     }
