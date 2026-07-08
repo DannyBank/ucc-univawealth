@@ -1,7 +1,10 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.User;
+import com.dbank.uccunivawealth.repo.SavingsGoalsRepository;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsGoal;
+import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
 import io.github.palexdev.materialfx.controls.MFXProgressBar;
@@ -30,15 +33,18 @@ public class GoalsController {
     private MFXTextField dateField;
 
     private final AppData appData = AppData.getInstance();
+    private final User currentUser = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
+        appData.loadGoals();
         renderGoals();
     }
 
     @FXML
     private void onAddGoal() {
         try {
+            int userId = currentUser.getUserId();
             String name = UiUtils.requireNonEmpty(nameField.getText(), "Goal name");
             double target = UiUtils.parsePositiveOrZero(targetField.getText(), "Target amount");
             if (target <= 0) {
@@ -46,19 +52,26 @@ public class GoalsController {
             }
             double current = UiUtils.parsePositiveOrZero(currentField.getText(), "Current savings");
             String date = dateField.getText() == null || dateField.getText().isBlank()
-                    ? "No date set"
-                    : dateField.getText().trim();
+                    ? "No date set" : dateField.getText().trim();
 
-            appData.getGoals().add(new SavingsGoal(name, target, current, date));
+            SavingsGoal goal = new SavingsGoal(0, userId, name, target, current, date, "ACTIVE");
+            if (!(new SavingsGoalsRepository().insert(goal) == 1))
+                Notification.showError("An error occurred, please try again");
 
-            nameField.clear();
-            targetField.clear();
-            currentField.clear();
-            dateField.clear();
+            appData.getGoals().add(goal);
+            clearFields();
             renderGoals();
+
         } catch (Exception ex) {
             Notification.showError(ex.getMessage());
         }
+    }
+
+    private void clearFields(){
+        nameField.clear();
+        targetField.clear();
+        currentField.clear();
+        dateField.clear();
     }
 
     private void renderGoals() {

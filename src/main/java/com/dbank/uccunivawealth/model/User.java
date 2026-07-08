@@ -30,10 +30,11 @@ public class User {
 
     public User(){}
 
-    public User(String username, String accountNumber, String passwordHash,
+    public User(int userId, String username, String accountNumber, String passwordHash,
                 String fullName, String email, String phone,
                 String dateCreated, String lastLogin,
                 boolean isActive) {
+        this.userId = userId;
         this.username = username;
         this.passwordHash = passwordHash;
         this.accountNumber = accountNumber;

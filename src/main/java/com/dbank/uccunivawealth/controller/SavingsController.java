@@ -1,5 +1,6 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.SavingsStatus;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsAccount;
@@ -58,7 +59,7 @@ public class SavingsController {
 
             SavingsAccount account = new SavingsAccount(
                     userId, accountNo, initialBal, rate,
-                    targetAmount, 0, new Date().toString(),
+                    targetAmount, initialBal, new Date().toString(),
                     targetDate, SavingsStatus.ACTIVE.toString()
             );
             if (appData.addSavingsAccount(account))
@@ -132,5 +133,3 @@ public class SavingsController {
         }
     }
 }
-
-enum SavingsStatus { ACTIVE, SUCCESS, INACTIVE }

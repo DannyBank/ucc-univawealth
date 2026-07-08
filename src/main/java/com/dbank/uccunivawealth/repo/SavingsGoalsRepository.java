@@ -10,7 +10,7 @@ public class SavingsGoalsRepository {
     public List<SavingsGoal> getAll() {
         List<SavingsGoal> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM SavingsAccount";
+        String sql = "SELECT * FROM Goals";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;
@@ -19,10 +19,13 @@ public class SavingsGoalsRepository {
 
                 while (rs.next()) {
                     list.add(new SavingsGoal(
-                            rs.getString("Name"),
+                            rs.getInt("SavingsId"),
+                            rs.getInt("UserId"),
+                            rs.getString("GoalName"),
                             rs.getDouble("TargetAmount"),
                             rs.getDouble("CurrentAmount"),
-                            rs.getString("TargetDate")
+                            rs.getString("Deadline"),
+                            rs.getString("Status")
                     ));
                 }
             }
@@ -32,22 +35,26 @@ public class SavingsGoalsRepository {
         return list;
     }
 
-    public void insert(SavingsGoal acc) {
-        String sql = "INSERT INTO SavingsAccount(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
+    public int insert(SavingsGoal acc) {
+        String sql = "INSERT INTO Goals(SavingsId,UserId,GoalName,TargetAmount,CurrentAmount,Deadline,Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                ps.setString(1, acc.getName());
-                ps.setString(2, acc.getProgressDisplay());
-                ps.setDouble(3, acc.getCurrentAmount());
+                ps.setInt(1, 0);
+                ps.setInt(2, acc.getUserId());
+                ps.setString(3, acc.getName());
                 ps.setDouble(4, acc.getTargetAmount());
+                ps.setDouble(5, acc.getCurrentAmount());
+                ps.setString(6, acc.getTargetDate());
+                ps.setString(7, acc.getStatus());
 
-                ps.executeUpdate();
+                return ps.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 

@@ -4,11 +4,8 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.UserRepository;
 import com.dbank.uccunivawealth.util.UiUtils;
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class AuthService {
     /** create a user in the database for accounts or systems use */
@@ -18,7 +15,7 @@ public class AuthService {
         String accountNo = UiUtils.generateAccountNumber();
         String date = LocalDateTime.now().toString();
 
-        User user = new User(username, accountNo, passwordHash, "n/a",
+        User user = new User(0, username, accountNo, passwordHash, "n/a",
                 email, msisdn, date, date, true);
         return new UserRepository().insert(user);
     }

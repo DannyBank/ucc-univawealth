@@ -55,14 +55,15 @@ public class SavingsRepository {
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, acc.getAccountNumber());
-            ps.setDouble(2, acc.getBalance());
-            ps.setDouble(3, acc.getInterestRate());
-            ps.setDouble(4, acc.getTargetAmount());
-            ps.setDouble(5, acc.getCurrentBalance());
-            ps.setString(6, acc.getStartDate());
-            ps.setString(7, acc.getTargetDate());
-            ps.setString(8, acc.getStatus());
+            ps.setInt(1, acc.getUserId());
+            ps.setString(2, acc.getAccountNumber());
+            ps.setDouble(3, acc.getBalance());
+            ps.setDouble(4, acc.getInterestRate());
+            ps.setDouble(5, acc.getTargetAmount());
+            ps.setDouble(6, acc.getCurrentBalance());
+            ps.setString(7, acc.getStartDate());
+            ps.setString(8, acc.getTargetDate());
+            ps.setString(9, acc.getStatus());
 
             return ps.executeUpdate();
         } catch (SQLException e) {

@@ -53,13 +53,7 @@ public class DashboardController {
     }
 
     public void refreshDashboard() {
-        lblSavings.setText("GHS 5000.00");
-        lblInvestments.setText("GHS 12000.00");
-        lblNetWorth.setText("GHS 17000.00");
-
-        allocationChart.getData().clear();
-        allocationChart.getData().add(new PieChart.Data("Savings", 5000));
-        allocationChart.getData().add(new PieChart.Data("Investments", 12000));
+        AppData.getInstance().loadAllData();
 
         double totalSavings = appData.getSavingsAccounts().stream()
                 .filter(Objects::nonNull)
@@ -70,6 +64,10 @@ public class DashboardController {
                 .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
                 .sum();
         double netWorth = totalSavings + totalInvestment;
+
+        allocationChart.getData().clear();
+        allocationChart.getData().add(new PieChart.Data("Savings", totalSavings));
+        allocationChart.getData().add(new PieChart.Data("Investments", totalInvestment));
 
         lblSavings.setText(UiUtils.formatMoney(totalSavings));
         lblInvestments.setText(UiUtils.formatMoney(totalInvestment));

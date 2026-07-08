@@ -8,6 +8,7 @@ public class UserRepository {
     // map results from the Users table to the User class object
     private User mapUser(ResultSet rs) throws SQLException {
         return new User(
+                rs.getInt("UserId"),
                 rs.getString("Username"),
                 rs.getString("AccountNumber"),
                 rs.getString("PasswordHash"),

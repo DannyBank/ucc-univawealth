@@ -6,16 +6,35 @@ package com.dbank.uccunivawealth.model;
  */
 public class SavingsGoal {
 
+    private final int userId;
+    private final int savingsId;
     private final String name;
     private final double targetAmount;
-    private double currentAmount;
+    private final double currentAmount;
     private final String targetDate;
+    private final String status;
 
-    public SavingsGoal(String name, double targetAmount, double currentAmount, String targetDate) {
+
+    public int getUserId() {
+        return userId;
+    }
+    public int getSavingsId() {
+        return savingsId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public SavingsGoal(int savingsId, int userId, String name, double targetAmount,
+                       double currentAmount, String targetDate, String status) {
         this.name = name;
         this.targetAmount = targetAmount;
         this.currentAmount = currentAmount;
         this.targetDate = targetDate;
+        this.savingsId = savingsId;
+        this.status = status;
+        this.userId = userId;
     }
 
     /** Fraction of the goal completed so far, clamped to the [0, 1] range for progress bars. */

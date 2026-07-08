@@ -155,36 +155,34 @@
                     <columns>
 
 
-                        <TableColumn fx:id="accNoCol"
-                                     text="Account No."
-                                     prefWidth="150">
-
-                            <cellValueFactory>
-                                <PropertyValueFactory property="accountNumber"/>
-                            </cellValueFactory>
-
-                        </TableColumn>
-
-
-
-                        <TableColumn fx:id="ownerCol"
-                                     text="Account Name"
-                                     prefWidth="220">
-
-                            <cellValueFactory>
-                                <PropertyValueFactory property="accountName"/>
-                            </cellValueFactory>
-
-                        </TableColumn>
-
-
-
-                        <TableColumn fx:id="rateCol"
-                                     text="Interest"
+                        <TableColumn fx:id="capitalCol"
+                                     text="Capital (GHS)"
                                      prefWidth="120">
 
                             <cellValueFactory>
-                                <PropertyValueFactory property="interestRateDisplay"/>
+                                <PropertyValueFactory property="initialBalance"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+                        <TableColumn fx:id="rateCol"
+                                     text="Interest (%)"
+                                     prefWidth="120">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="interestRate"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+                        <TableColumn fx:id="targetCol"
+                                     text="Target (GHS)"
+                                     prefWidth="120">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="targetAmount"/>
                             </cellValueFactory>
 
                         </TableColumn>
@@ -193,15 +191,35 @@
 
                         <TableColumn fx:id="balCol"
                                      text="Balance"
-                                     prefWidth="150">
+                                     prefWidth="120">
 
                             <cellValueFactory>
-                                <PropertyValueFactory property="balance"/>
+                                <PropertyValueFactory property="currentBalance"/>
                             </cellValueFactory>
 
                         </TableColumn>
 
 
+                        <TableColumn fx:id="startDateCol"
+                                     text="Started"
+                                     prefWidth="150">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="startDate"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+                        <TableColumn fx:id="targetDateCol"
+                                     text="Target"
+                                     prefWidth="150">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="targetDate"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
                     </columns>
 
 

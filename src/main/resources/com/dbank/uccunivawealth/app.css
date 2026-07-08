@@ -101,3 +101,7 @@
 .mfx-button-raised {
     -fx-padding: 10 20 10 20;
 }
+
+.table-column {
+    -fx-alignment: CENTER;
+}
