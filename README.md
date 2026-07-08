@@ -1,10 +1,11 @@
 # UnivaWealth — Savings & Investment Manager
 
-A JavaFX desktop app for keeping track of savings accounts, investments, transactions, and personal savings goals — all in GHS. Built as my term project for **INF811D (Object Oriented Programming)**, MSc. Information Technology.
+> **Manage your savings, investments, and financial goals before graduation.**
+A JavaFX desktop app for keeping track of savings accounts, investments, transactions, and personal savings goals. Built as my term project for **INF811D (Object Oriented Programming)**, MSc. Information Technology.
 
-The idea was simple: most students and young professionals here juggle a savings account, maybe a Susu or fixed deposit, and a few personal goals (rent, laptop, school fees) — but rarely have one place that shows all of it together. UnivaWealth is a small step toward that: log in, see your net worth at a glance, and track where your money is going.
+The idea is simple: most students and young professionals here juggle a savings account, maybe a Susu or fixed deposit, and a few personal goals (rent, laptop, school fees) — but rarely have one place that shows all of it together. UnivaWealth is a small step toward that: log in, see your net worth at a glance, and track where your money is going.
 
-## What it does
+## ✨ Features
 
 - **Accounts & authentication** :- Register and log in with a hashed password (bcrypt), a unique auto-generated account number, and a proper session so the app knows who's currently using it.
 - **Dashboard** :- A quick overview of total savings, total investments, and combined net worth, plus a pie chart showing how your money is split across savings and the different investment types you hold.
@@ -14,16 +15,19 @@ The idea was simple: most students and young professionals here juggle a savings
 - **Transactions** :-  Every deposit, withdrawal, investment, login, and transfer gets logged with a category and timestamp, so there's a running history of activity.
 - **All amounts in GHS** :-  Formatted with thousands separators (e.g. `GHS 12,500.00`), since this is built with the Ghanaian cedi in mind.
 
-## Tech stack
+## 🛠 Technology Stack
+| Technology | Purpose                       |
+|------------|-------------------------------|
+| Java 21+   | Programming language          |
+| JavaFX     | Desktop UI                    |
+| Maven      | Build & Dependency Management |
+| SQLite     | Embedded database             |
+| bcrypt     | Password encryption           |
+| JDBC       | Database connectivity         |
+| MaterialFX | Modern JavaFX controls        |
+| CSS        | User interface styling        |
 
-- **Java 21** + **JavaFX 21** (Controls, FXML)
-- **SQLite** (via `sqlite-jdbc`) for local, file-based persistence — external database server can be added later
-- **bcrypt** (`at.favre.lib:bcrypt`) for password hashing
-- **MaterialFX**, **ControlsFX**, **FormsFX**, **ValidatorFX**, **TilesFX** for UI components and styling
-- **Maven** for build and dependency management
-- **JUnit 5** to be added in the future for testing
-
-## Project structure
+## 📂 Project Structure
 
 ```
 src/main/java/com/dbank/uccunivawealth/
@@ -52,14 +56,127 @@ database/
     └── category-seed.sql      # Seed data for transaction categories
 ```
 
+## 🏗 Architecture
 The architecture roughly follows an MVC (Model-View-Controller): FXML defines the view, controllers handle UI logic, repositories handle persistence, and services (auth, session, app-wide data caching) sit in between.
+The application follows the **MVC (Model-View-Controller)** design pattern.
+
+### Controllers
+
+Responsible for handling user interactions and coordinating between the UI and business logic.
+
+Examples include:
+
+- DashboardController
+- LoginController
+- InvestmentController
+- GoalsController
+- MainController
+
+---
+
+### Models
+
+Represent the application's domain objects.
+
+Examples include:
+
+- User
+- Investment
+- SavingsAccount
+- Account
+
+---
+
+### Repository Layer
+
+Responsible for interacting with the SQLite database.
+
+Examples:
+
+- DatabaseManager
+- InvestmentsRepository
+- SavingsGoalsRepository
+
+---
+
+### Services
+
+Contain reusable business logic.
+
+Examples:
+
+- Authentication
+- Logging
+- Application state management
+
+---
+
+### Utilities
+
+Reusable helper classes for:
+
+- Input validation
+- Notifications
+- UI utilities
+
+---
+
+## 💾 Database
+
+The project uses **SQLite** as its database.
+
+Database resources are located in:
+
+```
+database/
+```
+
+SQL scripts are provided under:
+
+```
+database/scripts
+```
+
+These scripts include:
+
+- Database tables
+- Indexes
+- Category seed data
+
+---
 
 ## Getting started
 
 ### Prerequisites
 
-- **JDK 21** or later
-- **Maven 3.9+** (or just use the included wrapper, `mvnw` / `mvnw.cmd`)
+- Java JDK 21 or later
+- Maven 3.9+
+- IntelliJ IDEA (recommended)
+
+### Clone the repository
+
+```bash
+git clone https://github.com/DannyBank/ucc-univawealth.git
+```
+
+---
+
+### Navigate into the project
+
+```bash
+cd ucc-univawealth
+```
+
+---
+
+### Build the project
+
+```bash
+mvn clean install
+```
+
+---
+
 
 ### Set up the database
 
@@ -93,7 +210,7 @@ This launches the login screen first. New users can register from there — an a
 - **`AppData` acts as a lightweight in-memory cache** of the logged-in user's savings, investments, and transactions, refreshed from the database when the dashboard needs current numbers, so we're not hitting SQLite on every UI redraw. This can be improved later with using Redis
 - **Money is always in GHS**, formatted consistently through a single `UiUtils.formatMoney()` helper rather than scattering `String.format` calls across controllers.
 
-## Known limitations / what's next
+## Known limitations
 
 Due to limited timing given for this project, a few things are still rough in its edges:
 
@@ -103,6 +220,71 @@ Due to limited timing given for this project, a few things are still rough in it
 - No Test coverage yet. Using JUnit 5 dependency, models and repositories would benefit from unit tests.
 - Could eventually move from a local SQLite file to a networked database if this needed to support multiple devices per user.
 
-## Why "UnivaWealth"?
+## 📊 Project Modules
 
-A nod to the university context this was built in — a "university wealth" maker and tracker, scoped down to something every student could actually build and test in a semester.
+| Module | Description |
+|---------|-------------|
+| Authentication | User login and session handling |
+| Dashboard | Financial overview |
+| Savings | Savings account management |
+| Investments | Investment management |
+| Transactions | Transaction recording |
+| Goals | Savings goal tracking |
+| Logging | Centralized error logging |
+
+---
+
+## 🔮 Future Improvements
+
+Some planned enhancements include:
+
+- Charts and financial analytics
+- Budget management
+- Loan management
+- Investment recommendations
+- Email/SMS notifications
+- Report generation
+- Data export (Excel/PDF)
+- Multi-user support
+- Backup and restore
+- Cloud synchronization
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Push your branch.
+5. Create a Pull Request.
+
+---
+
+## 👨‍💻 Author
+
+**Daniel Bucknor-Ankrah**
+
+MS/ITE/25/0020
+
+MSc Information Technology
+
+University of Cape Coast
+
+---
+
+## 📄 License
+
+This project is developed for educational purposes as part of the MSc Information Technology programme at the University of Cape Coast.
+
+---
+
+## ⭐ Acknowledgements
+
+- University of Cape Coast
+- JavaFX
+- MaterialFX
+- SQLite
+- Apache Maven
