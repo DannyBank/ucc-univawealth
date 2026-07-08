@@ -2,6 +2,7 @@ package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.service.AuthService;
+import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
 import javafx.animation.FadeTransition;
@@ -56,8 +57,8 @@ public class MainController {
             goalsView = loadView("/com/dbank/uccunivawealth/goals.fxml");
 
             showDashboard();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 
@@ -156,10 +157,6 @@ public class MainController {
 
     @FXML
     public void logout() throws IOException {
-        if (UserSession.getInstance().getCurrentUser() != null) {
-            int userId = UserSession.getInstance().getCurrentUser().getUserId();
-            new AuthService().sessionLogout(userId);
-        }
 
         boolean confirmed = Notification.showConfirmation(
                 "Logout",
@@ -168,6 +165,11 @@ public class MainController {
         );
 
         if (confirmed) {
+            if (UserSession.getInstance().getCurrentUser() != null) {
+                int userId = UserSession.getInstance().getCurrentUser().getUserId();
+                new AuthService().sessionLogout(userId);
+            }
+
             Notification.showInfo("See you again soon");
 
             FXMLLoader loader = new FXMLLoader(

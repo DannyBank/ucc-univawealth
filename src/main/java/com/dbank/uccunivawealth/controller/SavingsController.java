@@ -6,6 +6,7 @@ import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsAccount;
+import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
@@ -74,8 +75,8 @@ public class SavingsController {
 
             // show successful account creation
             Notification.showInfo("Congratulations! \nYour savings account has been created");
-        } catch (Exception ex) {
-            Notification.showError(ex.getMessage());
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 
@@ -136,8 +137,8 @@ public class SavingsController {
             savingsTable.refresh();
             Notification.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",
                     action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getBalance()));
-        } catch (Exception ex) {
-            Notification.showError(ex.getMessage());
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 }

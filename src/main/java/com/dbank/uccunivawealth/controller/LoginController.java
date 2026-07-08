@@ -2,6 +2,7 @@ package com.dbank.uccunivawealth.controller;
 
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AuthService;
+import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.util.InputValidator;
 import com.dbank.uccunivawealth.util.Notification;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -66,25 +67,28 @@ public class LoginController {
     }
 
     private User login() throws SQLException {
+        try {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
 
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+            if (!InputValidator.isValidUsername(username) ||
+                    !InputValidator.isValidPassword(password)) {
+                return null;
+            }
 
-        if (!InputValidator.isValidUsername(username) ||
-                !InputValidator.isValidPassword(password)) {
-            return null;
-        }
+            AuthService authService = new AuthService();
+            User user = authService.getUser(username);
 
-        AuthService authService = new AuthService();
-        User user = authService.getUser(username);
+            if (!authService.isUserValid(user)) {
+                return null;
+            }
 
-        if (!authService.isUserValid(user)) {
-            return null;
-        }
-
-        if (authService.verify(user.getPasswordHash(), password)) {
-            authService.sessionLogin(user);
-            return user;
+            if (authService.verify(user.getPasswordHash(), password)) {
+                authService.sessionLogin(user);
+                return user;
+            }
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
         return null;
     }
@@ -104,8 +108,8 @@ public class LoginController {
             stage.setScene(new Scene(root, 1050, 500));
             stage.centerOnScreen();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 
@@ -134,8 +138,8 @@ public class LoginController {
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.setScene(new Scene(root, 550, 550));
             stage.centerOnScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 }

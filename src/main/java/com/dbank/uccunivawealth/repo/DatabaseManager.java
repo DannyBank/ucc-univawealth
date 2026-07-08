@@ -1,5 +1,7 @@
 package com.dbank.uccunivawealth.repo;
 
+import com.dbank.uccunivawealth.service.LoggerService;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,8 +14,8 @@ public class DatabaseManager {
     public static Connection connect() throws SQLException{
         try {
             return DriverManager.getConnection(URL);
-        } catch (SQLException e) {
-            System.out.println("Connection failed: " + e.getMessage());
+        } catch (Exception ex){
+            LoggerService.log(ex);
             return null;
         }
     }

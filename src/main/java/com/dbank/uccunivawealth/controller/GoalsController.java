@@ -6,6 +6,7 @@ import com.dbank.uccunivawealth.repo.SavingsGoalsRepository;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.SavingsGoal;
+import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
@@ -66,49 +67,62 @@ public class GoalsController {
             renderGoals();
 
         } catch (Exception ex) {
-            Notification.showError(ex.getMessage());
+            LoggerService.log(ex);
         }
     }
 
-    private void recordTransaction(int userId, double target, String date, String goal){
+    private void recordTransaction(int userId, double target, String date, String goal) {
         new TransactionsRepository().insert(
                 new Transaction(0, userId, 0, 0, "GOAL",
                         target, date, 8, goal));
     }
 
-    private void clearFields(){
-        nameField.clear();
-        targetField.clear();
-        currentField.clear();
-        dateField.clear();
+    private void clearFields() {
+        try {
+            nameField.clear();
+            targetField.clear();
+            currentField.clear();
+            dateField.clear();
+        } catch (Exception ex) {
+            LoggerService.log(ex);
+        }
     }
 
     private void renderGoals() {
-        goalsList.getChildren().clear();
+        try {
+            goalsList.getChildren().clear();
 
-        if (appData.getGoals().isEmpty()) {
-            goalsList.getChildren().add(new Label("No savings goals yet. Add one below."));
-            return;
-        }
+            if (appData.getGoals().isEmpty()) {
+                goalsList.getChildren().add(new Label("No savings goals yet. Add one below."));
+                return;
+            }
 
-        for (SavingsGoal goal : appData.getGoals()) {
-            goalsList.getChildren().add(buildGoalCard(goal));
+            for (SavingsGoal goal : appData.getGoals()) {
+                goalsList.getChildren().add(buildGoalCard(goal));
+            }
+        } catch (Exception ex) {
+            LoggerService.log(ex);
         }
     }
 
     private VBox buildGoalCard(SavingsGoal goal) {
-        Label nameLabel = new Label(goal.getName() + "  (target: " + goal.getTargetDate() + ")");
-        nameLabel.getStyleClass().add("goal-name");
+        try {
+            Label nameLabel = new Label(goal.getName() + "  (target: " + goal.getTargetDate() + ")");
+            nameLabel.getStyleClass().add("goal-name");
 
-        MFXProgressBar bar = new MFXProgressBar();
-        bar.setProgress(goal.getProgressFraction());
-        bar.setPrefWidth(400);
+            MFXProgressBar bar = new MFXProgressBar();
+            bar.setProgress(goal.getProgressFraction());
+            bar.setPrefWidth(400);
 
-        Label progressLabel = new Label(String.format("GHS %.2f / GHS %.2f  (%s)",
-                goal.getCurrentAmount(), goal.getTargetAmount(), goal.getProgressDisplay()));
+            Label progressLabel = new Label(String.format("GHS %.2f / GHS %.2f  (%s)",
+                    goal.getCurrentAmount(), goal.getTargetAmount(), goal.getProgressDisplay()));
 
-        VBox card = new VBox(6, nameLabel, bar, progressLabel);
-        card.getStyleClass().add("goal-card");
-        return card;
+            VBox card = new VBox(6, nameLabel, bar, progressLabel);
+            card.getStyleClass().add("goal-card");
+            return card;
+        } catch (Exception ex) {
+            LoggerService.log(ex);
+            return null;
+        }
     }
 }

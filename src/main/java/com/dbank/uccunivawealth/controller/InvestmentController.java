@@ -47,13 +47,17 @@ public class InvestmentController {
 
     @FXML
     public void initialize() {
-        investmentTable.setItems(appData.getInvestmentAccounts());
+        try {
+            investmentTable.setItems(appData.getInvestmentAccounts());
 
-        typeBox.setItems(FXCollections.observableArrayList(
-                "Stocks", "Bonds", "Mutual Fund",
-                "Treasury Bills", "Real Estate", "Fixed Deposit"));
-        riskLevel.setItems(FXCollections.observableArrayList(
-                "Low", "Growth", "Aggressive"));
+            typeBox.setItems(FXCollections.observableArrayList(
+                    "Stocks", "Bonds", "Mutual Fund",
+                    "Treasury Bills", "Real Estate", "Fixed Deposit"));
+            riskLevel.setItems(FXCollections.observableArrayList(
+                    "Low", "Growth", "Aggressive"));
+        } catch (Exception ex){
+            LoggerService.log(ex);
+        }
     }
 
     @FXML
@@ -88,8 +92,7 @@ public class InvestmentController {
                 Notification.showError("An error occurred, Please try again");
             }
         } catch (Exception ex) {
-            Notification.showError("An error occurred, Please try again");
-            LoggerService.logError(ex, "An error occurred, Please try again");
+            LoggerService.log(ex);
         }
     }
 
@@ -169,8 +172,8 @@ public class InvestmentController {
 
             Notification.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",
                     action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getBalance()));
-        } catch (Exception ex) {
-            Notification.showError(ex.getMessage());
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 

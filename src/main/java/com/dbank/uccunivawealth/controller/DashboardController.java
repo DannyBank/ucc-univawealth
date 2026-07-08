@@ -3,6 +3,7 @@ package com.dbank.uccunivawealth.controller;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.Investment;
+import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.UiUtils;
 import javafx.collections.FXCollections;
@@ -57,42 +58,46 @@ public class DashboardController {
     }
 
     public void refreshDashboard() {
-        AppData.getInstance().loadAllData();
+        try {
+            AppData.getInstance().loadAllData();
 
-        //greetings
-        lblUserWelcome.setText("Welcome " + user.getUsername() + ", Overview of your financials below");
+            //greetings
+            lblUserWelcome.setText("Welcome " + user.getUsername() + ", Overview of your financials below");
 
-        double totalSavings = appData.getSavingsAccounts().stream()
-                .filter(Objects::nonNull)
-                .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
-                .sum();
-        double totalInvestment = appData.getInvestmentAccounts().stream()
-                .filter(Objects::nonNull)
-                .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
-                .sum();
-        double netWorth = totalSavings + totalInvestment;
+            double totalSavings = appData.getSavingsAccounts().stream()
+                    .filter(Objects::nonNull)
+                    .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
+                    .sum();
+            double totalInvestment = appData.getInvestmentAccounts().stream()
+                    .filter(Objects::nonNull)
+                    .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
+                    .sum();
+            double netWorth = totalSavings + totalInvestment;
 
-        allocationChart.getData().clear();
-        allocationChart.getData().add(new PieChart.Data("Savings", totalSavings));
-        allocationChart.getData().add(new PieChart.Data("Investments", totalInvestment));
+            allocationChart.getData().clear();
+            allocationChart.getData().add(new PieChart.Data("Savings", totalSavings));
+            allocationChart.getData().add(new PieChart.Data("Investments", totalInvestment));
 
-        lblSavings.setText(UiUtils.formatMoney(totalSavings));
-        lblInvestments.setText(UiUtils.formatMoney(totalInvestment));
-        lblNetWorth.setText(UiUtils.formatMoney(netWorth));
+            lblSavings.setText(UiUtils.formatMoney(totalSavings));
+            lblInvestments.setText(UiUtils.formatMoney(totalInvestment));
+            lblNetWorth.setText(UiUtils.formatMoney(netWorth));
 
-        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
-        if (totalSavings > 0) {
-            pieData.add(new PieChart.Data("Savings", totalSavings));
-        }
-        for (Investment inv : appData.getInvestmentAccounts()) {
-            if (inv.getBalance() > 0) {
-                pieData.add(new PieChart.Data(
-                        inv.getInvestmentType(), inv.getBalance()));
+            ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+            if (totalSavings > 0) {
+                pieData.add(new PieChart.Data("Savings", totalSavings));
             }
+            for (Investment inv : appData.getInvestmentAccounts()) {
+                if (inv.getBalance() > 0) {
+                    pieData.add(new PieChart.Data(
+                            inv.getInvestmentType(), inv.getBalance()));
+                }
+            }
+            if (pieData.isEmpty()) {
+                pieData.add(new PieChart.Data("No funds yet", 1));
+            }
+            allocationChart.setData(pieData);
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
-        if (pieData.isEmpty()) {
-            pieData.add(new PieChart.Data("No funds yet", 1));
-        }
-        allocationChart.setData(pieData);
     }
 }

@@ -4,6 +4,7 @@ import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AuthService;
+import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.util.InputValidator;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -77,8 +78,8 @@ public class RegisterController {
             stage.setScene(new Scene(root, 550, 380));
             stage.centerOnScreen();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 
@@ -98,21 +99,26 @@ public class RegisterController {
     }
 
     public User register() throws Exception {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        String email = emailField.getText();
-        String msisdn = msisdnField.getText();
+        try {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            String email = emailField.getText();
+            String msisdn = msisdnField.getText();
 
-        if (!InputValidator.isValidUsername(username) ||
-            !InputValidator.isValidPassword(password) ||
-            !InputValidator.isValidUsername(email) ||
-            !InputValidator.isValidUsername(msisdn)) {
+            if (!InputValidator.isValidUsername(username) ||
+                    !InputValidator.isValidPassword(password) ||
+                    !InputValidator.isValidUsername(email) ||
+                    !InputValidator.isValidUsername(msisdn)) {
+                return null;
+            }
+
+            User user = new AuthService().addUser(username, password, email, msisdn);
+            recordTransaction(user.getUserId(), 0, LocalDate.now().toString(), "REGISTER");
+            return user;
+        } catch (Exception ex){
+            LoggerService.log(ex);
             return null;
         }
-
-        User user = new AuthService().addUser(username, password, email, msisdn);
-        recordTransaction(user.getUserId(), 0, LocalDate.now().toString(), "REGISTER");
-        return user;
     }
 
     public void onLoginBtnClick(ActionEvent actionEvent) {
@@ -124,8 +130,8 @@ public class RegisterController {
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.setScene(new Scene(root, 550, 380));
             stage.centerOnScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ex){
+            LoggerService.log(ex);
         }
     }
 
