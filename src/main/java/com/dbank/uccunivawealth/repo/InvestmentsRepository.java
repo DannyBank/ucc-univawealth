@@ -1,61 +1,100 @@
 package com.dbank.uccunivawealth.repo;
 
-import com.dbank.uccunivawealth.model.InvestmentAccount;
-
+import com.dbank.uccunivawealth.model.Investment;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InvestmentsRepository {
-    public List<InvestmentAccount> getAll() {
-        List<InvestmentAccount> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM SavingsAccount";
+    public List<Investment> getAll() {
+        List<Investment> list = new ArrayList<>();
 
-        try (Connection conn = DatabaseManager.connect()) {
-            assert conn != null;
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
+        String sql = "SELECT * FROM Investment";
 
-                while (rs.next()) {
-                    list.add(new InvestmentAccount(
-                            rs.getInt("userId"),
-                            rs.getString("accountnumber"),
-                            rs.getString("ownername"),
-                            rs.getDouble("initialbalance"),
-                            rs.getString("investmenttype"),
-                            rs.getDouble("initialbalance"),
-                            rs.getString("investmenttype")
+        try (Connection conn = DatabaseManager.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                    list.add(new Investment(
+                            rs.getInt("InvestmentId"),
+                            rs.getInt("UserId"),
+                            rs.getString("InvestmentName"),
+                            rs.getString("InvestmentType"),
+                            rs.getDouble("Principal"),
+                            rs.getDouble("InterestRate"),
+                            rs.getInt("DurationMonths"),
+                            rs.getString("StartDate"),
+                            rs.getString("MaturityDate"),
+                            rs.getDouble("ExpectedReturn"),
+                            rs.getString("Status")
                     ));
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
+            return list;
     }
 
-    public void insert(InvestmentAccount acc) {
-        String sql = "INSERT INTO savings_accounts(account_id, owner, balance, interest_rate) VALUES (?, ?, ?, ?)";
+    public Investment insert(Investment investment) throws SQLException {
 
-        try (Connection conn = DatabaseManager.connect()) {
-            assert conn != null;
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        String sql = """
+        INSERT INTO Investment (
+            UserId,
+            InvestmentName,
+            InvestmentType,
+            Principal,
+            InterestRate,
+            DurationMonths,
+            StartDate,
+            MaturityDate,
+            ExpectedReturn,
+            Status
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        RETURNING *;
+        """;
 
-                ps.setString(1, acc.getAccountNumber());
-                ps.setString(2, acc.getAccountName());
-                ps.setDouble(3, acc.getBalance());
-                ps.setDouble(4, acc.getBalance());
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                ps.executeUpdate();
+            ps.setInt(1, investment.getUserId());
+            ps.setString(2, investment.getInvestmentName());
+            ps.setString(3, investment.getInvestmentType());
+            ps.setDouble(4, investment.getPrincipal());
+            ps.setDouble(5, investment.getInterestRate());
+            ps.setInt(6, investment.getDurationMonths());
+            ps.setString(7, investment.getStartDate());
+            ps.setString(8, investment.getMaturityDate());
+            ps.setDouble(9, investment.getExpectedReturn());
+            ps.setString(10, investment.getStatus());
 
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    Investment saved = new Investment();
+
+                    saved.setInvestmentId(rs.getInt("InvestmentId"));
+                    saved.setUserId(rs.getInt("UserId"));
+                    saved.setInvestmentName(rs.getString("InvestmentName"));
+                    saved.setInvestmentType(rs.getString("InvestmentType"));
+                    saved.setPrincipal(rs.getDouble("Principal"));
+                    saved.setInterestRate(rs.getDouble("InterestRate"));
+                    saved.setDurationMonths(rs.getInt("DurationMonths"));
+                    saved.setStartDate(rs.getString("StartDate"));
+                    saved.setMaturityDate(rs.getString("MaturityDate"));
+                    saved.setExpectedReturn(rs.getDouble("ExpectedReturn"));
+                    saved.setStatus(rs.getString("Status"));
+
+                    return saved;
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return null;
     }
 
-    public void update(InvestmentAccount account){ return; }
+    public void update(Investment account){ return; }
     public void delete(String accountId){ return; }
-
 }

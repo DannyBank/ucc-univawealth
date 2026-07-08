@@ -15,24 +15,22 @@ import java.util.List;
  *     <li><b>Abstraction</b> - {@code Account} defines the common contract shared by every account
  *     type without dictating how each subtype behaves ({@link #getAccountCategory()},
  *     {@link #describeYield()} are left to concrete subclasses).</li>
- *     <li><b>Inheritance</b> - {@link SavingsAccount} and {@link InvestmentAccount} both extend
+ *     <li><b>Inheritance</b> - {@link SavingsAccount} and {@link Investment} both extend
  *     this class and reuse its balance/transaction handling.</li>
  * </ul>
  */
 public abstract class Account {
     private final int userId;
     private final String accountNumber;
-    private final String ownerName;
     private double balance;
     private final List<Transaction> transactions = new ArrayList<>();
 
-    protected Account(int userId, String accountNumber, String ownerName, double initialBalance) {
+    protected Account(int userId, String accountNumber, double initialBalance) {
         if (initialBalance < 0) {
             throw new IllegalArgumentException("Initial balance cannot be negative.");
         }
         this.userId = userId;
         this.accountNumber = accountNumber;
-        this.ownerName = ownerName;
         this.balance = initialBalance;
         if (initialBalance > 0) { logTransaction("OPENING BALANCE", initialBalance); }
     }
@@ -71,18 +69,10 @@ public abstract class Account {
     }
 
     public int getUserId() { return userId; }
-
     public String getAccountNumber() {
         return accountNumber;
     }
-
-    public String getAccountName() {
-        return ownerName;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
+    public double getBalance() {return balance;}
 
     public List<Transaction> getTransactions() {
         return Collections.unmodifiableList(transactions);

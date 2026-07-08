@@ -1,9 +1,7 @@
 package com.dbank.uccunivawealth.controller;
 
-import com.dbank.uccunivawealth.model.Account;
 import com.dbank.uccunivawealth.service.AppData;
-import com.dbank.uccunivawealth.model.InvestmentAccount;
-import com.dbank.uccunivawealth.model.SavingsAccount;
+import com.dbank.uccunivawealth.model.Investment;
 import com.dbank.uccunivawealth.util.UiUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,10 +58,10 @@ public class DashboardController {
         if (totalSavings > 0) {
             pieData.add(new PieChart.Data("Savings", totalSavings));
         }
-        for (InvestmentAccount inv : appData.getInvestmentAccounts()) {
+        for (Investment inv : appData.getInvestmentAccounts()) {
             if (inv.getBalance() > 0) {
                 pieData.add(new PieChart.Data(
-                        inv.getInvestmentType() + " (" + inv.getAccountNumber() + ")", inv.getBalance()));
+                        inv.getInvestmentType(), inv.getBalance()));
             }
         }
         if (pieData.isEmpty()) {

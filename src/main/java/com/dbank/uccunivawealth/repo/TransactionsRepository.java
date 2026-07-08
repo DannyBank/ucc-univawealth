@@ -1,6 +1,5 @@
 package com.dbank.uccunivawealth.repo;
 
-import com.dbank.uccunivawealth.model.InvestmentAccount;
 import com.dbank.uccunivawealth.model.Transaction;
 
 import java.sql.*;

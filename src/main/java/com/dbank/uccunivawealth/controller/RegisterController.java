@@ -7,6 +7,7 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -107,5 +108,19 @@ public class RegisterController {
         }
 
         return new AuthService().addUser(username, password, email, msisdn);
+    }
+
+    public void onLoginBtnClick(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/dbank/uccunivawealth/login-view.fxml"));
+
+            Parent root = loader.load();
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            stage.setScene(new Scene(root, 550, 380));
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

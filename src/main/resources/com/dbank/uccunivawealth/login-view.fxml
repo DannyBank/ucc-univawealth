@@ -62,7 +62,7 @@
                               floatingText="Username" prefWidth="250.0"
                               styleClass="mfx-text" >
                     <font>
-                        <Font size="10.0" />
+                        <Font size="13.0" />
                     </font>
                 </MFXTextField>
 
@@ -70,7 +70,7 @@
                                   floatingText="Password" prefWidth="250.0"
                                   styleClass="mfx-text">
                     <font>
-                        <Font size="10.0" />
+                        <Font size="13.0" />
                     </font>
                 </MFXPasswordField>
 

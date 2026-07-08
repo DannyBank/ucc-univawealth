@@ -1,7 +1,7 @@
 package com.dbank.uccunivawealth.service;
 
 import com.dbank.uccunivawealth.model.Account;
-import com.dbank.uccunivawealth.model.InvestmentAccount;
+import com.dbank.uccunivawealth.model.Investment;
 import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.model.SavingsGoal;
 import com.dbank.uccunivawealth.model.Transaction;
@@ -11,6 +11,8 @@ import com.dbank.uccunivawealth.repo.SavingsRepository;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 
 /**
  * In-memory data store shared by every controller in the application.
@@ -22,8 +24,6 @@ import javafx.collections.ObservableList;
  * injection, while still keeping the data access behind clear accessor methods
  * (encapsulation).
  */
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public final class AppData {
 
@@ -41,14 +41,14 @@ public final class AppData {
     // UI observable caches
     // ============================
     private final ObservableList<SavingsAccount> savingsAccounts = FXCollections.observableArrayList();
-    private final ObservableList<InvestmentAccount> investmentAccounts = FXCollections.observableArrayList();
+    private final ObservableList<Investment> investments = FXCollections.observableArrayList();
     private final ObservableList<Transaction> allTransactions = FXCollections.observableArrayList();
     private final ObservableList<SavingsGoal> goals = FXCollections.observableArrayList();
 
     // Getters for UI Binding
     // ============================
     public ObservableList<SavingsAccount> getSavingsAccounts() { return savingsAccounts; }
-    public ObservableList<InvestmentAccount> getInvestmentAccounts() { return investmentAccounts; }
+    public ObservableList<Investment> getInvestmentAccounts() { return investments; }
     public ObservableList<Transaction> getAllTransactions() { return allTransactions; }
     public ObservableList<SavingsGoal> getGoals() { return goals; }
 
@@ -70,7 +70,7 @@ public final class AppData {
     }
 
     public void loadInvestmentAccounts() {
-        investmentAccounts.setAll(investmentsRepo.getAll());
+        investments.setAll(investmentsRepo.getAll());
     }
 
     public void loadTransactions() {
@@ -103,19 +103,20 @@ public final class AppData {
     // INVESTMENT ACCOUNTS
     // ============================
 
-    public void addInvestmentAccount(InvestmentAccount acc) {
-        investmentsRepo.insert(acc);
-        investmentAccounts.add(acc);
+    public boolean addInvestmentAccount(Investment acc) throws SQLException {
+        Investment insert = investmentsRepo.insert(acc);
+        investments.add(acc);
+        return insert != null;
     }
 
-    public void updateInvestmentAccount(InvestmentAccount acc) {
+    public void updateInvestmentAccount(Investment acc) {
         investmentsRepo.update(acc);
         loadInvestmentAccounts();
     }
 
     public void deleteInvestmentAccount(String accountId) {
         investmentsRepo.delete(accountId);
-        investmentAccounts.removeIf(a -> a.getAccountNumber().equals(accountId));
+        investments.removeIf(a -> a.getInvestmentId().equals(accountId));
     }
 
     // TRANSACTIONS

@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,90 +13,255 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.dbank.uccunivawealth.controller.SavingsController"
-            styleClass="tab-content">
+            stylesheets="@app.css">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- ======================= MAIN AREA ======================= -->
+
     <center>
-        <TableView fx:id="savingsTable">
-            <columns>
-                <TableColumn fx:id="accNoCol" text="Account No.">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="accountNumber"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="ownerCol" text="accountName">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="accountName"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="rateCol" text="Interest Rate (p.a.)">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="interestRateDisplay"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="balCol" text="Balance (GHS)">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="balance"/>
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-            <placeholder>
-                <Label text="No savings accounts yet. Create one below."/>
-            </placeholder>
-        </TableView>
+
+        <GridPane hgap="20">
+
+            <columnConstraints>
+
+                <!-- LEFT: FORM -->
+                <ColumnConstraints
+                        percentWidth="35"
+                        hgrow="NEVER"/>
+
+                <!-- RIGHT: TABLE -->
+                <ColumnConstraints
+                        percentWidth="65"
+                        hgrow="ALWAYS"/>
+
+            </columnConstraints>
+
+
+            <!-- ================= CREATE ACCOUNT LEFT ================= -->
+
+            <VBox spacing="20"
+                  styleClass="form-panel"
+                  GridPane.columnIndex="0">
+
+                <padding>
+                    <Insets top="15"
+                            right="15"
+                            bottom="15"
+                            left="15"/>
+                </padding>
+
+
+                <Label text="Create Savings Account"
+                       styleClass="section-title"/>
+
+
+                <GridPane hgap="10"
+                          vgap="15">
+
+
+                    <columnConstraints>
+
+                        <ColumnConstraints prefWidth="120"/>
+
+                        <ColumnConstraints hgrow="ALWAYS"/>
+
+                    </columnConstraints>
+
+
+                    <Label text="Initial Deposit"/>
+
+                    <MFXTextField
+                            fx:id="initialBalField"
+                            GridPane.columnIndex="1"
+                            maxWidth="Infinity"/>
+
+
+
+                    <Label text="Interest Rate"
+                           GridPane.rowIndex="1"/>
+
+                    <MFXTextField
+                            fx:id="rateField"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"
+                            maxWidth="Infinity"/>
+
+
+
+                    <Label text="Target Amount"
+                           GridPane.rowIndex="2"/>
+
+                    <MFXTextField
+                            fx:id="targetAmtField"
+                            GridPane.rowIndex="2"
+                            GridPane.columnIndex="1"
+                            maxWidth="Infinity"/>
+
+
+
+                    <Label text="Target Date"
+                           GridPane.rowIndex="3"/>
+
+                    <DatePicker
+                            fx:id="targetDateField"
+                            GridPane.rowIndex="3"
+                            GridPane.columnIndex="1"
+                            maxWidth="Infinity"/>
+
+
+                </GridPane>
+
+
+                <MFXButton
+                        fx:id="createBtn"
+                        text="Create Savings Account"
+                        onAction="#onCreateAccount"
+                        styleClass="mfx-button-raised"/>
+
+
+            </VBox>
+
+
+
+            <!-- ================= TABLE RIGHT ================= -->
+
+            <VBox spacing="10"
+                  styleClass="form-panel"
+                  GridPane.columnIndex="1">
+
+                <padding>
+                    <Insets top="15"
+                            right="15"
+                            bottom="15"
+                            left="15"/>
+                </padding>
+
+
+                <Label text="Savings Accounts"
+                       styleClass="section-title"/>
+
+
+                <TableView fx:id="savingsTable"
+                           VBox.vgrow="ALWAYS">
+
+
+                    <columns>
+
+
+                        <TableColumn fx:id="accNoCol"
+                                     text="Account No."
+                                     prefWidth="150">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="accountNumber"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+
+                        <TableColumn fx:id="ownerCol"
+                                     text="Account Name"
+                                     prefWidth="220">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="accountName"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+
+                        <TableColumn fx:id="rateCol"
+                                     text="Interest"
+                                     prefWidth="120">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="interestRateDisplay"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+
+                        <TableColumn fx:id="balCol"
+                                     text="Balance"
+                                     prefWidth="150">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="balance"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
+
+
+                    </columns>
+
+
+                    <placeholder>
+                        <Label text="No savings accounts available"/>
+                    </placeholder>
+
+
+                </TableView>
+
+
+            </VBox>
+
+
+        </GridPane>
+
+
     </center>
+
+    <!-- ======================= TRANSACTIONS ======================= -->
+
     <bottom>
-        <VBox spacing="15">
+
+        <HBox spacing="15"
+              alignment="CENTER_LEFT"
+              styleClass="form-panel">
+
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets top="15"
+                        right="15"
+                        bottom="15"
+                        left="15"/>
             </padding>
 
-            <GridPane hgap="10" vgap="10" styleClass="form-panel">
-                <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
-                </padding>
-                <columnConstraints>
-                    <ColumnConstraints minWidth="140"/>
-                    <ColumnConstraints minWidth="240" hgrow="ALWAYS"/>
-                </columnConstraints>
+            <Label text="Amount"/>
 
-                <Label text="Owner:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="ownerField" floatingText="Owner name"
-                              GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <MFXTextField
+                    fx:id="amountField"
+                    prefWidth="180"/>
 
-                <Label text="Initial Deposit:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="initialBalField" floatingText="Initial deposit (GHS)"
-                              GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <MFXButton
+                    fx:id="depositBtn"
+                    text="Deposit"
+                    onAction="#onDeposit"
+                    styleClass="mfx-button-raised"/>
 
-                <Label text="Interest Rate (%):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="rateField" floatingText="Annual interest rate % (e.g. 12)"
-                              GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <MFXButton
+                    fx:id="withdrawBtn"
+                    text="Withdraw"
+                    onAction="#onWithdraw"
+                    styleClass="mfx-button-raised"/>
 
-                <Label text="Target:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="targetAmtField" floatingText="Set Target"
-                              GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <MFXButton
+                    fx:id="interestBtn"
+                    text="Apply Monthly Interest"
+                    onAction="#onApplyInterest"
+                    styleClass="mfx-button-raised"/>
 
-                <Label text="Target Date" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <MFXDatePicker fx:id="targetDateField" floatingText="Set Date to achieve"
-                              GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        </HBox>
 
-                <MFXButton fx:id="createBtn" text="Create Savings Account" onAction="#onCreateAccount"
-                           styleClass="mfx-button-raised" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-            </GridPane>
-
-            <HBox spacing="10" alignment="CENTER_LEFT" styleClass="form-panel">
-                <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
-                </padding>
-                <Label text="Amount:"/>
-                <MFXTextField fx:id="amountField" floatingText="Amount (GHS)"/>
-                <MFXButton fx:id="depositBtn" text="Deposit" onAction="#onDeposit" styleClass="mfx-button-raised"/>
-                <MFXButton fx:id="withdrawBtn" text="Withdraw" onAction="#onWithdraw" styleClass="mfx-button-raised"/>
-                <MFXButton fx:id="interestBtn" text="Apply Monthly Interest" onAction="#onApplyInterest"
-                           styleClass="mfx-button-raised"/>
-            </HBox>
-        </VBox>
     </bottom>
+
 </BorderPane>

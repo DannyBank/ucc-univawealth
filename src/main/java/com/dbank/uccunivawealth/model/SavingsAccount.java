@@ -41,11 +41,11 @@ public class SavingsAccount extends Account {
     /** Annual interest rate expressed as a fraction, e.g. 0.12 for 12%. */
     private final double interestRate;
 
-    public SavingsAccount(int userId, String accountNumber, String ownerName,
+    public SavingsAccount(int userId, String accountNumber,
                           double initialBalance, double interestRate,
                           double targetAmount, double currentBalance,
                           String startDate, String targetDate, String status) {
-        super(userId, accountNumber, ownerName, initialBalance);
+        super(userId, accountNumber, initialBalance);
         if (interestRate < 0) {
             throw new IllegalArgumentException("Interest rate cannot be negative.");
         } else {

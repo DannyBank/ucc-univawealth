@@ -90,8 +90,12 @@
                     </font>
                 </MFXTextField>
 
-                <MFXButton fx:id="btnRegister" prefWidth="250.0" styleClass="mfx-button"
-                           text="SUBMIT" onAction="#onRegisterBtnClick" />
+                <HBox alignment="BOTTOM_LEFT" maxWidth="250.0" spacing="10">
+                    <MFXButton fx:id="btnLogin" prefWidth="125.0" styleClass="mfx-button"
+                               text="LOGIN" onAction="#onLoginBtnClick" />
+                    <MFXButton fx:id="btnRegister" prefWidth="250.0" styleClass="mfx-button"
+                               text="SUBMIT" onAction="#onRegisterBtnClick" />
+                </HBox>
             </VBox>
 
             <!-- Loading overlay, now correctly stacked above everything -->

@@ -6,17 +6,12 @@ import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
-import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * Controller for {@code savings.fxml}: creating savings accounts, depositing, withdrawing,
@@ -30,8 +25,6 @@ public class SavingsController {
     private TableColumn<SavingsAccount, Double> balCol;
 
     @FXML
-    private MFXTextField ownerField;
-    @FXML
     private MFXTextField initialBalField;
     @FXML
     private MFXTextField rateField;
@@ -40,7 +33,7 @@ public class SavingsController {
     @FXML
     private MFXTextField targetAmtField;
     @FXML
-    private MFXDatePicker targetDateField;
+    private DatePicker targetDateField;
 
     private final AppData appData = AppData.getInstance();
     private final User currentUser = UserSession.getInstance().getCurrentUser();
@@ -58,14 +51,13 @@ public class SavingsController {
             String accountNo = currentUser.getAccountNumber();
             int userId = currentUser.getUserId();
 
-            String owner = UiUtils.requireNonEmpty(ownerField.getText(), "Owner name");
             double initialBal = UiUtils.parsePositiveOrZero(initialBalField.getText(), "Initial deposit");
             double rate = UiUtils.parsePositiveOrZero(rateField.getText(), "Interest rate") / 100.0;
             double targetAmount = UiUtils.parsePositiveOrZero(targetAmtField.getText(), "Target Amount");
-            String targetDate = UiUtils.requireNonEmpty(targetDateField.getText(), "Target Date");
+            String targetDate = UiUtils.requireNonEmpty(targetDateField.getValue().toString(), "Target Date");
 
             SavingsAccount account = new SavingsAccount(
-                    userId, accountNo, owner, initialBal, rate,
+                    userId, accountNo, initialBal, rate,
                     targetAmount, 0, new Date().toString(),
                     targetDate, SavingsStatus.ACTIVE.toString()
             );
@@ -83,10 +75,9 @@ public class SavingsController {
     }
 
     private void clearFields() {
-        ownerField.clear();
         initialBalField.clear();
         rateField.clear();
-        targetDateField.clear();
+        targetDateField.setValue(null);
         targetAmtField.clear();
     }
 

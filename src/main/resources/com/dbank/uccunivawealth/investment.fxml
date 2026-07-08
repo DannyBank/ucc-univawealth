@@ -4,7 +4,9 @@
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
@@ -14,98 +16,399 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.dbank.uccunivawealth.controller.InvestmentController"
             styleClass="tab-content">
+
+
+    <padding>
+        <Insets top="10"
+                right="10"
+                bottom="10"
+                left="10"/>
+    </padding>
+
+
     <center>
-        <TableView fx:id="investmentTable">
-            <columns>
-                <TableColumn fx:id="accNoCol" text="Account No.">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="accountNumber"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="ownerCol" text="Owner">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="ownerName"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="typeCol" text="Type">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="investmentType"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="riskCol" text="Risk Level">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="riskLevel"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="expReturnCol" text="Expected Return (p.a.)">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="expectedReturnDisplay"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="balCol" text="Balance (GHS)">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="balance"/>
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-            <placeholder>
-                <Label text="No investment accounts yet. Create one below."/>
-            </placeholder>
-        </TableView>
+
+
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="false"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED">
+
+
+            <content>
+
+
+                <VBox spacing="10">
+
+
+
+                    <!-- ================= CREATE INVESTMENT ================= -->
+
+
+                    <VBox spacing="8"
+                          styleClass="form-panel">
+
+
+                        <padding>
+                            <Insets top="10"
+                                    right="10"
+                                    bottom="10"
+                                    left="10"/>
+                        </padding>
+
+                        <Label text="Create Investment"
+                               styleClass="section-title"/>
+
+                        <GridPane hgap="8"
+                                  vgap="8">
+
+
+                            <columnConstraints>
+
+                                <ColumnConstraints prefWidth="110"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+
+                                <ColumnConstraints prefWidth="110"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+
+                                <ColumnConstraints prefWidth="110"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+
+                            </columnConstraints>
+
+                            <!-- ROW 0 -->
+
+                            <Label text="Investment Title:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"/>
+
+                            <MFXTextField fx:id="investmentNameField"
+                                          GridPane.rowIndex="0"
+                                          GridPane.columnIndex="1"/>
+
+                            <Label text="Type:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="2"/>
+
+
+                            <MFXComboBox fx:id="typeBox"
+                                         floatingText="Investment type"
+                                         GridPane.rowIndex="0"
+                                         GridPane.columnIndex="3"/>
+
+
+
+                            <Label text="Capital:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="4"/>
+
+
+                            <MFXTextField fx:id="initialBalField"
+                                          GridPane.rowIndex="0"
+                                          GridPane.columnIndex="5"/>
+
+                            <!-- ROW 1 -->
+
+                            <Label text="Interest:"
+                                   GridPane.rowIndex="1"
+                                   GridPane.columnIndex="0"/>
+
+
+                            <MFXTextField fx:id="interestField"
+                                          GridPane.rowIndex="1"
+                                          GridPane.columnIndex="1"/>
+
+                            <Label text="Duration:"
+                                   GridPane.rowIndex="1"
+                                   GridPane.columnIndex="2"/>
+
+                            <MFXTextField fx:id="durationField"
+                                          GridPane.rowIndex="1"
+                                          GridPane.columnIndex="3"/>
+
+
+
+                            <Label text="Risk:"
+                                   GridPane.rowIndex="1"
+                                   GridPane.columnIndex="4"/>
+
+
+                            <MFXComboBox fx:id="riskLevel"
+                                         GridPane.rowIndex="1"
+                                         GridPane.columnIndex="5"/>
+
+
+
+
+                            <!-- ROW 2 -->
+
+
+                            <Label text="Start:"
+                                   GridPane.rowIndex="2"
+                                   GridPane.columnIndex="0"/>
+
+
+                            <DatePicker fx:id="startDateField"
+                                        GridPane.rowIndex="2"
+                                        GridPane.columnIndex="1"/>
+
+
+
+                            <Label text="Maturity:"
+                                   GridPane.rowIndex="2"
+                                   GridPane.columnIndex="2"/>
+
+
+                            <DatePicker fx:id="maturityDateField"
+                                        GridPane.rowIndex="2"
+                                        GridPane.columnIndex="3"/>
+
+
+
+                            <Label text="Returns:"
+                                   GridPane.rowIndex="2"
+                                   GridPane.columnIndex="4"/>
+
+
+                            <MFXTextField fx:id="expectedReturnField"
+                                          GridPane.rowIndex="2"
+                                          GridPane.columnIndex="5"/>
+
+
+                        </GridPane>
+
+
+
+
+                        <!-- CENTER BUTTON -->
+
+
+                        <HBox alignment="CENTER">
+
+
+                            <MFXButton fx:id="createBtn"
+                                       text="Create Investment Account"
+                                       onAction="#onCreateAccount"
+                                       styleClass="mfx-button-raised"/>
+
+
+                        </HBox>
+
+
+                    </VBox>
+
+
+
+
+
+
+                    <!-- ================= INVESTMENT TABLE ================= -->
+
+
+                    <VBox spacing="8"
+                          styleClass="form-panel">
+
+
+                        <padding>
+                            <Insets top="10"
+                                    right="10"
+                                    bottom="10"
+                                    left="10"/>
+                        </padding>
+
+
+
+                        <Label text="Investment Portfolio"
+                               styleClass="section-title"/>
+
+
+
+                        <TableView fx:id="investmentTable"
+                                   prefHeight="400">
+
+
+                            <columns>
+
+
+                                <TableColumn fx:id="nameCol"
+                                             text="Investment">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="investmentName"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="typeCol"
+                                             text="Type">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="investmentType"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="principalCol"
+                                             text="Initial">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="Principal"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="interestCol"
+                                             text="Interest">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="interestRate"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="durationCol"
+                                             text="Duration">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="durationMonths"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="startCol"
+                                             text="Start">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="startDate"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="maturityCol"
+                                             text="Maturity">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="maturityDate"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="returnCol"
+                                             text="Returns">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="expectedReturn"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+
+                                <TableColumn fx:id="statusCol"
+                                             text="Status">
+
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="status"/>
+                                    </cellValueFactory>
+
+                                </TableColumn>
+
+
+                            </columns>
+
+
+                            <placeholder>
+                                <Label text="No investments yet. Create one below."/>
+                            </placeholder>
+
+
+                        </TableView>
+
+
+                    </VBox>
+
+
+                </VBox>
+
+
+            </content>
+
+
+        </ScrollPane>
+
+
     </center>
+
+
+
+
+
+    <!-- ================= ACTION BAR ================= -->
+
+
     <bottom>
-        <VBox spacing="15">
+
+
+        <HBox spacing="10"
+              alignment="CENTER_LEFT"
+              styleClass="form-panel">
+
+
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets top="10"
+                        right="10"
+                        bottom="10"
+                        left="10"/>
             </padding>
 
-            <GridPane hgap="10" vgap="10" styleClass="form-panel">
-                <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
-                </padding>
-                <columnConstraints>
-                    <ColumnConstraints minWidth="160"/>
-                    <ColumnConstraints minWidth="240" hgrow="ALWAYS"/>
-                </columnConstraints>
 
-                <Label text="Owner:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="ownerField" floatingText="Owner name"
-                              GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="Initial Investment:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="initialBalField" floatingText="Initial investment (GHS)"
-                              GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Amount:"/>
 
-                <Label text="Investment Type:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <MFXComboBox fx:id="typeBox" floatingText="Investment type"
-                             GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                <Label text="Risk Level:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <MFXComboBox fx:id="riskBox" floatingText="Risk level"
-                             GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                <Label text="Expected Return (%):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <MFXTextField fx:id="returnField" floatingText="Expected annual return % (e.g. 15)"
-                              GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <MFXTextField fx:id="simAmountField"
+                          floatingText="Amount (GHS)"
+                          prefWidth="180"/>
 
-                <MFXButton fx:id="createBtn" text="Create Investment Account" onAction="#onCreateAccount"
-                           styleClass="mfx-button-raised" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-            </GridPane>
 
-            <HBox spacing="10" alignment="CENTER_LEFT" styleClass="form-panel">
-                <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
-                </padding>
-                <Label text="Amount:"/>
-                <MFXTextField fx:id="amountField" floatingText="Amount (GHS)"/>
-                <MFXButton fx:id="depositBtn" text="Add Funds" onAction="#onDeposit" styleClass="mfx-button-raised"/>
-                <MFXButton fx:id="withdrawBtn" text="Withdraw" onAction="#onWithdraw" styleClass="mfx-button-raised"/>
-                <MFXButton fx:id="simulateBtn" text="Simulate Annual Return" onAction="#onSimulateReturn"
-                           styleClass="mfx-button-raised"/>
-            </HBox>
-        </VBox>
+
+            <MFXButton fx:id="depositBtn"
+                       text="Deposit"
+                       onAction="#onDeposit"
+                       styleClass="mfx-button-raised"/>
+
+
+
+            <MFXButton fx:id="simReturnsBtn"
+                       text="Simulate Annual Returns"
+                       onAction="#onSimulateReturn"
+                       styleClass="mfx-button-raised"/>
+
+
+        </HBox>
+
+
     </bottom>
+
+
 </BorderPane>

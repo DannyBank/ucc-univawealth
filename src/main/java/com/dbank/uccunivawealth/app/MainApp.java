@@ -1,6 +1,5 @@
 package com.dbank.uccunivawealth.app;
 
-import com.dbank.uccunivawealth.service.AppData;
 import io.github.palexdev.materialfx.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

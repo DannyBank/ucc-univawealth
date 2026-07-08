@@ -21,7 +21,6 @@ public class SavingsRepository {
                     list.add(new SavingsAccount(
                             rs.getInt("UserId"),
                             rs.getString("AccountNumber"),
-                            rs.getString("AccountName"),
                             rs.getDouble("InitialBalance"),
                             rs.getDouble("InterestRate"),
                             rs.getDouble("TargetAmount"),
@@ -43,7 +42,6 @@ public class SavingsRepository {
             INSERT INTO SavingsAccount (
                 UserId,
                 AccountNumber,
-                AccountName,
                 InitialBalance,
                 InterestRate,
                 TargetAmount,
@@ -52,20 +50,19 @@ public class SavingsRepository {
                 TargetDate,
                 Status
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, acc.getAccountNumber());
-            ps.setString(2, acc.getAccountName());
-            ps.setDouble(3, acc.getBalance());
-            ps.setDouble(4, acc.getInterestRate());
-            ps.setDouble(5, acc.getTargetAmount());
-            ps.setDouble(6, acc.getCurrentBalance());
-            ps.setString(7, acc.getStartDate());
-            ps.setString(8, acc.getTargetDate());
-            ps.setString(9, acc.getStatus());
+            ps.setDouble(2, acc.getBalance());
+            ps.setDouble(3, acc.getInterestRate());
+            ps.setDouble(4, acc.getTargetAmount());
+            ps.setDouble(5, acc.getCurrentBalance());
+            ps.setString(6, acc.getStartDate());
+            ps.setString(7, acc.getTargetDate());
+            ps.setString(8, acc.getStatus());
 
             return ps.executeUpdate();
         } catch (SQLException e) {
@@ -90,7 +87,6 @@ public class SavingsRepository {
                     found = new SavingsAccount(
                             rs.getInt("UserId"),
                             rs.getString("AccountNumber"),
-                            rs.getString("AccountName"),
                             rs.getDouble("InitialBalance"),
                             rs.getDouble("InterestRate"),
                             rs.getDouble("TargetAmount"),
