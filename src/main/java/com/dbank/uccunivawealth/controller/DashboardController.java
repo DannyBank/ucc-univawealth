@@ -19,12 +19,6 @@ import java.util.Objects;
 public class DashboardController {
 
     @FXML
-    private Label totalSavingsLabel;
-    @FXML
-    private Label totalInvestmentLabel;
-    @FXML
-    private Label netWorthLabel;
-    @FXML
     private PieChart allocationChart;
 
     private final AppData appData = AppData.getInstance();
@@ -39,7 +33,34 @@ public class DashboardController {
         refreshDashboard();
     }
 
+    @FXML private Label lblSavings;
+    @FXML private Label lblInvestments;
+    @FXML private Label lblNetWorth;
+
+    @FXML
+    private void addSavings() {
+        // logic to add savings
+    }
+
+    @FXML
+    private void addInvestment() {
+        // logic to add investment
+    }
+
+    @FXML
+    private void viewTransactions() {
+        // logic to show transactions tab
+    }
+
     public void refreshDashboard() {
+        lblSavings.setText("GHS 5000.00");
+        lblInvestments.setText("GHS 12000.00");
+        lblNetWorth.setText("GHS 17000.00");
+
+        allocationChart.getData().clear();
+        allocationChart.getData().add(new PieChart.Data("Savings", 5000));
+        allocationChart.getData().add(new PieChart.Data("Investments", 12000));
+
         double totalSavings = appData.getSavingsAccounts().stream()
                 .filter(Objects::nonNull)
                 .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
@@ -50,9 +71,9 @@ public class DashboardController {
                 .sum();
         double netWorth = totalSavings + totalInvestment;
 
-        totalSavingsLabel.setText(UiUtils.formatMoney(totalSavings));
-        totalInvestmentLabel.setText(UiUtils.formatMoney(totalInvestment));
-        netWorthLabel.setText(UiUtils.formatMoney(netWorth));
+        lblSavings.setText(UiUtils.formatMoney(totalSavings));
+        lblInvestments.setText(UiUtils.formatMoney(totalInvestment));
+        lblNetWorth.setText(UiUtils.formatMoney(netWorth));
 
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
         if (totalSavings > 0) {

@@ -27,7 +27,6 @@
             </padding>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-                <Label text="\$" style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold;"/>
                 <Label text="💰UnivaWealth" style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;"/>
             </HBox>
 
@@ -60,55 +59,6 @@
     <!-- Main Content -->
     <center>
         <StackPane fx:id="contentArea" style="-fx-background-color: #F4F6FA;">
-            <VBox spacing="24.0" style="-fx-background-color: #F4F6FA;">
-                <padding>
-                    <Insets top="24" right="24" bottom="24" left="24"/>
-                </padding>
-
-                <!-- Header -->
-                <VBox spacing="4.0">
-                    <Label text="Dashboard" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1F2937;"/>
-                    <Label text="Overview of your savings, investments, and net worth"
-                           style="-fx-font-size: 14px; -fx-text-fill: #6B7280;"/>
-                </VBox>
-
-                <!-- Split Layout: Chart Left, Cards Right -->
-                <HBox spacing="24.0" VBox.vgrow="ALWAYS">
-                    <!-- Chart Section -->
-                    <VBox spacing="14.0" HBox.hgrow="ALWAYS"
-                          style="-fx-background-color: white; -fx-background-radius: 18; -fx-border-color: #E5E7EB; -fx-border-radius: 18; -fx-padding: 20;">
-                        <Label text="Asset Allocation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1F2937;"/>
-                        <StackPane VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
-                            <PieChart fx:id="assetAllocationChart"
-                                      labelsVisible="true"
-                                      legendVisible="true"
-                                      style="-fx-background-color: transparent;"/>
-                        </StackPane>
-                        <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <Label text="" style="-fx-background-color: #F97316; -fx-background-radius: 100; -fx-min-width: 10; -fx-min-height: 10;"/>
-                            <Label text="No funds yet" style="-fx-font-size: 13px; -fx-text-fill: #4B5563;"/>
-                        </HBox>
-                    </VBox>
-
-                    <!-- Cards Section -->
-                    <VBox spacing="18.0" prefWidth="300.0">
-                        <VBox spacing="8.0" style="-fx-background-color: linear-gradient(to right, #2F855A, #38A169); -fx-background-radius: 18; -fx-padding: 18;">
-                            <Label text="Total Savings" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
-                            <Label text="GHS 0.00" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
-                        </VBox>
-
-                        <VBox spacing="8.0" style="-fx-background-color: linear-gradient(to right, #1E4E6E, #275E83); -fx-background-radius: 18; -fx-padding: 18;">
-                            <Label text="Total Investments" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
-                            <Label text="GHS 0.00" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
-                        </VBox>
-
-                        <VBox spacing="8.0" style="-fx-background-color: linear-gradient(to right, #6B4EA2, #7E5BB5); -fx-background-radius: 18; -fx-padding: 18;">
-                            <Label text="Net Worth" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
-                            <Label text="GHS 0.00" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
-                        </VBox>
-                    </VBox>
-                </HBox>
-            </VBox>
         </StackPane>
     </center>
 </BorderPane>

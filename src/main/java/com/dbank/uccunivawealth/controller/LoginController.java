@@ -90,7 +90,7 @@ public class LoginController {
 
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/dbank/uccunivawealth/main.fxml"));
+                    getClass().getResource("/com/dbank/uccunivawealth/main-view.fxml"));
 
             Parent root = loader.load();
 

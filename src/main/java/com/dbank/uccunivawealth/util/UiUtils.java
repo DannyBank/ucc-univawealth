@@ -15,8 +15,7 @@ import java.time.format.DateTimeFormatter;
  */
 public final class UiUtils {
 
-    private UiUtils() {
-    }
+    private UiUtils() {}
 
     public static String formatMoney(double amount) {
         return String.format("GHS %,.2f", amount);
