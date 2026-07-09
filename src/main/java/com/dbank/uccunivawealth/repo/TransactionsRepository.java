@@ -2,7 +2,6 @@ package com.dbank.uccunivawealth.repo;
 
 import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.service.LoggerService;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

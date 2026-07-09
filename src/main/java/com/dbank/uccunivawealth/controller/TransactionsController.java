@@ -4,11 +4,9 @@ import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
 import java.util.Comparator;
 
 /**

@@ -10,7 +10,6 @@ import com.dbank.uccunivawealth.repo.SavingsRepository;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.SQLException;
 
 /**

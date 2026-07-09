@@ -1,6 +1,5 @@
 package com.dbank.uccunivawealth.controller;
 
-import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
@@ -17,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
-
 import java.time.LocalDateTime;
 
 /**
