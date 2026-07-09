@@ -153,6 +153,14 @@
 
 
                     <columns>
+                        <TableColumn fx:id="savingsIdCol"
+                                     prefWidth="120" visible="false">
+
+                            <cellValueFactory>
+                                <PropertyValueFactory property="savingsId"/>
+                            </cellValueFactory>
+
+                        </TableColumn>
 
 
                         <TableColumn fx:id="capitalCol"

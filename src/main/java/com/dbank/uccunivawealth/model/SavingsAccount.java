@@ -1,5 +1,9 @@
 package com.dbank.uccunivawealth.model;
 
+import com.dbank.uccunivawealth.repo.TransactionsRepository;
+
+import java.time.LocalDateTime;
+
 /**
  * A savings account
  */
@@ -38,7 +42,8 @@ public class SavingsAccount extends Account{
     public SavingsAccount(int userId, String accountNumber,
                           double initialBalance, double interestRate,
                           double targetAmount, double currentBalance,
-                          String startDate, String targetDate, String status) {
+                          String startDate, String targetDate, String status,
+                          int savingsId) {
         super(userId, accountNumber);
         if (interestRate < 0) {
             throw new IllegalArgumentException("Interest rate cannot be negative.");
@@ -51,7 +56,7 @@ public class SavingsAccount extends Account{
         this.startDate = startDate;
         this.targetDate = targetDate;
         this.status = status;
-        this.savingsId = 0;
+        this.savingsId = savingsId;
     }
 
     public double getInterestRate() {
@@ -60,12 +65,6 @@ public class SavingsAccount extends Account{
 
     public String getInterestRateDisplay() {
         return String.format("%.2f%%", interestRate * 100);
-    }
-
-    public void deposit(double amount) {
-    }
-
-    public void withdraw(double amount) {
     }
 
     public double getBalance() {

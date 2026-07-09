@@ -106,7 +106,7 @@ Contain reusable business logic.
 Examples:
 
 - Authentication
-- Logging
+- Error Logging
 - Application state management
 
 ---

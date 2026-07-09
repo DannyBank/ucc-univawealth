@@ -15,7 +15,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Controller for {@code savings.fxml}: creating savings accounts, depositing, withdrawing,
@@ -52,7 +54,7 @@ public class SavingsController {
     @FXML
     private void onCreateAccount() {
         try {
-            String accountNo = currentUser.getAccountNumber();
+            String accountNo = currentUser.getAccountNumber() + new Random().nextInt();
             int userId = currentUser.getUserId();
 
             double initialBal = UiUtils.parsePositiveOrZero(initialBalField.getText(), "Initial deposit");
@@ -63,7 +65,7 @@ public class SavingsController {
             SavingsAccount account = new SavingsAccount(
                     userId, accountNo, initialBal, rate,
                     targetAmount, initialBal, new Date().toString(),
-                    targetDate, SavingsStatus.ACTIVE.toString()
+                    targetDate, SavingsStatus.ACTIVE.toString(),0
             );
             if (!appData.addSavingsAccount(account))
                 Notification.showError("An error occurred, please try again");
@@ -129,16 +131,50 @@ public class SavingsController {
             }
 
             if (action.equals("deposit")) {
-                selected.deposit(amount);
+                deposit(selected, amount);
             } else {
-                selected.withdraw(amount);
+                withdraw(selected, amount);
             }
             amountField.clear();
             savingsTable.refresh();
             Notification.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",
-                    action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getBalance()));
+                    action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getCurrentBalance()));
         } catch (Exception ex){
             LoggerService.log(ex);
         }
+    }
+
+    public void deposit(SavingsAccount acc, double amount) throws Exception {
+        // Update the database savings balance
+        int userId = currentUser.getUserId();
+        int res = appData.depositSavingsAccount(userId, acc.getSavingsId(), amount);
+
+        if (res == 1) {
+            // record transaction
+            boolean trans = new TransactionsRepository().insert(
+                    new Transaction(0,
+                            acc.getUserId(), acc.getSavingsId(), 0,
+                            "DEPOSIT", amount,
+                            LocalDateTime.now().toString(), 1, "SAVINGS DEPOSIT"));
+        }
+        else
+            throw new Exception("Deposit failure");
+    }
+
+    public void withdraw(SavingsAccount acc, double amount) throws Exception {
+        // Update the database savings balance
+        int userId = currentUser.getUserId();
+        int res = appData.withdrawSavingsAccount(userId, acc.getSavingsId(), amount);
+
+        if (res == 1) {
+            // record transaction
+            boolean trans = new TransactionsRepository().insert(
+                    new Transaction(0,
+                            acc.getUserId(), acc.getSavingsId(), 0,
+                            "WITHDRAWAL", amount,
+                            LocalDateTime.now().toString(), 2, "SAVINGS WITHDRAWAL"));
+        }
+        else
+            throw new Exception("Withdrawal failure");
     }
 }

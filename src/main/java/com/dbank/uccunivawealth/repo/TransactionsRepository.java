@@ -12,7 +12,7 @@ public class TransactionsRepository {
     public List<Transaction> getAll() {
         List<Transaction> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM Transactions";
+        String sql = "SELECT * FROM Transactions WHERE TransactionType NOT IN ('LOGIN','REGISTER')";
 
         try (Connection conn = DatabaseManager.connect()) {
             assert conn != null;

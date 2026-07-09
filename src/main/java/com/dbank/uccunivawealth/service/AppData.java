@@ -94,6 +94,13 @@ public final class AppData {
         loadSavingsAccounts(); // refresh UI
     }
 
+    public int updateSavingsAccount(int userId, int savingsId, double amount, int type) {
+        int res = savingsRepo.update(userId, savingsId, amount, type);
+        if (res == 1)
+            loadSavingsAccounts(); // refresh UI
+        return res;
+    }
+
     public void deleteSavingsAccount(int accountId) {
         savingsRepo.delete(String.valueOf(accountId));
         savingsAccounts.removeIf(a -> a.getSavingsId() == accountId);
@@ -142,5 +149,13 @@ public final class AppData {
     public void deleteGoal(String name) {
         goalsRepo.delete(name);
         goals.removeIf(g -> g.getName().equals(name));
+    }
+
+    public int depositSavingsAccount(int userId, int savingsId, double amount) {
+        return updateSavingsAccount(userId, savingsId, amount, 1);
+    }
+
+    public int withdrawSavingsAccount(int userId, int savingsId, double amount) {
+        return updateSavingsAccount(userId, savingsId, amount, 0);
     }
 }

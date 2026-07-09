@@ -27,7 +27,8 @@ public class SavingsRepository {
                             rs.getDouble("CurrentBalance"),
                             rs.getString("StartDate"),
                             rs.getString("TargetDate"),
-                            rs.getString("Status")
+                            rs.getString("Status"),
+                            rs.getInt("SavingsId")
                     ));
                 }
             }
@@ -72,6 +73,29 @@ public class SavingsRepository {
         }
     }
     public void update(SavingsAccount account){ return; }
+    public int update(int userId, int savingsId, double amount, int type){
+        String sql = (type == 1)?
+            """
+            UPDATE SavingsAccount SET CurrentBalance = CurrentBalance + ? 
+                                  WHERE SavingsId = ? AND UserId = ?;
+            """:
+            """
+            UPDATE SavingsAccount SET CurrentBalance = CurrentBalance - ? 
+                                  WHERE SavingsId = ? AND UserId = ?;
+            """;
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setDouble(1, amount);
+            ps.setInt(2, savingsId);
+            ps.setInt(3, userId);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
     public void delete(String accountId){ return; }
 
     public SavingsAccount getByUser(int userId) {
@@ -94,7 +118,8 @@ public class SavingsRepository {
                             rs.getDouble("CurrentBalance"),
                             rs.getString("StartDate"),
                             rs.getString("TargetDate"),
-                            rs.getString("Status")
+                            rs.getString("Status"),
+                            rs.getInt("SavingsId")
                     );
                 }
             }
