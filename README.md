@@ -238,17 +238,18 @@ Due to limited timing given for this project, a few things are still rough in it
 
 Some planned enhancements include:
 
-- Charts and financial analytics
-- Budget management
+- Welcome & Onboarding Emails
+- Campus Challenges
+- Investment/Savings Goal Updates
+- Monthly Financial Report
+- Financial Education Newsletter
 - Loan management
 - Investment recommendations
-- Email/SMS notifications
-- Report generation
+- SMS notifications
 - Data export (Excel/PDF)
 - Multi-user support
 - Backup and restore
-- Cloud synchronization
-- Parameterized stored procedure queries for security
+- AI Financial Coach Reports
 
 ---
 
