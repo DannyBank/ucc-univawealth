@@ -1,5 +1,6 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.SavingsAccount;
 import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
@@ -16,6 +17,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
+
+import java.time.LocalDateTime;
 
 /**
  * Controller for {@code investment.fxml}: creating investment accounts, adding/withdrawing
@@ -162,26 +165,52 @@ public class InvestmentController {
             }
 
             if (action.equals("deposit")) {
-                deposit(amount);
+                deposit(selected, amount);
             } else {
-                withdraw(amount);
+                withdraw(selected, amount);
             }
 
             simAmountField.clear();
             investmentTable.refresh();
 
             Notification.showInfo(String.format("%s of GHS %.2f successful. New balance: GHS %.2f",
-                    action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getBalance()));
+                    action.equals("deposit") ? "Deposit" : "Withdrawal", amount, selected.getPrincipal()));
         } catch (Exception ex){
             LoggerService.log(ex);
         }
     }
 
-    private void withdraw(double amount) {
+    public void deposit(Investment acc, double amount) throws Exception {
+        // Update the database savings balance
+        int userId = currentUser.getUserId();
+        int res = appData.depositInvestmentAccount(userId, acc.getInvestmentId(), amount);
 
+        if (res == 1) {
+            // record transaction
+            boolean trans = new TransactionsRepository().insert(
+                    new Transaction(0,
+                            acc.getUserId(), acc.getInvestmentId(), 0,
+                            "DEPOSIT", amount,
+                            LocalDateTime.now().toString(), 1, "INVEST. DEPOSIT"));
+        }
+        else
+            throw new Exception("Deposit failure");
     }
 
-    private void deposit(double amount) {
+    public void withdraw(Investment acc, double amount) throws Exception {
+        // Update the database investment balance
+        int userId = currentUser.getUserId();
+        int res = appData.withdrawInvestmentAccount(userId, acc.getInvestmentId(), amount);
 
+        if (res == 1) {
+            // record transaction
+            boolean trans = new TransactionsRepository().insert(
+                    new Transaction(0,
+                            acc.getUserId(), acc.getInvestmentId(), 0,
+                            "WITHDRAWAL", amount,
+                            LocalDateTime.now().toString(), 2, "INVEST. WITHDRAWAL"));
+        }
+        else
+            throw new Exception("Withdrawal failure");
     }
 }

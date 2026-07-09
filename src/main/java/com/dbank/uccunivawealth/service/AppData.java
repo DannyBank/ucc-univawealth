@@ -120,6 +120,21 @@ public final class AppData {
         loadInvestmentAccounts();
     }
 
+    public int updateInvestmentAccount(int userId, int investmentId, double amount, int type) {
+        int res = investmentsRepo.update(userId, investmentId, amount, type);
+        if (res == 1)
+            loadInvestmentAccounts(); // refresh UI
+        return res;
+    }
+
+    public int depositInvestmentAccount(int userId, int investmentId, double amount) {
+        return updateInvestmentAccount(userId, investmentId, amount, 1);
+    }
+
+    public int withdrawInvestmentAccount(int userId, int investmentId, double amount) {
+        return updateInvestmentAccount(userId, investmentId, amount, 0);
+    }
+
     public void deleteInvestmentAccount(String accountId) {
         investmentsRepo.delete(accountId);
         investments.removeIf(a -> a.getInvestmentId().equals(accountId));

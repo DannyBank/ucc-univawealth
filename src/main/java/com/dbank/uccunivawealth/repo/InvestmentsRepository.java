@@ -96,5 +96,30 @@ public class InvestmentsRepository {
     }
 
     public void update(Investment account){ return; }
+
+    public int update(int userId, int investmentId, double amount, int type){
+        String sql = (type == 1)?
+                """
+                UPDATE Investment SET Principal = Principal + ? 
+                                      WHERE InvestmentId = ? AND UserId = ?;
+                """:
+                """
+                UPDATE Investment SET Principal = Principal - ? 
+                                      WHERE InvestmentId = ? AND UserId = ?;
+                """;
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setDouble(1, amount);
+            ps.setInt(2, investmentId);
+            ps.setInt(3, userId);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public void delete(String accountId){ return; }
 }
