@@ -134,6 +134,10 @@ public class InvestmentController {
             Notification.showError("Please select an investment account first.");
             return;
         }
+        if (riskLevel.getValue() == null || riskLevel.getValue().isEmpty()){
+            Notification.showError("Please select a risk level first.");
+            return;
+        }
         double gain = simulateAnnualReturn(
                 selected.getPrincipal(), selected.getInterestRate(),
                 selected.getDurationMonths(), riskLevel.getValue());
