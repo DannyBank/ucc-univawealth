@@ -185,12 +185,4 @@ public class MainController {
             System.out.println("Logout Cancelled.");
         }
     }
-
-    public void addSavings(ActionEvent actionEvent) {
-        showSavings();
-    }
-
-    public void addInvestment(ActionEvent actionEvent) {
-        showInvestment();
-    }
 }

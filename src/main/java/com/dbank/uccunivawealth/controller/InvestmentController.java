@@ -134,22 +134,42 @@ public class InvestmentController {
             Notification.showError("Please select an investment account first.");
             return;
         }
-        double gain = simulateAnnualReturn(riskLevel.getValue());
+        double gain = simulateAnnualReturn(
+                selected.getPrincipal(), selected.getInterestRate(),
+                selected.getDurationMonths(), riskLevel.getValue());
         investmentTable.refresh();
         String sign = gain >= 0 ? "gain" : "loss";
         Notification.showInfo(String.format(
-                "Simulated a %s of GHS %.2f.", sign, Math.abs(gain)));
+                "Risk level: %s on GHS %.2f\nSimulated a %s of GHS %.2f.",
+                riskLevel.getValue(), selected.getPrincipal(), sign, Math.abs(gain)));
     }
 
-    public double simulateAnnualReturn(String riskLevel) {
+    public double simulateAnnualReturn(double principal,
+                                       double annualRate,
+                                       int durationMonths,
+                                       String riskLevel) {
+
         double varianceFactor = switch (riskLevel == null ? "" : riskLevel) {
-            case "Low" -> 0.02;
-            case "Medium" -> 0.08;
-            case "High" -> 0.18;
-            default -> 0.05;
+            case "Low" -> 0.02;      // ±2%
+            case "Medium" -> 0.08;   // ±8%
+            case "High" -> 0.18;     // ±18%
+            default -> 0.05;         // ±5%
         };
 
-        return varianceFactor;
+        // Random fluctuation between -varianceFactor and +varianceFactor
+        double fluctuation = (Math.random() * 2 - 1) * varianceFactor;
+
+        // Adjust the annual rate
+        double simulatedRate = annualRate * (1 + fluctuation);
+
+        // Prevent negative returns
+        simulatedRate = Math.max(simulatedRate, 0);
+
+        // Convert duration to years
+        double years = durationMonths / 12.0;
+
+        // Calculate simple interest
+        return principal * simulatedRate * years / 100.0;
     }
 
     private void performAction(String action) {

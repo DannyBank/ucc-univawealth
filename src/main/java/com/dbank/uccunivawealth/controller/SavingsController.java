@@ -112,10 +112,16 @@ public class SavingsController {
             Notification.showError("Please select a savings account first.");
             return;
         }
-        double interest = selected.applyMonthlyInterest();
+        double interest = applyMonthlyInterest(selected);
         savingsTable.refresh();
         Notification.showInfo(String.format(
-                "Applied interest of GHS %.2f", interest));
+                "Applied on GHS %.2f,\ninterest returns is GHS %.2f",
+                selected.getCurrentBalance(), interest));
+    }
+
+    // Display the interest to be made on the current amount in the account
+    public double applyMonthlyInterest(SavingsAccount acc) {
+        return acc.getCurrentBalance() * (acc.getInterestRate() / 12);
     }
 
     private void performAction(String action) {

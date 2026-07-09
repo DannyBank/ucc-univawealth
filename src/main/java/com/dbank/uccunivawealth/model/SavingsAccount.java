@@ -70,8 +70,4 @@ public class SavingsAccount extends Account{
     public double getBalance() {
         return Double.MIN_NORMAL;
     }
-
-    public double applyMonthlyInterest() {
-        return Double.MIN_NORMAL;
-    }
 }

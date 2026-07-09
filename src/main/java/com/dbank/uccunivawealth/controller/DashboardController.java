@@ -66,7 +66,7 @@ public class DashboardController {
 
             double totalSavings = appData.getSavingsAccounts().stream()
                     .filter(Objects::nonNull)
-                    .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
+                    .mapToDouble(item -> Objects.requireNonNullElse(item.getCurrentBalance(), 0.0))
                     .sum();
             double totalInvestment = appData.getInvestmentAccounts().stream()
                     .filter(Objects::nonNull)
