@@ -105,9 +105,10 @@ public class RegisterController {
             String msisdn = msisdnField.getText();
 
             if (!InputValidator.isValidUsername(username) ||
-                    !InputValidator.isValidPassword(password) ||
-                    !InputValidator.isValidUsername(email) ||
-                    !InputValidator.isValidUsername(msisdn)) {
+                    !InputValidator.isValidUsername(password) ||
+                    InputValidator.isEmailValid(email) ||
+                    InputValidator.isValidMsisdn(msisdn) ||
+                    !InputValidator.isEmailValid(email)) {
                 return null;
             }
 

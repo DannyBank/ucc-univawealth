@@ -69,7 +69,7 @@ public class LoginController {
             String password = passwordField.getText();
 
             if (!InputValidator.isValidUsername(username) ||
-                    !InputValidator.isValidPassword(password)) {
+                !InputValidator.isValidUsername(password)) {
                 return null;
             }
 
