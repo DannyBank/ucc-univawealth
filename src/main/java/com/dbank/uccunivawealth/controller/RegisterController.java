@@ -1,11 +1,13 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.RegResponse;
 import com.dbank.uccunivawealth.model.Transaction;
 import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.repo.TransactionsRepository;
 import com.dbank.uccunivawealth.service.AuthService;
 import com.dbank.uccunivawealth.service.LoggerService;
 import com.dbank.uccunivawealth.util.InputValidator;
+import com.dbank.uccunivawealth.util.Notification;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.FadeTransition;
@@ -32,7 +34,6 @@ public class RegisterController {
     @FXML MFXTextField msisdnField;
     @FXML Button btnLogin;
     @FXML Label lbl;
-
     @FXML private VBox loadingPane;
     @FXML private ProgressIndicator progressIndicator;
 
@@ -41,9 +42,9 @@ public class RegisterController {
 
         fade(loadingPane, true);
 
-        Task<User> registerTask = new Task<>() {
+        Task<RegResponse> registerTask = new Task<>() {
             @Override
-            protected User call() throws Exception {
+            protected RegResponse call() throws Exception {
                 return register();
             }
         };
@@ -51,10 +52,15 @@ public class RegisterController {
         registerTask.setOnSucceeded(e -> {
             fade(loadingPane, false);
 
-            User user = registerTask.getValue();
+            RegResponse response = registerTask.getValue();
 
-            if (user != null) {
-                goToMainPage(user);
+            if (response != null && response.getUser() != null) {
+                Notification.showInfo(response.getMessage());
+                goToMainPage(response.getUser());
+            } else if (response != null && !response.getMessage().isBlank()){
+                Notification.showInfo(response.getMessage());
+            } else {
+                Notification.showInfo("An error occurred. Please try again");
             }
         });
 
@@ -97,27 +103,47 @@ public class RegisterController {
         ft.play();
     }
 
-    public User register() throws Exception {
+    public RegResponse register() {
+        RegResponse regResponse = new RegResponse();
+        regResponse.setUser(null);
+
         try {
             String username = usernameField.getText();
             String password = passwordField.getText();
             String email = emailField.getText();
             String msisdn = msisdnField.getText();
 
-            if (!InputValidator.isValidUsername(username) ||
-                    !InputValidator.isValidUsername(password) ||
-                    InputValidator.isEmailValid(email) ||
-                    InputValidator.isValidMsisdn(msisdn) ||
-                    !InputValidator.isEmailValid(email)) {
-                return null;
+            if (!InputValidator.isValidUsername(username)){
+                regResponse.setMessage("Please specify a valid username\n(No special characters)");
+                return regResponse;
+            }
+            if (password.isBlank()){
+                regResponse.setMessage("Please specify a valid password");
+                return regResponse;
+            }
+            if (!InputValidator.isEmailValid(email)){
+                regResponse.setMessage("Please specify a valid email\n(eg john@mail.com)");
+                return regResponse;
+            }
+            if (!InputValidator.isValidMsisdn(msisdn)) {
+                regResponse.setMessage("Please specify a valid msisdn\n(eg. 233xxx or 02xxx");
+                return regResponse;
             }
 
             User user = new AuthService().addUser(username, password, email, msisdn);
             recordTransaction(user.getUserId(), 0, LocalDate.now().toString(), "REGISTER");
-            return user;
+
+            regResponse.setMessage("You have successfully created an account\nPlease log in now");
+            regResponse.setUser(user);
+
+            return regResponse;
+
         } catch (Exception ex){
-            LoggerService.log(ex);
-            return null;
+            LoggerService.logE(ex);
+
+            regResponse.setMessage("An error occurred, please try again");
+
+            return regResponse;
         }
     }
 

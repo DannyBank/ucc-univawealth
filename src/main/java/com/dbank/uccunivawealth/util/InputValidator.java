@@ -24,7 +24,8 @@ public class InputValidator {
         }
 
         username = username.trim();
-        return !USERNAME_PATTERN.matcher(username).matches();
+        boolean match = USERNAME_PATTERN.matcher(username).matches();
+        return match;
     }
 
     public static boolean isEmailValid(String email) {

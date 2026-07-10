@@ -20,7 +20,8 @@ public final class LoggerService {
             + File.separator + "UccUnivaWealth" + File.separator
             + "logs";
 
-    private LoggerService() {}
+    private LoggerService() {
+    }
 
     /**
      * Logs an exception and displays a generic error message.
@@ -89,6 +90,68 @@ public final class LoggerService {
         }
 
         showGenericAlert();
+    }
+
+    public static void logE(Exception ex) {
+
+        try {
+
+            // Create logs directory if it doesn't exist
+            Files.createDirectories(Path.of(LOG_FOLDER));
+
+            String fileName = "error-" + LocalDate.now() + ".txt";
+            Path logFile = Path.of(LOG_FOLDER, fileName);
+
+            StringBuilder log = new StringBuilder();
+
+            log.append("====================================================\n");
+            log.append("Date/Time : ")
+                    .append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    .append("\n");
+
+            if (ex.getStackTrace().length > 0) {
+
+                StackTraceElement element = ex.getStackTrace()[0];
+
+                log.append("Class     : ")
+                        .append(element.getClassName())
+                        .append("\n");
+
+                log.append("Method    : ")
+                        .append(element.getMethodName())
+                        .append("\n");
+
+                log.append("Line      : ")
+                        .append(element.getLineNumber())
+                        .append("\n");
+            }
+
+            log.append("Exception : ")
+                    .append(ex.getClass().getName())
+                    .append("\n");
+
+            log.append("Message   : ")
+                    .append(ex.getMessage())
+                    .append("\n\n");
+
+            log.append("Stack Trace:\n");
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+
+            log.append(sw);
+            log.append("\n\n");
+
+            Files.writeString(
+                    logFile,
+                    log.toString(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+            );
+        } catch (IOException ignored) {
+            System.out.println(ignored.getMessage());
+        }
     }
 
     /**
