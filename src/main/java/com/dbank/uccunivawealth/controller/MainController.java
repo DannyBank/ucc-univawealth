@@ -165,6 +165,7 @@ public class MainController {
             if (UserSession.getInstance().getCurrentUser() != null) {
                 int userId = UserSession.getInstance().getCurrentUser().getUserId();
                 new AuthService().sessionLogout(userId);
+                UserSession.getInstance().setCurrentUser(null);
             }
 
             Notification.showInfo("See you again soon");

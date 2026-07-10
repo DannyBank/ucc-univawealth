@@ -122,4 +122,34 @@ public class InvestmentsRepository {
     }
 
     public void delete(String accountId){ return; }
+
+    public List<Investment> getById(int userId) {
+        List<Investment> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM Investment WHERE UserId = " + userId;
+
+        try (Connection conn = DatabaseManager.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                list.add(new Investment(
+                        rs.getInt("InvestmentId"),
+                        rs.getInt("UserId"),
+                        rs.getString("InvestmentName"),
+                        rs.getString("InvestmentType"),
+                        rs.getDouble("Principal"),
+                        rs.getDouble("InterestRate"),
+                        rs.getInt("DurationMonths"),
+                        rs.getString("StartDate"),
+                        rs.getString("MaturityDate"),
+                        rs.getDouble("ExpectedReturn"),
+                        rs.getString("Status")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

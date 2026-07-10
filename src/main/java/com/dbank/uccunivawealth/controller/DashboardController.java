@@ -59,16 +59,19 @@ public class DashboardController {
 
     public void refreshDashboard() {
         try {
+            AppData.getInstance().clearAllData();
+
             AppData.getInstance().loadAllData();
+            int userId = user.getUserId();
 
             //greetings
             lblUserWelcome.setText("Welcome " + user.getUsername() + ", Overview of your financials below");
 
-            double totalSavings = appData.getSavingsAccounts().stream()
+            double totalSavings = appData.getSavingsAccounts(userId).stream()
                     .filter(Objects::nonNull)
                     .mapToDouble(item -> Objects.requireNonNullElse(item.getCurrentBalance(), 0.0))
                     .sum();
-            double totalInvestment = appData.getInvestmentAccounts().stream()
+            double totalInvestment = appData.getInvestmentAccounts(userId).stream()
                     .filter(Objects::nonNull)
                     .mapToDouble(item -> Objects.requireNonNullElse(item.getBalance(), 0.0))
                     .sum();

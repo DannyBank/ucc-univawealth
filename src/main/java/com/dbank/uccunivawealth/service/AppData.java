@@ -1,9 +1,6 @@
 package com.dbank.uccunivawealth.service;
 
-import com.dbank.uccunivawealth.model.Investment;
-import com.dbank.uccunivawealth.model.SavingsAccount;
-import com.dbank.uccunivawealth.model.SavingsGoal;
-import com.dbank.uccunivawealth.model.Transaction;
+import com.dbank.uccunivawealth.model.*;
 import com.dbank.uccunivawealth.repo.InvestmentsRepository;
 import com.dbank.uccunivawealth.repo.SavingsGoalsRepository;
 import com.dbank.uccunivawealth.repo.SavingsRepository;
@@ -39,24 +36,42 @@ public final class AppData {
     // UI observable caches
     // ============================
     private final ObservableList<SavingsAccount> savingsAccounts = FXCollections.observableArrayList();
+    private final ObservableList<SavingsAccount> savingsAccountsById = FXCollections.observableArrayList();
     private final ObservableList<Investment> investments = FXCollections.observableArrayList();
+    private final ObservableList<Investment> investmentsById = FXCollections.observableArrayList();
     private final ObservableList<Transaction> allTransactions = FXCollections.observableArrayList();
     private final ObservableList<SavingsGoal> goals = FXCollections.observableArrayList();
 
     // Getters for UI Binding
     // ============================
     public ObservableList<SavingsAccount> getSavingsAccounts() { return savingsAccounts; }
+    public ObservableList<SavingsAccount> getSavingsAccounts(int userId) { return savingsAccountsById; }
     public ObservableList<Investment> getInvestmentAccounts() { return investments; }
+    public ObservableList<Investment> getInvestmentAccounts(int userId) { return investmentsById; }
     public ObservableList<Transaction> getAllTransactions() { return allTransactions; }
     public ObservableList<SavingsGoal> getGoals() { return goals; }
 
     // Initial Load from Database
     // ============================
     public void loadAllData() {
+        User currentUser = UserSession.getInstance().getCurrentUser();
         loadSavingsAccounts();
+        loadSavingsAccounts(currentUser.getUserId());
         loadInvestmentAccounts();
+        loadInvestmentAccounts(currentUser.getUserId());
         loadTransactions();
         loadGoals();
+    }
+
+    // Clear all loaded data
+    // ============================
+    public void clearAllData() {
+        savingsAccounts.clear();
+        savingsAccountsById.clear();
+        investments.clear();
+        investmentsById.clear();
+        allTransactions.clear();
+        goals.clear();
     }
 
     public void loadSavingsAccounts() {
@@ -64,11 +79,15 @@ public final class AppData {
     }
 
     public void loadSavingsAccounts(int userId) {
-        savingsAccounts.setAll(savingsRepo.getByUser(userId));
+        savingsAccountsById.setAll(savingsRepo.getByUser(userId));
     }
 
     public void loadInvestmentAccounts() {
         investments.setAll(investmentsRepo.getAll());
+    }
+
+    public void loadInvestmentAccounts(int userId) {
+        investmentsById.setAll(investmentsRepo.getById(userId));
     }
 
     public void loadTransactions() {
