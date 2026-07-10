@@ -1,7 +1,9 @@
 package com.dbank.uccunivawealth.controller;
 
+import com.dbank.uccunivawealth.model.User;
 import com.dbank.uccunivawealth.service.AppData;
 import com.dbank.uccunivawealth.model.Transaction;
+import com.dbank.uccunivawealth.service.UserSession;
 import com.dbank.uccunivawealth.util.Notification;
 import com.dbank.uccunivawealth.util.UiUtils;
 import javafx.fxml.FXML;
@@ -24,8 +26,10 @@ public class TransactionsController {
 
     @FXML
     public void initialize() {
+        User currentUser = UserSession.getInstance().getCurrentUser();
+
         appData.loadTransactions();
-        var transactions = appData.getAllTransactions();
+        var transactions = appData.getAllTransactions(currentUser.getUserId());
         transactionsTable.setItems(transactions);
 
         amountCol.setCellFactory(col -> UiUtils.moneyCell());

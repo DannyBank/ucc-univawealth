@@ -36,17 +36,19 @@ public class GoalsController {
     private MFXTextField dateField;
 
     private final AppData appData = AppData.getInstance();
-    private final User currentUser = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
-        appData.loadGoals();
+        User currentUser = UserSession.getInstance().getCurrentUser();
+        appData.loadGoals(currentUser.getUserId());
         renderGoals();
     }
 
     @FXML
     private void onAddGoal() {
         try {
+            User currentUser = UserSession.getInstance().getCurrentUser();
+
             int userId = currentUser.getUserId();
             String name = UiUtils.requireNonEmpty(nameField.getText(), "Goal name");
             double target = UiUtils.parsePositiveOrZero(targetField.getText(), "Target amount");

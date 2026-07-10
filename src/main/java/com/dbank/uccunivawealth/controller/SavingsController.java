@@ -42,17 +42,18 @@ public class SavingsController {
     private DatePicker targetDateField;
 
     private final AppData appData = AppData.getInstance();
-    private final User currentUser = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
+        User currentUser = UserSession.getInstance().getCurrentUser();
         appData.loadSavingsAccounts(currentUser.getUserId());
-        savingsTable.setItems(appData.getSavingsAccounts());
+        savingsTable.setItems(appData.getSavingsAccounts(currentUser.getUserId()));
         balCol.setCellFactory(col -> UiUtils.moneyCell());
     }
 
     @FXML
     private void onCreateAccount() {
+        User currentUser = UserSession.getInstance().getCurrentUser();
         try {
             String accountNo = currentUser.getAccountNumber() + new Random().nextInt();
             int userId = currentUser.getUserId();
@@ -151,6 +152,7 @@ public class SavingsController {
     }
 
     public void deposit(SavingsAccount acc, double amount) throws Exception {
+        User currentUser = UserSession.getInstance().getCurrentUser();
         // Update the database savings balance
         int userId = currentUser.getUserId();
         int res = appData.depositSavingsAccount(userId, acc.getSavingsId(), amount);
@@ -168,6 +170,8 @@ public class SavingsController {
     }
 
     public void withdraw(SavingsAccount acc, double amount) throws Exception {
+        User currentUser = UserSession.getInstance().getCurrentUser();
+
         // Update the database savings balance
         int userId = currentUser.getUserId();
         int res = appData.withdrawSavingsAccount(userId, acc.getSavingsId(), amount);

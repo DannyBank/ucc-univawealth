@@ -40,6 +40,7 @@ public final class AppData {
     private final ObservableList<Investment> investments = FXCollections.observableArrayList();
     private final ObservableList<Investment> investmentsById = FXCollections.observableArrayList();
     private final ObservableList<Transaction> allTransactions = FXCollections.observableArrayList();
+    private final ObservableList<Transaction> allTransactionsById = FXCollections.observableArrayList();
     private final ObservableList<SavingsGoal> goals = FXCollections.observableArrayList();
 
     // Getters for UI Binding
@@ -49,6 +50,7 @@ public final class AppData {
     public ObservableList<Investment> getInvestmentAccounts() { return investments; }
     public ObservableList<Investment> getInvestmentAccounts(int userId) { return investmentsById; }
     public ObservableList<Transaction> getAllTransactions() { return allTransactions; }
+    public ObservableList<Transaction> getAllTransactions(int userId) { return allTransactionsById; }
     public ObservableList<SavingsGoal> getGoals() { return goals; }
 
     // Initial Load from Database
@@ -60,6 +62,7 @@ public final class AppData {
         loadInvestmentAccounts();
         loadInvestmentAccounts(currentUser.getUserId());
         loadTransactions();
+        loadTransactions(currentUser.getUserId());
         loadGoals();
     }
 
@@ -94,8 +97,14 @@ public final class AppData {
         allTransactions.setAll(transactionsRepo.getAll());
     }
 
+    public void loadTransactions(int userId) { allTransactions.setAll(transactionsRepo.getAll()); }
+
     public void loadGoals() {
         goals.setAll(goalsRepo.getAll());
+    }
+
+    public void loadGoals(int userId) {
+        goals.setAll(goalsRepo.getById(userId));
     }
 
     // SAVINGS ACCOUNTS

@@ -44,12 +44,12 @@ public class InvestmentController {
     @FXML private MFXComboBox<String> riskLevel;
 
     private final AppData appData = AppData.getInstance();
-    private final User currentUser = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
         try {
-            investmentTable.setItems(appData.getInvestmentAccounts());
+            User currentUser = UserSession.getInstance().getCurrentUser();
+            investmentTable.setItems(appData.getInvestmentAccounts(currentUser.getUserId()));
 
             typeBox.setItems(FXCollections.observableArrayList(
                     "Stocks", "Bonds", "Mutual Fund",
@@ -64,6 +64,8 @@ public class InvestmentController {
     @FXML
     private void onCreateAccount() {
         try {
+            User currentUser = UserSession.getInstance().getCurrentUser();
+
             int userId = currentUser.getUserId();
             String investmentName = investmentNameField.getText();
             double interest = UiUtils.parsePositiveOrZero(interestField.getText(), "Interest Rate");
@@ -203,6 +205,8 @@ public class InvestmentController {
     }
 
     public void deposit(Investment acc, double amount) throws Exception {
+        User currentUser = UserSession.getInstance().getCurrentUser();
+
         // Update the database savings balance
         int userId = currentUser.getUserId();
         int res = appData.depositInvestmentAccount(userId, acc.getInvestmentId(), amount);
@@ -220,6 +224,8 @@ public class InvestmentController {
     }
 
     public void withdraw(Investment acc, double amount) throws Exception {
+        User currentUser = UserSession.getInstance().getCurrentUser();
+
         // Update the database investment balance
         int userId = currentUser.getUserId();
         int res = appData.withdrawInvestmentAccount(userId, acc.getInvestmentId(), amount);

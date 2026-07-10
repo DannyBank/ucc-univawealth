@@ -59,4 +59,32 @@ public class SavingsGoalsRepository {
 
     public void update(SavingsGoal account){ return; }
     public void delete(String accountId){ return; }
+
+    public List<SavingsGoal> getById(int userId) {
+        List<SavingsGoal> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM Goals WHERE UserId = " + userId;
+
+        try (Connection conn = DatabaseManager.connect()) {
+            assert conn != null;
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+
+                while (rs.next()) {
+                    list.add(new SavingsGoal(
+                            rs.getInt("SavingsId"),
+                            rs.getInt("UserId"),
+                            rs.getString("GoalName"),
+                            rs.getDouble("TargetAmount"),
+                            rs.getDouble("CurrentAmount"),
+                            rs.getString("Deadline"),
+                            rs.getString("Status")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
