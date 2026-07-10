@@ -31,7 +31,7 @@
                     <Insets bottom="40.0" left="40.0" right="30.0" top="40.0" />
                 </padding>
 
-                <Label styleClass="welcome-title" text="UnivaWealth" wrapText="true">
+                <Label styleClass="welcome-title" text="UnivaWEALTH" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -56,47 +56,76 @@
                 </font>
             </Label>
 
-            <VBox alignment="CENTER" maxWidth="320.0" spacing="16" styleClass="form-box">
+            <GridPane alignment="CENTER" hgap="12" vgap="14" maxWidth="400.0" styleClass="form-box">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="110" halignment="RIGHT" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
 
-                <MFXTextField fx:id="usernameField" alignment="CENTER_LEFT"
-                              floatingText="Eg. ucc, no symbols/special characters" prefWidth="250.0"
-                              styleClass="mfx-text" >
+                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                <MFXTextField fx:id="usernameField"
+                              GridPane.rowIndex="0" GridPane.columnIndex="1"
+                              alignment="CENTER_LEFT"
+                              floatingText="Eg. ucc, no symbols/special characters"
+                              prefWidth="250.0"
+                              styleClass="mfx-text">
                     <font>
-                        <Font size="10.0" />
+                        <Font size="13.0" />
                     </font>
                 </MFXTextField>
 
-                <MFXPasswordField fx:id="passwordField" alignment="CENTER_LEFT"
-                                  floatingText="At least 6 characters" prefWidth="250.0"
-                                  styleClass="mfx-text" textLimit="6">
+                <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                <MFXPasswordField fx:id="passwordField"
+                                  GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                  alignment="CENTER_LEFT"
+                                  floatingText="At least 6 characters"
+                                  prefWidth="250.0"
+                                  styleClass="mfx-text"
+                                  textLimit="6">
                     <font>
-                        <Font size="10.0" />
+                        <Font size="13.0" />
                     </font>
                 </MFXPasswordField>
 
-                <MFXTextField fx:id="emailField" alignment="CENTER_LEFT"
-                              floatingText="Eg. lec@ucc.edu.gh" prefWidth="250.0"
+                <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                <MFXTextField fx:id="emailField"
+                              GridPane.rowIndex="2" GridPane.columnIndex="1"
+                              alignment="CENTER_LEFT"
+                              floatingText="Eg. lec@ucc.edu.gh"
+                              prefWidth="250.0"
                               styleClass="mfx-text">
                     <font>
-                        <Font size="10.0" />
+                        <Font size="13.0" />
                     </font>
                 </MFXTextField>
 
-                <MFXTextField fx:id="msisdnField" alignment="CENTER_LEFT"
-                              floatingText="Eg, 0242123456" prefWidth="250.0"
-                              styleClass="mfx-text" textLimit="12">
+                <Label text="MSISDN:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <MFXTextField fx:id="msisdnField"
+                              GridPane.rowIndex="3" GridPane.columnIndex="1"
+                              alignment="CENTER_LEFT"
+                              floatingText="Eg. 0242123456"
+                              prefWidth="250.0"
+                              styleClass="mfx-text"
+                              textLimit="12">
                     <font>
-                        <Font size="10.0" />
+                        <Font size="13.0" />
                     </font>
                 </MFXTextField>
 
-                <HBox alignment="BOTTOM_LEFT" maxWidth="250.0" spacing="10">
-                    <MFXButton fx:id="btnLogin" prefWidth="125.0" styleClass="mfx-button"
+                <HBox spacing="10"
+                      alignment="CENTER_LEFT"
+                      maxWidth="300.0"
+                      GridPane.rowIndex="4"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="2">
+                    <Label/>
+                    <Label/>
+                    <MFXButton fx:id="btnLogin" prefWidth="105.0" styleClass="mfx-button"
                                text="LOGIN" onAction="#onLoginBtnClick" />
-                    <MFXButton fx:id="btnRegister" prefWidth="250.0" styleClass="mfx-button"
+                    <MFXButton fx:id="btnRegister" prefWidth="105.0" styleClass="mfx-button"
                                text="SUBMIT" onAction="#onRegisterBtnClick" />
                 </HBox>
-            </VBox>
+            </GridPane>
 
             <!-- Loading overlay, now correctly stacked above everything -->
             <VBox fx:id="loadingPane" alignment="CENTER" styleClass="loading-pane" visible="false">

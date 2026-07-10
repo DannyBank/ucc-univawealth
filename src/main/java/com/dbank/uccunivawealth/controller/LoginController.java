@@ -133,7 +133,7 @@ public class LoginController {
 
             Parent root = loader.load();
             Stage stage = (Stage) btnLogin.getScene().getWindow();
-            stage.setScene(new Scene(root, 550, 550));
+            stage.setScene(new Scene(root, 650, 450));
             stage.centerOnScreen();
         } catch (Exception ex){
             LoggerService.log(ex);

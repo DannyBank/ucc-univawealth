@@ -31,7 +31,7 @@
                     <Insets bottom="40.0" left="40.0" right="30.0" top="40.0" />
                 </padding>
 
-                <Label styleClass="welcome-title" text="UNIVAWEALTH" wrapText="true">
+                <Label styleClass="welcome-title" text="UnivaWEALTH" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>

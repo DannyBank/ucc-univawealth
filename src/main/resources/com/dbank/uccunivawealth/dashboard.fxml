@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       xmlns="http://javafx.com/javafx/21"
       fx:controller="com.dbank.uccunivawealth.controller.DashboardController"
@@ -15,7 +15,7 @@
       style="-fx-background-color: #F4F6FA;"
       stylesheets="@styles.css,start.css,app.css">
     <padding>
-        <Insets top="24" right="24" bottom="24" left="24"/>
+        <Insets top="24" right="24" bottom="24" left="24" />
     </padding>
 
     <!-- Header -->
@@ -62,11 +62,11 @@
             <Label text="Quick Actions" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1F2937;"/>
             <VBox spacing="12.0">
                 <MFXButton
-                        text="Add Savings"
+                        text="Add Savings      "
                         onAction="#addSavings"
                         styleClass="mfx-button-raised"/>
                 <MFXButton
-                        text="Add Investment"
+                        text="Add Investment   "
                         onAction="#addInvestment"
                         styleClass="mfx-button-raised"/>
                 <MFXButton
