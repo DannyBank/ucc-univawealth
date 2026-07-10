@@ -96,4 +96,34 @@ public class TransactionsRepository {
 
     public void update(Transaction account){ return; }
     public void delete(String accountId){ return; }
+
+    public List<Transaction> getById(int userId) {
+        List<Transaction> list = new ArrayList<>();
+        String sql = "SELECT * FROM Transactions WHERE TransactionType NOT IN ('LOGIN','REGISTER') AND UserId = ?";
+
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new Transaction(
+                            rs.getInt("TransactionId"),
+                            rs.getInt("UserId"),
+                            rs.getInt("SavingsId"),
+                            rs.getInt("InvestmentId"),
+                            rs.getString("TransactionType"),
+                            rs.getDouble("Amount"),
+                            rs.getString("TransactionDate"),
+                            rs.getInt("CategoryId"),
+                            rs.getString("Notes")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            LoggerService.log(e);
+        }
+        return list;
+    }
 }

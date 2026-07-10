@@ -28,15 +28,10 @@ public class TransactionsController {
     public void initialize() {
         User currentUser = UserSession.getInstance().getCurrentUser();
 
-        appData.loadTransactions();
+        appData.loadTransactions(currentUser.getUserId());
         var transactions = appData.getAllTransactions(currentUser.getUserId());
         transactionsTable.setItems(transactions);
-
         amountCol.setCellFactory(col -> UiUtils.moneyCell());
-
-        // Sort newest first by default.
-        transactions.sort(Comparator.comparingInt(Transaction::getId).reversed());
-        //transactions.addListener((ListChangeListener<Transaction>) c -> transactionsTable.sort());
     }
 
     @FXML

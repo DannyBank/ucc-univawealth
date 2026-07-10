@@ -74,6 +74,7 @@ public final class AppData {
         investments.clear();
         investmentsById.clear();
         allTransactions.clear();
+        allTransactionsById.clear();
         goals.clear();
     }
 
@@ -97,7 +98,9 @@ public final class AppData {
         allTransactions.setAll(transactionsRepo.getAll());
     }
 
-    public void loadTransactions(int userId) { allTransactions.setAll(transactionsRepo.getAll()); }
+    public void loadTransactions(int userId) {
+        allTransactionsById.setAll(transactionsRepo.getById(userId));
+    }
 
     public void loadGoals() {
         goals.setAll(goalsRepo.getAll());

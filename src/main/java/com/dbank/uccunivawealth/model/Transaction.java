@@ -1,8 +1,6 @@
 package com.dbank.uccunivawealth.model;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.dbank.uccunivawealth.util.DateFormatter;
 
 /**
  * An immutable record of a single balance-changing event on an {@link Account}.
@@ -26,7 +24,7 @@ public class Transaction {
     }
 
     public String getTransDate() {
-        return transDate;
+        return DateFormatter.formatDate(transDate);
     }
 
     public int getCategory() {

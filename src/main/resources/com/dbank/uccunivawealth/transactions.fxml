@@ -8,38 +8,63 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.dbank.uccunivawealth.controller.TransactionsController"
-            styleClass="tab-content">
+            styleClass="tab-content" stylesheets="@app.css">
     <center>
-        <TableView fx:id="transactionsTable">
-            <columns>
-                <TableColumn fx:id="dateCol" text="Date">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="transactionDate"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="transTypeCol" text="Transaction">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="transactionType"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="notesCol" text="Description">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="notes"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="amountCol" text="Amount (GHS)">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="amount"/>
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-            <placeholder>
-                <Label text="No transactions yet."/>
-            </placeholder>
-        </TableView>
+
+        <GridPane hgap="20">
+
+            <VBox spacing="10"
+                  styleClass="form-panel"
+                  GridPane.columnIndex="1" prefWidth="800">
+
+                <padding>
+                    <Insets top="15"
+                            right="15"
+                            bottom="15"
+                            left="15"/>
+                </padding>
+
+
+                <Label text="Transactions"
+                       styleClass="section-title"/>
+
+                <TableView fx:id="transactionsTable">
+                    <columns>
+                        <TableColumn fx:id="dateCol" text="Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="transDate"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="transTypeCol" text="Transaction">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="type"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="notesCol" text="Description">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="notes"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="amountCol" text="Amount (GHS)">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="amount"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                    <placeholder>
+                        <Label text="No transactions yet."/>
+                    </placeholder>
+                </TableView>
+
+            </VBox>
+
+        </GridPane>
+
     </center>
     <bottom>
         <HBox alignment="CENTER_RIGHT">

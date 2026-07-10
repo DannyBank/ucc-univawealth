@@ -97,18 +97,18 @@ public class SavingsRepository {
     }
     public void delete(String accountId){ return; }
 
-    public SavingsAccount getByUser(int userId) {
-        String sql = "SELECT * FROM SavingsAccount WHERE UserId = " + userId;
-        SavingsAccount found = null;
+    public List<SavingsAccount> getByUser(int userId) {
+        List<SavingsAccount> list = new ArrayList<>();
+        String sql = "SELECT * FROM SavingsAccount WHERE UserId = ?";
 
-        try (Connection conn = DatabaseManager.connect()) {
-            if (conn == null) return null;
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
+            ps.setInt(1, userId);
 
-                 while (rs.next()) {
-                    found = new SavingsAccount(
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new SavingsAccount(
                             rs.getInt("UserId"),
                             rs.getString("AccountNumber"),
                             rs.getDouble("InitialBalance"),
@@ -119,12 +119,12 @@ public class SavingsRepository {
                             rs.getString("TargetDate"),
                             rs.getString("Status"),
                             rs.getInt("SavingsId")
-                    );
+                    ));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return found;
+        return list;
     }
 }

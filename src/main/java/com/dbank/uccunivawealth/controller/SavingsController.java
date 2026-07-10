@@ -46,6 +46,7 @@ public class SavingsController {
     @FXML
     public void initialize() {
         User currentUser = UserSession.getInstance().getCurrentUser();
+
         appData.loadSavingsAccounts(currentUser.getUserId());
         savingsTable.setItems(appData.getSavingsAccounts(currentUser.getUserId()));
         balCol.setCellFactory(col -> UiUtils.moneyCell());
