@@ -66,8 +66,4 @@ public class SavingsAccount extends Account{
     public String getInterestRateDisplay() {
         return String.format("%.2f%%", interestRate * 100);
     }
-
-    public double getBalance() {
-        return Double.MIN_NORMAL;
-    }
 }

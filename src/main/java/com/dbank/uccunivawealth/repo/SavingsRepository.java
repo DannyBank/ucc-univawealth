@@ -57,7 +57,7 @@ public class SavingsRepository {
 
             ps.setInt(1, acc.getUserId());
             ps.setString(2, acc.getAccountNumber());
-            ps.setDouble(3, acc.getBalance());
+            ps.setDouble(3, acc.getInitialBalance());
             ps.setDouble(4, acc.getInterestRate());
             ps.setDouble(5, acc.getTargetAmount());
             ps.setDouble(6, acc.getCurrentBalance());

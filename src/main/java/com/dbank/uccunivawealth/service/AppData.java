@@ -64,6 +64,7 @@ public final class AppData {
         loadTransactions();
         loadTransactions(currentUser.getUserId());
         loadGoals();
+        loadGoals(currentUser.getUserId());
     }
 
     // Clear all loaded data
@@ -114,14 +115,16 @@ public final class AppData {
     // ============================
 
     public boolean addSavingsAccount(SavingsAccount acc) {
-        int insert = savingsRepo.insert(acc);// save to DB
-        savingsAccounts.add(acc);            // update UI
+        int insert = savingsRepo.insert(acc);
+        if (insert > 0) {
+            loadSavingsAccounts(acc.getUserId());  // reload so the table's list gets the real SavingsId too
+        }
         return insert > 0;
     }
 
     public void updateSavingsAccount(SavingsAccount acc) {
         savingsRepo.update(acc);
-        loadSavingsAccounts(); // refresh UI
+        loadSavingsAccounts(acc.getUserId()); // refresh UI
     }
 
     public int updateSavingsAccount(int userId, int savingsId, double amount, int type) {
@@ -140,20 +143,22 @@ public final class AppData {
     // ============================
 
     public boolean addInvestmentAccount(Investment acc) throws SQLException {
-        Investment insert = investmentsRepo.insert(acc);
-        investments.add(acc);
-        return insert != null;
+        Investment saved = investmentsRepo.insert(acc);
+        if (saved != null) {
+            investmentsById.add(saved);
+        }
+        return saved != null;
     }
 
     public void updateInvestmentAccount(Investment acc) {
         investmentsRepo.update(acc);
-        loadInvestmentAccounts();
+        loadInvestmentAccounts(acc.getInvestmentId());
     }
 
     public int updateInvestmentAccount(int userId, int investmentId, double amount, int type) {
         int res = investmentsRepo.update(userId, investmentId, amount, type);
         if (res == 1)
-            loadInvestmentAccounts(); // refresh UI
+            loadInvestmentAccounts(investmentId); // refresh UI
         return res;
     }
 
@@ -181,14 +186,17 @@ public final class AppData {
     // GOALS
     // =========================
 
-    public void addGoal(SavingsGoal goal) {
-        goalsRepo.insert(goal);
-        goals.add(goal);
+    public boolean addGoal(SavingsGoal goal) {
+        int insert = goalsRepo.insert(goal);
+        if (insert > 0) {
+            loadGoals(goal.getUserId());  // reload so the table's list gets the real SavingsId too
+        }
+        return insert > 0;
     }
 
     public void updateGoal(SavingsGoal goal) {
         goalsRepo.update(goal);
-        loadGoals();
+        loadGoals(goal.getUserId());
     }
 
     public void deleteGoal(String name) {

@@ -114,7 +114,7 @@ public class GoalsController {
 
             MFXProgressBar bar = new MFXProgressBar();
             bar.setProgress(goal.getProgressFraction());
-            bar.setPrefWidth(400);
+            bar.setPrefWidth(500);
 
             Label progressLabel = new Label(String.format("GHS %.2f / GHS %.2f  (%s)",
                     goal.getCurrentAmount(), goal.getTargetAmount(), goal.getProgressDisplay()));

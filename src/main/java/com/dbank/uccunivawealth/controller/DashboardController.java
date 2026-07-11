@@ -26,7 +26,6 @@ public class DashboardController {
     private PieChart allocationChart;
 
     private final AppData appData = AppData.getInstance();
-    private final User user = UserSession.getInstance().getCurrentUser();
 
     @FXML
     public void initialize() {
@@ -60,6 +59,7 @@ public class DashboardController {
     public void refreshDashboard() {
         try {
             AppData.getInstance().clearAllData();
+            User user = UserSession.getInstance().getCurrentUser();
 
             AppData.getInstance().loadAllData();
             int userId = user.getUserId();
@@ -89,7 +89,7 @@ public class DashboardController {
             if (totalSavings > 0) {
                 pieData.add(new PieChart.Data("Savings", totalSavings));
             }
-            for (Investment inv : appData.getInvestmentAccounts()) {
+            for (Investment inv : appData.getInvestmentAccounts(user.getUserId())) {
                 if (inv.getBalance() > 0) {
                     pieData.add(new PieChart.Data(
                             inv.getInvestmentType(), inv.getBalance()));
